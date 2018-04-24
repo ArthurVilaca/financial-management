@@ -1,0 +1,73 @@
+import { Injectable } from '@angular/core';
+import { ProviderService } from './provider.service'
+import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component'
+
+@Injectable()
+export class HttpService {
+  hash: string = "";
+  header: HttpHeaders;
+  headers: any = {};
+
+  constructor(private router: Router, private provider: ProviderService, private http: HttpClient, private message: MessageDialogComponent) {
+    this.hash = this.provider.hash;
+    this.headers = {
+      'Authorization': this.hash,
+    };
+    this.header = new HttpHeaders(this.headers);
+  }
+
+  generateHeader() {
+    this.header = new HttpHeaders(this.headers);
+  }
+
+  get(url) {
+    return this.http.get(url, { headers: this.header })
+        .toPromise()
+        .then((data: any) => {
+          return this.validateRequest(data);
+        });
+  }
+      
+  validateRequest(data) {
+    return new Promise((resolve, reject) => {
+      if(data.internalErrorStatus == 800) {
+        this.message.openDialog('Erro', JSON.parse(data.message));
+        return this.logout();
+      }
+      resolve(data)
+    });
+  }
+
+  put(url) {
+    return this.http.put(url, {}, { headers: this.header })
+        .toPromise()
+        .then((data: any) => {
+          return this.validateRequest(data);
+        });
+  }
+
+  logout() {
+    this.headers = {
+      'Authorization': this.hash
+    }
+    this.generateHeader();
+    this.router.navigate(['login']).then(_ => {});
+  }
+
+  post(url, data, header?) {
+    let headers = this.header;
+    if(header) {
+      header.Authorization = this.hash;
+      headers = new HttpHeaders(header);
+    }
+    return this.http.post(url, data, { headers: headers })
+        .toPromise()
+        .then((data: any) => {
+          return this.validateRequest(data);
+        });
+  }
+
+}
