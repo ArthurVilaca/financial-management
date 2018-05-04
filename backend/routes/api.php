@@ -13,6 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', function() {
+    return response()->json(['message' => 'INNOVARE API', 'status' => 'Connected']);
+});
+
+Route::post('/login', 'UserController@login');
+// Route::post('/forgotPassword', 'UserController@forgotPassword');
+// Route::post('/resetPassword', 'UserController@resetPassword');
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    //Rotas de usuario
+    Route::resource('user', 'UserController', ['except' => [
+        'store'
+    ]]);
+
+    
 });

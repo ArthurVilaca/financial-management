@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// routes
+import { RouterModule } from '@angular/router';
+import { rootRouterConfig } from './app.routes';
+
 
 import { AppComponent } from './app.component';
 
@@ -10,7 +14,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(rootRouterConfig, { useHash: true }),
   ],
   providers: [],
   bootstrap: [AppComponent]
