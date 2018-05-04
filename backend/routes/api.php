@@ -23,9 +23,11 @@ Route::post('/login', 'EmployeesController@login');
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     //Rotas de usuario
-    Route::resource('user', 'EmployeesController', ['except' => [
+    Route::resource('employees', 'EmployeesController', ['except' => [
         'store'
     ]]);
 
-    
+    Route::resource('clients', 'ClientsController');
+
+    Route::resource('providers', 'ProvidersController');
 });

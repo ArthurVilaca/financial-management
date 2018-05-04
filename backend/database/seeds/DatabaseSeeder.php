@@ -20,5 +20,25 @@ class DatabaseSeeder extends Seeder
             'status' => 'APROVADO'
         ]);
 
+        DB::table('clients')->insert([
+            'name' => 'Cliente 1',
+            'status' => 'APROVADO'
+        ]);
+
+        DB::table('clients')->insert([
+            'name' => 'Cliente 2',
+            'status' => 'BLOQUEADO'
+        ]);
+
+        DB::table('providers')->insert([
+            'name' => 'Fornecedor 1',
+            'status' => 'APROVADO'
+        ]);
+
+        DB::table('providers')->insert([
+            'name' => 'Fornecedor 2',
+            'status' => 'BLOQUEADO'
+        ]);
+
     }
 }
