@@ -17,13 +17,13 @@ Route::get('/', function() {
     return response()->json(['message' => 'INNOVARE API', 'status' => 'Connected']);
 });
 
-Route::post('/login', 'UserController@login');
-// Route::post('/forgotPassword', 'UserController@forgotPassword');
-// Route::post('/resetPassword', 'UserController@resetPassword');
+Route::post('/login', 'EmployeesController@login');
+// Route::post('/forgotPassword', 'EmployeesController@forgotPassword');
+// Route::post('/resetPassword', 'EmployeesController@resetPassword');
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     //Rotas de usuario
-    Route::resource('user', 'UserController', ['except' => [
+    Route::resource('user', 'EmployeesController', ['except' => [
         'store'
     ]]);
 

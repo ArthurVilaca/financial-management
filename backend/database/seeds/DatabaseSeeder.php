@@ -17,8 +17,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'arthur_vilaca',
             'email' => 'vilaca.arthur.f@gmail.com',
             'password' => bcrypt('123'),
-            'user_type' => 'U',
-            'status' => 'APPROVED'
+            'status' => 'APROVADO'
         ]);
 
     }

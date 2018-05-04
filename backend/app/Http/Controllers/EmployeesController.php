@@ -7,19 +7,19 @@ use JWTAuth;
 use App\Employees;
 use JWTAuthException;
 use \App\Response\Response;
-use \App\Service\UserService;
+use \App\Service\EmployeesService;
 
 class EmployeesController extends Controller
 {
     private $employees;
-    private $userService;
+    private $employeesService;
     private $response;
 
     public function __construct()
     {
         $this->employees = new Employees();
         $this->response = new Response();
-        $this->userService = new UserService();
+        $this->employeesService = new EmployeesService();
     }
     /**
      * Display a listing of the resource.
@@ -64,7 +64,7 @@ class EmployeesController extends Controller
         
         $user = JWTAuth::toUser($token);
 
-        if($user->status != "APPROVED")
+        if($user->status != "APROVADO")
         {
             $this->response->setType("N");    
             $this->response->setMessages("You don't have permission to do login!");
@@ -76,7 +76,6 @@ class EmployeesController extends Controller
         $this->response->setMessages("Login successfully!");
         
         $this->response->setDataSet("name", $user->name);
-        $this->response->setDataSet("user_type", $user->user_type);
 
         return response()->json($this->response->toString(), 200);
     }
@@ -97,7 +96,7 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $returnUser = $this->userService->create($request);
+        $returnUser = $this->employeesService->create($request);
             
         $this->response->setType("S");
         $this->response->setDataSet("user", $returnUser);
