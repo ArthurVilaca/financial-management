@@ -8,10 +8,11 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private appState: ProviderService) {}
 
   public canActivate(route: ActivatedRouteSnapshot) {
-    if(this.appState.provider.user) {
+    // if(this.appState.provider.user) {
       return true;
-    }
-    return false;
+    // }
+    // return false;
+
     // const token = localStorage.getItem('token');
     // let tokenIsExpired = false;
 

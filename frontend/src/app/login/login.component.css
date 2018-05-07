@@ -1,0 +1,27 @@
+.container {
+    padding: 20px;
+    margin: auto;
+    width: 50%;
+}
+
+.form {
+    min-width: 150px;
+    width: 100%;
+}
+  
+.full-width {
+    width: 100%;
+}
+
+.button-submit {
+    margin: auto;
+    width: 50%;
+    display: block;
+}
+
+.title{
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}

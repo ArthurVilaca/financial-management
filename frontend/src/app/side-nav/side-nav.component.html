@@ -1,0 +1,32 @@
+<mat-toolbar-row color="primary" class="toolbar">
+  <div class="sidenav-content">
+    <mat-icon class="icon-menu" (click)="sidenav.toggle()">{{sidenav.opened ? 'arrow_back' : 'menu'}}</mat-icon>
+    <div class="organization-name">GESTÃO INNOVARE</div>
+  </div>
+</mat-toolbar-row>
+<mat-sidenav-container class="container" fullscreen>
+  <mat-sidenav #sidenav class="sidenav">
+    <div class="menu-profile">
+      {{ appState.provider.user.full_name }} 
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="profile-button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Editar perfil</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/clientes']">Clientes</a>
+      <a mat-list-item [routerLink]="['/fornecedores']">Fornecedores</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <!--All children routes go here-->
+  <router-outlet></router-outlet>
+</mat-sidenav-container>

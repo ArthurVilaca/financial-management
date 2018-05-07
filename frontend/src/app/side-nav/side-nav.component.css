@@ -1,0 +1,62 @@
+.container {
+    top: 64px !important;
+    width: 100%;
+}
+  
+.sidenav-content {
+    align-items: center;
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    background-color: lightgray;
+}
+  
+.sidenav {
+    background-color: white;
+    min-width: 200px;
+    text-align: left;
+}
+  
+.user-menu {
+    color: white;
+    user-select: none;
+}
+  
+.icon-menu {
+    cursor: pointer;
+    padding-left: 20px;
+}
+  
+.organization-name {
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: auto;
+}
+  
+.progress-bar {
+    left: 0;
+    position: fixed !important;
+    top: 64px;
+    z-index: 3;
+}
+  
+.toolbar {
+    height: 64px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.profile-button {
+    padding: 20px;
+}
+
+.menu-profile {
+    padding: 10px;
+    background-color: lightgray;
+    font-weight: bold;
+}

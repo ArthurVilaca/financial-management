@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "frontend"
+    "name": "gradient-able-v1.7.0"
   },
   "apps": [
     {
@@ -19,7 +19,10 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "../node_modules/bootstrap/scss/bootstrap.scss",
+        "../node_modules/font-awesome-scss/scss/font-awesome.scss",
+        "assets/icon/themify-icons/themify-icons.css",
+        "scss/style.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -54,7 +57,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
 }
