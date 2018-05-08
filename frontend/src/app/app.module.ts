@@ -37,6 +37,10 @@ import { HomeComponent } from './home/home.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { DialogOverviewExampleDialog } from './message-dialog/message-dialog-overview';
+import { ClientsComponent } from './clients/clients.component';
+import { ClientComponent } from './client/client.component';
+import { TaxesComponent } from './taxes/taxes.component';
+import { TaxComponent } from './tax/tax.component';
 
 
 @NgModule({
@@ -46,7 +50,11 @@ import { DialogOverviewExampleDialog } from './message-dialog/message-dialog-ove
     HomeComponent,
     SideNavComponent,
     MessageDialogComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    ClientsComponent,
+    ClientComponent,
+    TaxesComponent,
+    TaxComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +81,7 @@ import { DialogOverviewExampleDialog } from './message-dialog/message-dialog-ove
     MatNativeDateModule,
     MatRadioModule,
   ],
-  providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
+  providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
   bootstrap: [AppComponent],
   entryComponents: [ DialogOverviewExampleDialog ]
 })

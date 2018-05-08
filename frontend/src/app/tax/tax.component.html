@@ -1,0 +1,29 @@
+<div class="main-section">
+  <form class="form" name="taxForm" (ngSubmit)="save()">
+
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-form-field class="full-width">
+          <input name="name" matInput placeholder="Nome" [(ngModel)]="tax.name">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="amount" type="number" matInput placeholder="Valor" [(ngModel)]="tax.amount">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-select name="type" placeholder="Tipo" [(ngModel)]="tax.type">
+            <mat-option [value]="'RECEITA'">RECEITA</mat-option>
+            <mat-option [value]="'DESPESA'">DESPESA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <div class="full-width button-submit">
+        <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
+      </div>
+    </mat-list>
+  </form>
+</div>

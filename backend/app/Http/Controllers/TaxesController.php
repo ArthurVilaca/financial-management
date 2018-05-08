@@ -6,20 +6,20 @@ use Illuminate\Http\Request;
 use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
-use \App\Service\ClientsService;
-use \App\Clients;
+use \App\Service\TaxesService;
+use \App\Taxes;
 
-class ClientsController extends Controller
+class TaxesController extends Controller
 {
     private $response;
-    private $clients;
-    private $clientsService;
+    private $taxes;
+    private $taxesService;
 
     public function __construct()
     {
         $this->response = new Response();
-        $this->clientsService = new ClientsService();
-        $this->clients = new Clients();
+        $this->taxesService = new TaxesService();
+        $this->taxes = new Taxes();
     }
     /**
      * Display a listing of the resource.
@@ -28,9 +28,9 @@ class ClientsController extends Controller
      */
     public function index()
     {
-         $clients = $this->clients->get();
+         $taxes = $this->taxes->get();
 
-        $this->response->setDataSet("clients", $clients);
+        $this->response->setDataSet("taxes", $taxes);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 
@@ -53,11 +53,11 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        $returnClient = $this->clientsService->create($request);
+        $returnTax = $this->taxesService->create($request);
             
         $this->response->setType("S");
-        $this->response->setDataSet("client", $returnClient);
-        $this->response->setMessages("Created client successfully!");
+        $this->response->setDataSet("user", $returnTax);
+        $this->response->setMessages("Created user successfully!");
         
         return response()->json($this->response->toString(), 200);
     }

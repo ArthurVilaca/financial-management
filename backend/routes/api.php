@@ -27,7 +27,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         'store'
     ]]);
 
-    Route::resource('clients', 'ClientsController');
-
-    Route::resource('providers', 'ProvidersController');
+    
 });
+Route::resource('clients', 'ClientsController');
+Route::resource('providers', 'ProvidersController');
+Route::resource('taxes', 'TaxesController');
