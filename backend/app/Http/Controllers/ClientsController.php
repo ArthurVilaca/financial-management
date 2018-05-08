@@ -70,7 +70,13 @@ class ClientsController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = $this->clients->find($id);
+
+        $this->response->setDataSet("client", $client);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
     }
 
     /**
@@ -91,23 +97,17 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->user->find($id);
-        
-        if(!$user) 
-        {
-            $this->response->setType("N");
-            $this->response->setMessages("Record not found!");
+        $clientx = $this->clients->find($id);
 
-            return response()->json($this->response->toString(), 404);
-        }
+        $client_data = $request->all();
+        $client->fill($client_data);
+        $client->save();
 
-        $user->fill($request->all());
-        $user->save();
+        $this->response->setDataSet("tax", $client);
         $this->response->setType("S");
-        $this->response->setDataSet("user", $user);
-        $this->response->setMessages("Sucess, user updated!");
+        $this->response->setMessages("Sucess!");
 
-        return response()->json($this->response->toString(), 200);
+        return response()->json($this->response->toString());
     }
 
     /**

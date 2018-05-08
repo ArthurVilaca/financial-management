@@ -1,7 +1,7 @@
 <div class="main-section">
   <mat-card class="advertiser-card" *ngFor="let tax of appState.provider.taxes">
     <mat-card-header>
-      <mat-card-title>{{tax.name}}</mat-card-title>
+      <mat-card-title>{{tax.name}} - {{tax.amount}}</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
       <button color="primary" routerLink="/imposto/{{tax.id}}" mat-button>Editar</button>

@@ -1,0 +1,12 @@
+<div class="main-section">
+  <mat-card class="advertiser-card" *ngFor="let client of appState.provider.providers">
+    <mat-card-header>
+      <mat-card-title>{{client.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+      <button color="primary" routerLink="/cliente/{{client.id}}" mat-button>Editar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<a class="button-float" mat-fab routerLink="/cliente/novo"><mat-icon>add</mat-icon></a>

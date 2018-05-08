@@ -41,8 +41,8 @@ export class HttpService {
     });
   }
 
-  put(url) {
-    return this.http.put(url, {}, { headers: this.header })
+  put(url, post) {
+    return this.http.put(url, post, { headers: this.header })
         .toPromise()
         .then((data: any) => {
           return this.validateRequest(data);

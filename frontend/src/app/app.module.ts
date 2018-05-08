@@ -41,6 +41,9 @@ import { ClientsComponent } from './clients/clients.component';
 import { ClientComponent } from './client/client.component';
 import { TaxesComponent } from './taxes/taxes.component';
 import { TaxComponent } from './tax/tax.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProvidersComponent } from './providers/providers.component';
+import { ProviderComponent } from './provider/provider.component';
 
 
 @NgModule({
@@ -54,7 +57,10 @@ import { TaxComponent } from './tax/tax.component';
     ClientsComponent,
     ClientComponent,
     TaxesComponent,
-    TaxComponent
+    TaxComponent,
+    ProfileComponent,
+    ProvidersComponent,
+    ProviderComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,8 @@ import { ClientsComponent } from './clients/clients.component';
 import { ClientComponent } from './client/client.component';
 import { TaxesComponent } from './taxes/taxes.component';
 import { TaxComponent } from './tax/tax.component';
+import { ProvidersComponent } from './providers/providers.component';
+import { ProviderComponent } from './provider/provider.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -18,6 +20,9 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'impostos', component: TaxesComponent },
 	{ path: 'imposto/novo', component: TaxComponent },
 	{ path: 'imposto/:id', component: TaxComponent },
+	{ path: 'fornecedores', component: ProvidersComponent },
+	{ path: 'fornecedor/novo', component: ProviderComponent },
+	{ path: 'fornecedor/:id', component: ProviderComponent },
 ];
 
 export const rootRouterConfig: Routes = [

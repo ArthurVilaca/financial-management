@@ -70,7 +70,13 @@ class TaxesController extends Controller
      */
     public function show($id)
     {
-        //
+        $tax = $this->taxes->find($id);
+
+        $this->response->setDataSet("tax", $tax);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
     }
 
     /**
@@ -91,23 +97,17 @@ class TaxesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->user->find($id);
-        
-        if(!$user) 
-        {
-            $this->response->setType("N");
-            $this->response->setMessages("Record not found!");
+        $tax = $this->taxes->find($id);
 
-            return response()->json($this->response->toString(), 404);
-        }
+        $tax_data = $request->all();
+        $tax->fill($tax_data);
+        $tax->save();
 
-        $user->fill($request->all());
-        $user->save();
+        $this->response->setDataSet("tax", $tax);
         $this->response->setType("S");
-        $this->response->setDataSet("user", $user);
-        $this->response->setMessages("Sucess, user updated!");
+        $this->response->setMessages("Sucess!");
 
-        return response()->json($this->response->toString(), 200);
+        return response()->json($this->response->toString());
     }
 
     /**

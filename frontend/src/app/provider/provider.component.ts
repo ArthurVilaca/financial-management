@@ -5,21 +5,19 @@ import { MessageDialogComponent } from '../message-dialog/message-dialog.compone
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-tax',
-  templateUrl: './tax.component.html',
-  styleUrls: ['./tax.component.css']
+  selector: 'app-provider',
+  templateUrl: './provider.component.html',
+  styleUrls: ['./provider.component.css']
 })
-export class TaxComponent {
-  tax: any = {
-    type: 'RECEITA'
-  };
+export class ProviderComponent {
+  provider: any = {};
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.route.params.subscribe(params => {
       if(params['id']) {
-        this.http.get('/taxes/' + params['id'])
+        this.http.get('/providers/' + params['id'])
           .then((data: any) => {
-            this.tax = data.dataset.tax;
+            this.provider = data.dataset.provider;
           })
           .catch((error) => {
             console.log(error);
@@ -29,23 +27,20 @@ export class TaxComponent {
   }
 
   save() {
-    if(this.tax.id) {
-      this.http.put('/taxes/' + this.tax.id, this.tax)
+    if(this.provider.id) {
+      this.http.put('/providers/' + this.provider.id, this.provider)
         .then((data: any) => {
-          this.router.navigate(['impostos']).then(_ => {});
         })
         .catch((error) => {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
-      this.http.post('/taxes', this.tax)
+      this.http.post('/providers', this.provider)
         .then((data: any) => {
-          this.router.navigate(['impostos']).then(_ => {});
         })
         .catch((error) => {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     }
   }
-
 }

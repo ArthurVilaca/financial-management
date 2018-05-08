@@ -12,15 +12,36 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ClientComponent {
   client: any = {};
 
-  constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
+    this.route.params.subscribe(params => {
+      if(params['id']) {
+        this.http.get('/clients/' + params['id'])
+          .then((data: any) => {
+            this.client = data.dataset.client;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  }
 
   save() {
-    this.http.post('/clients', this.client)
-      .then((data: any) => {
-      })
-      .catch((error) => {
-        this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
-      });
+    if(this.client.id) {
+      this.http.put('/clients/' + this.client.id, this.client)
+        .then((data: any) => {
+        })
+        .catch((error) => {
+          this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+        });
+    } else {
+      this.http.post('/clients', this.client)
+        .then((data: any) => {
+        })
+        .catch((error) => {
+          this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+        });
+    }
   }
 
 }
