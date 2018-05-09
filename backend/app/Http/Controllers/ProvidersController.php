@@ -6,14 +6,20 @@ use Illuminate\Http\Request;
 use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
+use \App\Service\ProvidersService;
+use \App\Providers;
 
 class ProvidersController extends Controller
 {
     private $response;
+    private $providers;
+    private $providersService;
 
     public function __construct()
     {
         $this->response = new Response();
+        $this->providersService = new ProvidersService();
+        $this->providers = new Providers();
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +28,9 @@ class ProvidersController extends Controller
      */
     public function index()
     {
-         $users = $this->employees->get();
+         $providers = $this->providers->get();
 
-        $this->response->setDataSet("users", $users);
+        $this->response->setDataSet("providers", $providers);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 
@@ -47,11 +53,11 @@ class ProvidersController extends Controller
      */
     public function store(Request $request)
     {
-        $returnUser = $this->employeesService->create($request);
+        $returnProvider = $this->providersService->create($request);
             
         $this->response->setType("S");
-        $this->response->setDataSet("user", $returnUser);
-        $this->response->setMessages("Created user successfully!");
+        $this->response->setDataSet("Provider", $returnProvider);
+        $this->response->setMessages("Created Provider successfully!");
         
         return response()->json($this->response->toString(), 200);
     }
@@ -64,7 +70,13 @@ class ProvidersController extends Controller
      */
     public function show($id)
     {
-        //
+        $provider = $this->providers->find($id);
+
+        $this->response->setDataSet("provider", $provider);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
     }
 
     /**
@@ -85,23 +97,17 @@ class ProvidersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->user->find($id);
-        
-        if(!$user) 
-        {
-            $this->response->setType("N");
-            $this->response->setMessages("Record not found!");
+        $provider = $this->providers->find($id);
 
-            return response()->json($this->response->toString(), 404);
-        }
+        $provider_data = $request->all();
+        $provider->fill($provider_data);
+        $provider->save();
 
-        $user->fill($request->all());
-        $user->save();
+        $this->response->setDataSet("provider", $provider);
         $this->response->setType("S");
-        $this->response->setDataSet("user", $user);
-        $this->response->setMessages("Sucess, user updated!");
+        $this->response->setMessages("Sucess!");
 
-        return response()->json($this->response->toString(), 200);
+        return response()->json($this->response->toString());
     }
 
     /**

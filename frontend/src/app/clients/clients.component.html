@@ -1,12 +1,29 @@
 <div class="main-section">
-  <mat-card class="advertiser-card" *ngFor="let client of appState.provider.clients">
-    <mat-card-header>
-      <mat-card-title>{{client.name}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-actions>
-      <button color="primary" routerLink="/cliente/{{client.id}}" mat-button>Editar</button>
-    </mat-card-actions>
-  </mat-card>
+  <div class="row">
+    <div class="col-sm-12">
+      <span class="code-header"><strong>Clients</strong></span>
+      <div class="table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of appState.provider.clients">
+              <th scope="row">{{client.id}}</th>
+              <td>{{client.name}}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 <a class="button-float" mat-fab routerLink="/cliente/novo"><mat-icon>add</mat-icon></a>

@@ -1,12 +1,31 @@
 <div class="main-section">
-  <mat-card class="advertiser-card" *ngFor="let tax of appState.provider.taxes">
-    <mat-card-header>
-      <mat-card-title>{{tax.name}} - {{tax.amount}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-actions>
-      <button color="primary" routerLink="/imposto/{{tax.id}}" mat-button>Editar</button>
-    </mat-card-actions>
-  </mat-card>
+  <div class="row">
+    <div class="col-sm-12">
+      <span class="code-header"><strong>Fornecedores</strong></span>
+      <div class="table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Valor</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tax of appState.provider.taxes">
+              <th scope="row">{{tax.id}}</th>
+              <td>{{tax.name}}</td>
+              <td>{{tax.amount}}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 <a class="button-float" mat-fab routerLink="/imposto/novo"><mat-icon>add</mat-icon></a>
