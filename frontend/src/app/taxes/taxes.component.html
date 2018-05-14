@@ -18,8 +18,12 @@
               <th scope="row">{{tax.id}}</th>
               <td>{{tax.name}}</td>
               <td>{{tax.amount}}</td>
-              <td></td>
-              <td></td>
+              <td routerLink="/imposto/{{tax.id}}">
+                <i class="fas fa-edit"></i>
+              </td>
+              <td>
+                <i class="fas fa-trash-alt"></i>
+              </td>
             </tr>
           </tbody>
         </table>

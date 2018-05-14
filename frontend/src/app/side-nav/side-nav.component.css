@@ -52,11 +52,16 @@
 }
 
 .profile-button {
-    padding: 20px;
+    /* padding: 20px; */
 }
 
 .menu-profile {
     padding: 10px;
     background-color: lightgray;
     font-weight: bold;
+}
+
+.container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }

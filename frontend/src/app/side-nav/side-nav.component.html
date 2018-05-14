@@ -6,8 +6,8 @@
 </mat-toolbar-row>
 <mat-sidenav-container class="container" fullscreen>
   <mat-sidenav #sidenav class="sidenav">
-    <div class="menu-profile">
-      <!-- {{ appState.provider.user.full_name }}  -->
+    <div class="menu-profile" *ngIf="appState.provider.user">
+      {{ appState.provider.user.name }} 
       <button mat-icon-button [matMenuTriggerFor]="menu" class="profile-button">
         <mat-icon>more_vert</mat-icon>
       </button>

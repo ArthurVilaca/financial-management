@@ -29,5 +29,5 @@ export const rootRouterConfig: Routes = [
 	{ path: '', component: LoginComponent },
 	{ path: 'login', component: LoginComponent },
 	{ path: '', component: SideNavComponent, canActivate: [AuthGuard], children: SECURE_ROUTES },
-	{ path: '**',  redirectTo: 'login', pathMatch: 'full' },
+	{ path: '**',  redirectTo: 'login' },
 ];

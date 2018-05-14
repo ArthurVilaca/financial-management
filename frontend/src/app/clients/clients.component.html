@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-12">
       <span class="code-header"><strong>Clients</strong></span>
-      <div class="table-responsive">
+      <div class="table-border-style table-responsive">
         <table class="table" style="width: 100%;">
           <thead>
             <tr>
@@ -16,8 +16,12 @@
             <tr *ngFor="let client of appState.provider.clients">
               <th scope="row">{{client.id}}</th>
               <td>{{client.name}}</td>
-              <td></td>
-              <td></td>
+              <td routerLink="/cliente/{{client.id}}">
+                <i class="fas fa-edit"></i>
+              </td>
+              <td>
+                <i class="fas fa-trash-alt"></i>
+              </td>
             </tr>
           </tbody>
         </table>
