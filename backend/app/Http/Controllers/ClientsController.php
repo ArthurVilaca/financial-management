@@ -71,6 +71,7 @@ class ClientsController extends Controller
     public function show($id)
     {
         $client = $this->clients->find($id);
+        $client->taxes = $this->clientsService->loadTaxes($id);
 
         $this->response->setDataSet("client", $client);
         $this->response->setType("S");

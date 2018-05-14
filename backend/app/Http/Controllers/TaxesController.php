@@ -130,4 +130,38 @@ class TaxesController extends Controller
 
         $user->delete();
     }
+
+    /**
+     * Store a newly created resource in fk of provider.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function provider(Request $request, $provider_id)
+    {
+        $returnTax = $this->taxesService->createProvider($request, $provider_id);
+            
+        $this->response->setType("S");
+        $this->response->setDataSet("tax", $returnTax);
+        $this->response->setMessages("Created tax successfully!");
+        
+        return response()->json($this->response->toString(), 200);
+    }
+
+    /**
+     * Store a newly created resource in fk of client.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function client(Request $request, $client_id)
+    {
+        $returnTax = $this->taxesService->createClient($request, $client_id);
+            
+        $this->response->setType("S");
+        $this->response->setDataSet("tax", $returnTax);
+        $this->response->setMessages("Created tax successfully!");
+        
+        return response()->json($this->response->toString(), 200);
+    }
 }

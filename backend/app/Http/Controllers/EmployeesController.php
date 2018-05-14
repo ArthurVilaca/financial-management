@@ -173,4 +173,21 @@ class EmployeesController extends Controller
 
         $user->delete();
     }
+
+    public function profile(Request $request)
+    {
+        if($request->get('password') === $request->get('password2')) {
+            $userLogged = $this->employeesService->getAuthUser($request);
+            $userLogged->password = bcrypt($request->get('password'));
+            $userLogged->save();
+
+            $this->response->setType("S");
+            $this->response->setDataSet("user", $userLogged);
+            $this->response->setMessages("Password alterada com sucesso!");
+        } else {
+            $this->response->setType("N");    
+            $this->response->setMessages("You don't have permission to do login!");
+        }
+        return response()->json($this->response->toString());
+    }
 }

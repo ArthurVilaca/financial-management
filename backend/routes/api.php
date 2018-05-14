@@ -21,6 +21,7 @@ Route::post('/login', 'EmployeesController@login');
 // Route::post('/forgotPassword', 'EmployeesController@forgotPassword');
 // Route::post('/resetPassword', 'EmployeesController@resetPassword');
 
+Route::post('/profile', 'EmployeesController@profile');
 Route::get('/zipcode/{number}', 'FunctionsController@zipcode');
 
 Route::group(['middleware' => 'jwt.auth'], function () {
@@ -35,3 +36,6 @@ Route::resource('employees', 'EmployeesController', ['except' => [
 Route::resource('clients', 'ClientsController');
 Route::resource('providers', 'ProvidersController');
 Route::resource('taxes', 'TaxesController');
+
+Route::post('tax/provider/{provider_id}', 'TaxesController@provider');
+Route::post('tax/client/{client_id}', 'TaxesController@client');

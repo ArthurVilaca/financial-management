@@ -71,6 +71,7 @@ class ProvidersController extends Controller
     public function show($id)
     {
         $provider = $this->providers->find($id);
+        $provider->taxes = $this->providersService->loadTaxes($id);
 
         $this->response->setDataSet("provider", $provider);
         $this->response->setType("S");

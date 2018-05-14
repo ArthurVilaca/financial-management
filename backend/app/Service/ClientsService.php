@@ -2,14 +2,17 @@
 namespace App\Service;
 use Illuminate\Http\Request;
 use App\Clients;
+use App\Taxes;
 
 class ClientsService extends Service
 {
     private $clients;
+    private $taxes;
 
     public function __construct()
     {
         $this->clients = new Clients();
+        $this->taxes = new Taxes();
     }
 
     public function create(Request $request)
@@ -28,6 +31,11 @@ class ClientsService extends Service
         ]);
 
         return $returnClient;
+    }
+
+    public function loadTaxes($id) {
+        $taxes = $this->taxes->loadClient($id);
+        return $taxes;
     }
 
 }
