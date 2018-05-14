@@ -16,7 +16,7 @@
             <tr *ngFor="let provider of appState.provider.providers">
               <th scope="row">{{provider.id}}</th>
               <td>{{provider.name}}</td>
-              <td routerLink="/fornecedor/{{provider.id}}">
+              <td class="clickable" routerLink="/fornecedor/{{provider.id}}">
                 <i class="fas fa-edit"></i>
               </td>
               <td>

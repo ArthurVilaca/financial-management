@@ -16,7 +16,7 @@
             <tr *ngFor="let employee of appState.provider.employees">
               <th scope="row">{{employee.id}}</th>
               <td>{{employee.name}}</td>
-              <td routerLink="/funcionario/{{employee.id}}">
+              <td class="clickable" routerLink="/funcionario/{{employee.id}}">
                 <i class="fas fa-edit"></i>
               </td>
               <td>

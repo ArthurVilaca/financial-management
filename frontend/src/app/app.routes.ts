@@ -11,11 +11,13 @@ import { ProvidersComponent } from './providers/providers.component';
 import { ProviderComponent } from './provider/provider.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { AuthGuard } from './auth.guard';
 
 const SECURE_ROUTES: Routes = [
 	{ path: 'home', component: HomeComponent },
+	{ path: 'perfil', component: ProfileComponent },
 	{ path: 'clientes', component: ClientsComponent },
 	{ path: 'cliente/novo', component: ClientComponent },
 	{ path: 'cliente/:id', component: ClientComponent },

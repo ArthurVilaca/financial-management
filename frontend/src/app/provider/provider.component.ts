@@ -4,6 +4,9 @@ import { ProviderService } from '../provider.service'
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { TaxSelectionComponent } from '../tax-selection/tax-selection.component';
+
 @Component({
   selector: 'app-provider',
   templateUrl: './provider.component.html',
@@ -12,7 +15,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ProviderComponent {
   provider: any = {};
 
-  constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
+  constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService, public dialog: MatDialog) {
+    this.loadProvider();
+  }
+  
+  loadProvider() {
     this.route.params.subscribe(params => {
       if(params['id']) {
         this.http.get('/providers/' + params['id'])
@@ -60,5 +67,26 @@ export class ProviderComponent {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     }
+  }
+
+  pushTax() {
+    let dialogRef = this.dialog.open(TaxSelectionComponent, {
+      width: '80%',
+      data: { }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if(result) {
+        this.route.params.subscribe(params => {
+          this.http.post('/tax/provider/' + params['id'], result)
+            .then((data: any) => {
+              this.loadProvider();
+            })
+            .catch((error) => {
+              this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+            });
+        });
+      }
+    });
   }
 }

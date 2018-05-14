@@ -1,3 +1,32 @@
-<p>
-  profile works!
-</p>
+<div class="main-section">
+  <form class="form" name="advertiserForm" (ngSubmit)="save()">
+
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <div class="full-width">
+          <span class="code-header"><strong>Perfil</strong></span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="full-width" *ngIf="appState.provider.user">
+          <input name="name" matInput placeholder="Nome" [(ngModel)]="appState.provider.user.name" disabled>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="password" type="text" matInput placeholder="Nova senha" [(ngModel)]="profile.password">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="passwor2" type="text" matInput placeholder="Confirmar senha" [(ngModel)]="profile.password2">
+        </mat-form-field>
+      </mat-list-item>
+
+      <div class="full-width button-submit">
+        <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
+      </div>
+    </mat-list>
+  </form>
+</div>

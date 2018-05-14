@@ -3,6 +3,12 @@
 
     <mat-list role="list">
       <mat-list-item role="listitem">
+        <div class="full-width">
+          <span class="code-header"><strong>Cliente</strong></span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
         <mat-form-field class="full-width">
           <input name="name" matInput placeholder="Nome" [(ngModel)]="client.name">
         </mat-form-field>
@@ -65,5 +71,30 @@
         <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
       </div>
     </mat-list>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-md-12">
+        <span class="code-header"><strong>Impostos</strong></span>
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let tax of client.taxes">
+      <div class="col-md-8">
+        {{tax.name}}
+      </div>
+      <div class="col-md-4">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+    </div>
+
+    <hr />
+    <div class="row" *ngIf="client.id">
+      <div class="col-md-6">
+        <button type="button" (click)="pushTax()" mat-raised-button color="primary" class="button-submit">Novo</button>
+      </div>
+    </div>
+
   </form>
 </div>

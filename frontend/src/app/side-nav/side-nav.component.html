@@ -13,7 +13,7 @@
       </button>
     </div>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button [routerLink]="['/perfil']" mat-menu-item>
         <mat-icon>edit</mat-icon>
         <span>Editar perfil</span>
       </button>
@@ -30,5 +30,6 @@
     </mat-nav-list>
   </mat-sidenav>
   <!--All children routes go here-->
+  <app-route-orientation></app-route-orientation>
   <router-outlet></router-outlet>
 </mat-sidenav-container>

@@ -46,6 +46,8 @@ import { ProvidersComponent } from './providers/providers.component';
 import { ProviderComponent } from './provider/provider.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { RouteOrientationComponent } from './route-orientation/route-orientation.component';
+import { TaxSelectionComponent } from './tax-selection/tax-selection.component';
 
 
 @NgModule({
@@ -64,7 +66,9 @@ import { EmployeeComponent } from './employee/employee.component';
     ProvidersComponent,
     ProviderComponent,
     EmployeesComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    RouteOrientationComponent,
+    TaxSelectionComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +97,6 @@ import { EmployeeComponent } from './employee/employee.component';
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogOverviewExampleDialog ]
+  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent ]
 })
 export class AppModule { }

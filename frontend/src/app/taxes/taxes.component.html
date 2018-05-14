@@ -1,7 +1,7 @@
 <div class="main-section">
   <div class="row">
     <div class="col-sm-12">
-      <span class="code-header"><strong>Fornecedores</strong></span>
+      <span class="code-header"><strong>Impostos</strong></span>
       <div class="table-responsive">
         <table class="table" style="width: 100%;">
           <thead>
@@ -18,7 +18,7 @@
               <th scope="row">{{tax.id}}</th>
               <td>{{tax.name}}</td>
               <td>{{tax.amount}}</td>
-              <td routerLink="/imposto/{{tax.id}}">
+              <td class="clickable" routerLink="/imposto/{{tax.id}}">
                 <i class="fas fa-edit"></i>
               </td>
               <td>
