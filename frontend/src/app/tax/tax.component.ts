@@ -11,7 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class TaxComponent {
   tax: any = {
-    type: 'RECEITA'
+    reference: 'RECEITA',
+    type: 'FEDERAL'
   };
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {

@@ -9,6 +9,8 @@ import { TaxesComponent } from './taxes/taxes.component';
 import { TaxComponent } from './tax/tax.component';
 import { ProvidersComponent } from './providers/providers.component';
 import { ProviderComponent } from './provider/provider.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -23,6 +25,9 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'fornecedores', component: ProvidersComponent },
 	{ path: 'fornecedor/novo', component: ProviderComponent },
 	{ path: 'fornecedor/:id', component: ProviderComponent },
+	{ path: 'funcionarios', component: EmployeesComponent },
+	{ path: 'funcionario/novo', component: EmployeeComponent },
+	{ path: 'funcionario/:id', component: EmployeeComponent },
 ];
 
 export const rootRouterConfig: Routes = [

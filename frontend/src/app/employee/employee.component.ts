@@ -5,19 +5,19 @@ import { MessageDialogComponent } from '../message-dialog/message-dialog.compone
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-provider',
-  templateUrl: './provider.component.html',
-  styleUrls: ['./provider.component.css']
+  selector: 'app-employee',
+  templateUrl: './employee.component.html',
+  styleUrls: ['./employee.component.scss']
 })
-export class ProviderComponent {
-  provider: any = {};
+export class EmployeeComponent {
+  employee: any = {};
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.route.params.subscribe(params => {
       if(params['id']) {
-        this.http.get('/providers/' + params['id'])
+        this.http.get('/employees/' + params['id'])
           .then((data: any) => {
-            this.provider = data.dataset.provider;
+            this.employee = data.dataset.employee;
           })
           .catch((error) => {
             console.log(error);
@@ -27,14 +27,14 @@ export class ProviderComponent {
   }
 
   searchZip() {
-    if(this.provider.zip_code) {
-      if(this.provider.zip_code.length >= 7) {
-        this.http.get('/zipcode/' + this.provider.zip_code)
+    if(this.employee.zip_code) {
+      if(this.employee.zip_code.length >= 7) {
+        this.http.get('/zipcode/' + this.employee.zip_code)
           .then((data: any) => {
-            this.provider.adress = data.logradouro;
-            this.provider.adress_district = data.bairro;
-            this.provider.city = data.localidade;
-            this.provider.state = data.uf;
+            this.employee.adress = data.logradouro;
+            this.employee.adress_district = data.bairro;
+            this.employee.city = data.localidade;
+            this.employee.state = data.uf;
           })
           .catch((error) => {
           });
@@ -43,22 +43,23 @@ export class ProviderComponent {
   }
 
   save() {
-    if(this.provider.id) {
-      this.http.put('/providers/' + this.provider.id, this.provider)
+    if(this.employee.id) {
+      this.http.put('/employees/' + this.employee.id, this.employee)
         .then((data: any) => {
-          this.router.navigate(['fornecedores']).then(_ => {});
+          this.router.navigate(['funcionarios']).then(_ => {});
         })
         .catch((error) => {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
-      this.http.post('/providers', this.provider)
+      this.http.post('/employees', this.employee)
         .then((data: any) => {
-          this.router.navigate(['fornecedores']).then(_ => {});
+          this.router.navigate(['funcionarios']).then(_ => {});
         })
         .catch((error) => {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     }
   }
+
 }

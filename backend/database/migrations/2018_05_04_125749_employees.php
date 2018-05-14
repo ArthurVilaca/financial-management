@@ -33,6 +33,9 @@ class Employees extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
 
+            $table->dateTime('admission')->nullable();
+            $table->dateTime('resignation')->nullable();
+
             $table->timestamps();
         });
     }

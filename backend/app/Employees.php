@@ -28,6 +28,9 @@ class Employees extends Authenticatable
         'zip_code',
         'city',
         'state',
+        'sector',
+        'admission',
+        'resignation',
     ];
 
     /**

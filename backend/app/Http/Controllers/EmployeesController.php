@@ -28,9 +28,9 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-         $users = $this->employees->get();
+        $employees = $this->employees->get();
 
-        $this->response->setDataSet("users", $users);
+        $this->response->setDataSet("employees", $employees);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 
@@ -38,7 +38,7 @@ class EmployeesController extends Controller
     }
 
     /**
-     * Login user
+     * Login employees
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -96,10 +96,10 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $returnUser = $this->employeesService->create($request);
+        $returnEmployeer = $this->employeesService->create($request);
             
         $this->response->setType("S");
-        $this->response->setDataSet("user", $returnUser);
+        $this->response->setDataSet("employeer", $returnEmployeer);
         $this->response->setMessages("Created user successfully!");
         
         return response()->json($this->response->toString(), 200);
@@ -113,7 +113,13 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = $this->employees->find($id);
+
+        $this->response->setDataSet("employee", $employee);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
     }
 
     /**
@@ -134,23 +140,17 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->user->find($id);
-        
-        if(!$user) 
-        {
-            $this->response->setType("N");
-            $this->response->setMessages("Record not found!");
+        $employeer = $this->employees->find($id);
 
-            return response()->json($this->response->toString(), 404);
-        }
+        $employeer_data = $request->all();
+        $employeer->fill($employeer_data);
+        $employeer->save();
 
-        $user->fill($request->all());
-        $user->save();
+        $this->response->setDataSet("empl$employeer", $employeer);
         $this->response->setType("S");
-        $this->response->setDataSet("user", $user);
-        $this->response->setMessages("Sucess, user updated!");
+        $this->response->setMessages("Sucess!");
 
-        return response()->json($this->response->toString(), 200);
+        return response()->json($this->response->toString());
     }
 
     /**

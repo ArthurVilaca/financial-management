@@ -14,9 +14,19 @@
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <mat-select name="type" placeholder="Tipo" [(ngModel)]="tax.type">
+          <mat-select name="reference" placeholder="Referencia" [(ngModel)]="tax.reference">
             <mat-option [value]="'RECEITA'">RECEITA</mat-option>
             <mat-option [value]="'DESPESA'">DESPESA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="type" placeholder="Tipo" [(ngModel)]="tax.type">
+            <mat-option [value]="'FEDERAL'">FEDERAL</mat-option>
+            <mat-option [value]="'ESTADUAL'">ESTADUAL</mat-option>
+            <mat-option [value]="'MUNICIPAL'">MUNICIPAL</mat-option>
           </mat-select>
         </mat-form-field>
       </mat-list-item>

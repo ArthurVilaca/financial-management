@@ -4,60 +4,60 @@
     <mat-list role="list">
       <mat-list-item role="listitem">
         <mat-form-field class="full-width">
-          <input name="name" matInput placeholder="Nome" [(ngModel)]="client.name">
+          <input name="name" matInput placeholder="Nome" [(ngModel)]="employee.name">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <mat-select name="status" placeholder="Status" [(ngModel)]="client.status">
+          <mat-select name="status" placeholder="Status" [(ngModel)]="employee.status">
             <mat-option [value]="'APROVADO'">APROVADO</mat-option>
             <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input name="phone" type="text" matInput placeholder="Telefone" [(ngModel)]="client.phone">
+          <input name="phone" type="text" matInput placeholder="Telefone" [(ngModel)]="employee.phone">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="email" type="text" matInput placeholder="Email" [(ngModel)]="client.email">
+          <input name="email" type="text" matInput placeholder="Email" [(ngModel)]="employee.email">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input name="zip_code" type="text" matInput placeholder="CEP" [(ngModel)]="client.zip_code" (change)="searchZip()">
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="half-width">
-          <input name="adress" type="text" matInput placeholder="Endereço" [(ngModel)]="client.adress">
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input name="adress_number" type="text" matInput placeholder="Numero" [(ngModel)]="client.adress_number">
+          <input name="zip_code" type="text" matInput placeholder="CEP" [(ngModel)]="employee.zip_code" (change)="searchZip()">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="adress_complement" type="text" matInput placeholder="Complemento" [(ngModel)]="client.adress_complement">
+          <input name="adress" type="text" matInput placeholder="Endereço" [(ngModel)]="employee.adress">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input name="adress_district" type="text" matInput placeholder="Bairro" [(ngModel)]="client.adress_district">
+          <input name="adress_number" type="text" matInput placeholder="Numero" [(ngModel)]="employee.adress_number">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="city" type="text" matInput placeholder="Cidade" [(ngModel)]="client.city">
+          <input name="adress_complement" type="text" matInput placeholder="Complemento" [(ngModel)]="employee.adress_complement">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input name="state" type="text" matInput placeholder="Estado" [(ngModel)]="client.state">
+          <input name="adress_district" type="text" matInput placeholder="Bairro" [(ngModel)]="employee.adress_district">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="city" type="text" matInput placeholder="Cidade" [(ngModel)]="employee.city">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="state" type="text" matInput placeholder="Estado" [(ngModel)]="employee.state">
         </mat-form-field>
       </mat-list-item>
 

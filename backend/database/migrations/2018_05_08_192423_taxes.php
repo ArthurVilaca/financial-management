@@ -18,6 +18,9 @@ class Taxes extends Migration
             $table->string('name');
             $table->double('amount');
 
+            $table->enum('type', ['FEDERAL', 'MUNICIPAL', 'ESTADUAL'])->default('FEDERAL');
+            $table->enum('reference', ['RECEITA', 'DESPESA'])->default('RECEITA');
+
             $table->timestamps();
         });
     }

@@ -97,7 +97,7 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $clientx = $this->clients->find($id);
+        $client = $this->clients->find($id);
 
         $client_data = $request->all();
         $client->fill($client_data);

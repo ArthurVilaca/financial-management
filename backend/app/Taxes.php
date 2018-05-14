@@ -13,7 +13,9 @@ class Taxes extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'amount', 
+        'name',
+        'amount',
+        'type',
+        'reference',
     ];
 }

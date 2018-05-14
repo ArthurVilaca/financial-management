@@ -44,6 +44,8 @@ import { TaxComponent } from './tax/tax.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProvidersComponent } from './providers/providers.component';
 import { ProviderComponent } from './provider/provider.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import { ProviderComponent } from './provider/provider.component';
     TaxComponent,
     ProfileComponent,
     ProvidersComponent,
-    ProviderComponent
+    ProviderComponent,
+    EmployeesComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
