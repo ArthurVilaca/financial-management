@@ -24,6 +24,8 @@ class TaxesService extends Service
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'reference' => $request->get('reference'),
+            'description' => $request->get('description'),
+            'collection' => $request->get('collection'),
             'type' => $request->get('type'),
         ]);
 

@@ -15,6 +15,12 @@
       </mat-list-item>
 
       <mat-list-item role="listitem">
+          <mat-form-field class="full-width">
+            <input name="description" type="text" matInput placeholder="Descrição" [(ngModel)]="tax.description">
+          </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
         <mat-form-field class="half-width">
           <input name="amount" type="number" matInput placeholder="Valor" [(ngModel)]="tax.amount">
         </mat-form-field>
@@ -33,6 +39,13 @@
             <mat-option [value]="'FEDERAL'">FEDERAL</mat-option>
             <mat-option [value]="'ESTADUAL'">ESTADUAL</mat-option>
             <mat-option [value]="'MUNICIPAL'">MUNICIPAL</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-select name="collection" placeholder="Coleção" [(ngModel)]="tax.collection">
+            <mat-option [value]="'R$'">R$</mat-option>
+            <mat-option [value]="'%'">%</mat-option>
           </mat-select>
         </mat-form-field>
       </mat-list-item>
