@@ -1,6 +1,6 @@
 {
   "/": {
-    "target": "http://localhost/innovare-gestao/backend/public/index.php/api",
+    "target": "http://localhost/innovare-gestao/backend/public/",
     "secure": false
   }
 }

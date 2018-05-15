@@ -24,7 +24,7 @@ export class HttpService {
   }
 
   get(url) {
-    return this.http.get(url, { headers: this.header })
+    return this.http.get('index.php/api' + url, { headers: this.header })
         .toPromise()
         .then((data: any) => {
           return this.validateRequest(data);
@@ -42,7 +42,7 @@ export class HttpService {
   }
 
   put(url, post) {
-    return this.http.put(url, post, { headers: this.header })
+    return this.http.put('index.php/api' + url, post, { headers: this.header })
         .toPromise()
         .then((data: any) => {
           return this.validateRequest(data);
@@ -63,7 +63,7 @@ export class HttpService {
       header.Authorization = this.hash;
       headers = new HttpHeaders(header);
     }
-    return this.http.post(url, data, { headers: headers })
+    return this.http.post('index.php/api' + url, data, { headers: headers })
         .toPromise()
         .then((data: any) => {
           return this.validateRequest(data);
