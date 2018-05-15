@@ -19,12 +19,18 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
             'status' => 'APROVADO'
         ]);
+        DB::table('employees')->insert([
+            'name' => 'Luciana',
+            'username' => 'luciana',
+            'email' => 'luciana@innovarepesquisa.com.br',
+            'password' => bcrypt('123'),
+            'status' => 'APROVADO'
+        ]);
 
         DB::table('clients')->insert([
             'name' => 'Cliente 1',
             'status' => 'APROVADO'
         ]);
-
         DB::table('clients')->insert([
             'name' => 'Cliente 2',
             'status' => 'BLOQUEADO'
@@ -34,10 +40,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'Fornecedor 1',
             'status' => 'APROVADO'
         ]);
-
         DB::table('providers')->insert([
             'name' => 'Fornecedor 2',
             'status' => 'BLOQUEADO'
+        ]);
+
+        DB::table('banks')->insert([
+            'name' => 'Banco do Brasil'
+        ]);
+        DB::table('banks')->insert([
+            'name' => 'BRADESCO'
+        ]);
+        DB::table('banks')->insert([
+            'name' => 'ITAU'
         ]);
 
     }

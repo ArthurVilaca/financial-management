@@ -12,6 +12,10 @@ import { ProviderComponent } from './provider/provider.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BanksComponent } from './banks/banks.component';
+import { BankComponent } from './bank/bank.component';
+import { CostCentersComponent } from './cost-centers/cost-centers.component';
+import { CostCenterComponent } from './cost-center/cost-center.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -30,6 +34,12 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'funcionarios', component: EmployeesComponent },
 	{ path: 'funcionario/novo', component: EmployeeComponent },
 	{ path: 'funcionario/:id', component: EmployeeComponent },
+	{ path: 'bancos', component: BanksComponent },
+	{ path: 'banco/novo', component: BankComponent },
+	{ path: 'banco/:id', component: BankComponent },
+	{ path: 'centroDeCustos', component: CostCentersComponent },
+	{ path: 'centroDeCusto/novo', component: CostCenterComponent },
+	{ path: 'centroDeCusto/:id', component: CostCenterComponent },
 ];
 
 export const rootRouterConfig: Routes = [

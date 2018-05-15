@@ -30,12 +30,15 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     
 });
 
-Route::resource('employees', 'EmployeesController', ['except' => [
-    'store'
-]]);
+// Route::resource('employees', 'EmployeesController', ['except' => [
+//     'store'
+// ]]);
+Route::resource('employees', 'EmployeesController');
 Route::resource('clients', 'ClientsController');
 Route::resource('providers', 'ProvidersController');
 Route::resource('taxes', 'TaxesController');
+Route::resource('banks', 'BanksController');
+Route::resource('cost_centers', 'CostCentersController');
 
 Route::post('tax/provider/{provider_id}', 'TaxesController@provider');
 Route::post('tax/client/{client_id}', 'TaxesController@client');

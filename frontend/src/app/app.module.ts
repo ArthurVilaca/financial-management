@@ -48,6 +48,10 @@ import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { RouteOrientationComponent } from './route-orientation/route-orientation.component';
 import { TaxSelectionComponent } from './tax-selection/tax-selection.component';
+import { BanksComponent } from './banks/banks.component';
+import { BankComponent } from './bank/bank.component';
+import { CostCentersComponent } from './cost-centers/cost-centers.component';
+import { CostCenterComponent } from './cost-center/cost-center.component';
 
 
 @NgModule({
@@ -68,7 +72,11 @@ import { TaxSelectionComponent } from './tax-selection/tax-selection.component';
     EmployeesComponent,
     EmployeeComponent,
     RouteOrientationComponent,
-    TaxSelectionComponent
+    TaxSelectionComponent,
+    BanksComponent,
+    BankComponent,
+    CostCentersComponent,
+    CostCenterComponent
   ],
   imports: [
     BrowserModule,

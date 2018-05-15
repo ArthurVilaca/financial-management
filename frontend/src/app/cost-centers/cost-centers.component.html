@@ -1,0 +1,33 @@
+<div class="main-section">
+  <div class="row">
+    <div class="col-sm-12">
+      <span class="code-header"><strong>Centro de Custos</strong></span>
+      <div class="table-border-style table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cost_center of appState.provider.cost_centers">
+              <th scope="row">{{cost_center.id}}</th>
+              <td>{{cost_center.name}}</td>
+              <td class="clickable" routerLink="/centroDeCusto/{{cost_center.id}}">
+                <i class="fas fa-edit"></i>
+              </td>
+              <td>
+                <i class="fas fa-trash-alt"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="button-float" mat-fab routerLink="/centroDeCusto/novo"><mat-icon>add</mat-icon></a>
