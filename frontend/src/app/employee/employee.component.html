@@ -69,7 +69,29 @@
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="sector" type="text" matInput placeholder="Setor" [(ngModel)]="employee.sector">
+          <mat-select name="sector" placeholder="Setor" [(ngModel)]="employee.sector">
+            <mat-option [value]="'ADMINISTRATIVO'">ADMINISTRATIVO</mat-option>
+            <mat-option [value]="'FINANCEIRO'">FINANCEIRO</mat-option>
+            <mat-option [value]="'CAMPO'">CAMPO</mat-option>
+            <mat-option [value]="'COMERCIAL'">COMERCIAL</mat-option>
+            <mat-option [value]="'ANALISE'">ANALISE</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="username" type="text" matInput placeholder="Usuario" [(ngModel)]="employee.username">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="password" type="password" matInput placeholder="Senha" [(ngModel)]="employee.password">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="salary" type="number" matInput placeholder="Salario" [(ngModel)]="employee.salary">
         </mat-form-field>
       </mat-list-item>
 

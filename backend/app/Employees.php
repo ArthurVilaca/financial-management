@@ -31,6 +31,7 @@ class Employees extends Authenticatable
         'sector',
         'admission',
         'resignation',
+        'salary',
     ];
 
     /**

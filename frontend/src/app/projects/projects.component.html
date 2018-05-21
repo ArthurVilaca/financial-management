@@ -1,0 +1,33 @@
+<div class="main-section">
+  <div class="row">
+    <div class="col-sm-12">
+      <span class="code-header"><strong>Projetos</strong></span>
+      <div class="table-border-style table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Editar</th>
+              <th>Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let projects of appState.provider.projects">
+              <th scope="row">{{projects.id}}</th>
+              <td>{{projects.name}}</td>
+              <td class="clickable" routerLink="/projeto/{{projects.id}}">
+                <i class="fas fa-edit"></i>
+              </td>
+              <td>
+                <i class="fas fa-trash-alt"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="button-float" mat-fab routerLink="/projeto/novo"><mat-icon>add</mat-icon></a>

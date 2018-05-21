@@ -1,0 +1,47 @@
+<div class="main-section">
+  <form class="form" name="advertiserForm" (ngSubmit)="save()">
+
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <div class="full-width">
+          <span class="code-header"><strong>Projeto</strong></span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="full-width">
+          <input name="name" matInput placeholder="Nome" [(ngModel)]="projects.name">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="status" placeholder="Status" [(ngModel)]="projects.status">
+            <mat-option [value]="'APROVADO'">APROVADO</mat-option>
+            <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="notes" matInput placeholder="Comentarios" [(ngModel)]="projects.notes">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="amount" type="number" matInput placeholder="Valor" [(ngModel)]="projects.amount">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-select name="clients_id" placeholder="Cliente" [(ngModel)]="projects.clients_id">
+            <mat-option *ngFor="let client of appState.provider.clients" [value]="client.id">{{client.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <div class="full-width button-submit">
+        <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
+      </div>
+    </mat-list>
+  </form>
+</div>

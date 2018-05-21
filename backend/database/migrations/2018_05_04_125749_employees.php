@@ -18,7 +18,7 @@ class Employees extends Migration
             $table->string('username')->nullable();
             $table->string('name');
             $table->string('password');
-            $table->string('sector')->nullable();
+            $table->enum('sector', ['ADMINISTRATIVO', 'FINANCEIRO', 'CAMPO', 'COMERCIAL', 'ANALISE'])->nullable();
             $table->enum('status', ['APROVADO', 'BLOQUEADO'])->default('BLOQUEADO');
             $table->string('token')->nullable();
             $table->dateTime('expiration_date')->nullable();
@@ -35,6 +35,7 @@ class Employees extends Migration
 
             $table->dateTime('admission')->nullable();
             $table->dateTime('resignation')->nullable();
+            $table->double('salary')->nullable();
 
             $table->timestamps();
         });

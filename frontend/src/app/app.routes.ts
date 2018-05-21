@@ -16,6 +16,12 @@ import { BanksComponent } from './banks/banks.component';
 import { BankComponent } from './bank/bank.component';
 import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { CostCenterComponent } from './cost-center/cost-center.component';
+import { BillspayComponent } from './billspay/billspay.component';
+import { BillspaysComponent } from './billspays/billspays.component';
+import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
+import { BillsreceivesComponent } from './billsreceives/billsreceives.component';
+import { ProjectComponent } from './project/project.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -40,6 +46,15 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'centroDeCustos', component: CostCentersComponent },
 	{ path: 'centroDeCusto/novo', component: CostCenterComponent },
 	{ path: 'centroDeCusto/:id', component: CostCenterComponent },
+	{ path: 'contasAPagar', component: BillspaysComponent },
+	{ path: 'contaAPagar/novo', component: BillspayComponent },
+	{ path: 'contaAPagar/:id', component: BillspayComponent },
+	{ path: 'contasAReceber', component: BillsreceivesComponent },
+	{ path: 'contaAReceber/novo', component: BillsreceiveComponent },
+	{ path: 'contaAReceber/:id', component: BillsreceiveComponent },
+	{ path: 'projetos', component: ProjectsComponent },
+	{ path: 'projeto/novo', component: ProjectComponent },
+	{ path: 'projeto/:id', component: ProjectComponent },
 ];
 
 export const rootRouterConfig: Routes = [

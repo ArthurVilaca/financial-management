@@ -52,6 +52,12 @@ import { BanksComponent } from './banks/banks.component';
 import { BankComponent } from './bank/bank.component';
 import { CostCentersComponent } from './cost-centers/cost-centers.component';
 import { CostCenterComponent } from './cost-center/cost-center.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectComponent } from './project/project.component';
+import { BillspaysComponent } from './billspays/billspays.component';
+import { BillspayComponent } from './billspay/billspay.component';
+import { BillsreceivesComponent } from './billsreceives/billsreceives.component';
+import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
 
 
 @NgModule({
@@ -76,7 +82,13 @@ import { CostCenterComponent } from './cost-center/cost-center.component';
     BanksComponent,
     BankComponent,
     CostCentersComponent,
-    CostCenterComponent
+    CostCenterComponent,
+    ProjectsComponent,
+    ProjectComponent,
+    BillspaysComponent,
+    BillspayComponent,
+    BillsreceivesComponent,
+    BillsreceiveComponent
   ],
   imports: [
     BrowserModule,

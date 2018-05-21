@@ -1,0 +1,31 @@
+<div class="main-section">
+  <form class="form" name="advertiserForm" (ngSubmit)="save()">
+
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <div class="full-width">
+          <span class="code-header"><strong>Conta a Pagar</strong></span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="full-width">
+          <input name="name" matInput placeholder="Nome" [(ngModel)]="billspay.name">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="status" placeholder="Status" [(ngModel)]="billspay.status">
+            <mat-option [value]="'APROVADO'">APROVADO</mat-option>
+            <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <div class="full-width button-submit">
+        <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
+      </div>
+    </mat-list>
+  </form>
+</div>
