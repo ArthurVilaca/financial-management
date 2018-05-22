@@ -18,6 +18,7 @@ class Billspay extends Model
         'comments',
         'amount',
         'projects_phases_id',
+        'due_date',
     ];
 
 }

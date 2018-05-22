@@ -1,8 +1,15 @@
 .container {
     top: 64px !important;
     width: 100%;
+    height: 90% !important;
+    position: absolute;
 }
-  
+
+.drawer {
+    background: lightgray;
+    min-width: 200px;
+}
+
 .sidenav-content {
     align-items: center;
     display: inline-flex;

@@ -10,14 +10,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent {
-  projects: any = {};
+  projects: any = {
+    projects_phases: []
+  };
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadProject();
-    this.loadClients();
+    this.loadFillData();
   }
 
-  loadClients() {
+  loadFillData() {
     this.http.get('/clients')
       .then((data: any) => {
         this.appState.set('clients', data.dataset.clients);
@@ -25,6 +27,18 @@ export class ProjectComponent {
       .catch((error) => {
         console.log(error);
       });
+
+    this.http.get('/providers')
+      .then((data: any) => {
+        this.appState.set('providers', data.dataset.providers);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  addPhase() {
+    this.projects.projects_phases.push({});
   }
   
   loadProject() {

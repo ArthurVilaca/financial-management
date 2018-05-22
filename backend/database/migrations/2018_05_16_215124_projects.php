@@ -19,6 +19,7 @@ class Projects extends Migration
             $table->string('notes');
             $table->string('status');
             $table->double('amount');
+            $table->dateTime('expiration_date')->nullable();
 
             $table->integer('clients_id')->unsigned();
             $table->foreign('clients_id')->references('id')->on('clients');
@@ -41,7 +42,7 @@ class Projects extends Migration
         Schema::create('projects_phases', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('status');            
+            $table->string('status');
             $table->dateTime('expiration_date')->nullable();
 
             $table->integer('projects_id')->unsigned();
@@ -53,12 +54,26 @@ class Projects extends Migration
             $table->timestamps();
         });
 
+        Schema::create('phases_billings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('status');
+            $table->double('amount');
+            $table->dateTime('due_date')->nullable();
+
+            $table->integer('projects_phases_id')->unsigned();
+            $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
+
+            $table->timestamps();
+        });
+
         Schema::create('billspay', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('comments');
             $table->string('status');
             $table->double('amount');
+            $table->dateTime('due_date')->nullable();
 
             $table->integer('projects_phases_id')->unsigned();
             $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
@@ -72,6 +87,7 @@ class Projects extends Migration
             $table->string('comments');
             $table->string('status');
             $table->double('amount');
+            $table->dateTime('due_date')->nullable();
 
             $table->integer('projects_id')->unsigned();
             $table->foreign('projects_id')->references('id')->on('projects');

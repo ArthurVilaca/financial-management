@@ -18,6 +18,7 @@ class Projects extends Model
         'status',
         'amount',
         'clients_id',
+        'expiration_date',
     ];
 
 }

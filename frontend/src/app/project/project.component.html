@@ -39,6 +39,29 @@
         </mat-form-field>
       </mat-list-item>
 
+      <hr />
+      <mat-list-item role="listitem" *ngFor="let phase of projects.projects_phases">
+        <mat-form-field class="col-md-6">
+          <mat-select name="provider_id-{{phase.provider_id}}" placeholder="Fornecedor" [(ngModel)]="phase.provider_id">
+            <mat-option *ngFor="let provider of appState.provider.providers" [value]="provider.id">{{provider.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-3">
+          <input name="amount-{{phase.provider_id}}" type="number" matInput placeholder="Valor" [(ngModel)]="phase.amount">
+        </mat-form-field>
+
+        <mat-form-field class="col-md-3">
+            <input name="number-{{phase.provider_id}}" type="number" matInput placeholder="Parcelas" [(ngModel)]="phase.number">
+          </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <div class="half-width">
+          <button type="button" mat-raised-button color="primary" (click)="addPhase()">Adicionar Fase</button>
+        </div>
+      </mat-list-item>
+
       <div class="full-width button-submit">
         <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
       </div>

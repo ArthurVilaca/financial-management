@@ -1,27 +1,28 @@
 <mat-toolbar-row color="primary" class="toolbar">
   <div class="sidenav-content">
-    <mat-icon class="icon-menu" (click)="sidenav.toggle()">{{sidenav.opened ? 'arrow_back' : 'menu'}}</mat-icon>
+    <mat-icon class="icon-menu" (click)="drawer.toggle()">menu</mat-icon>
     <div class="organization-name">GESTÃO INNOVARE</div>
-  </div>
-</mat-toolbar-row>
-<mat-sidenav-container class="container" fullscreen>
-  <mat-sidenav #sidenav class="sidenav">
-    <div class="menu-profile" *ngIf="appState.provider.user">
-      {{ appState.provider.user.name }} 
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="profile-button">
-        <mat-icon>more_vert</mat-icon>
-      </button>
+
+    <div *ngIf="appState.provider.user">
+      {{ appState.provider.user.name }}
     </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="profile-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
     <mat-menu #menu="matMenu">
       <button [routerLink]="['/perfil']" mat-menu-item>
         <mat-icon>edit</mat-icon>
-        <span>Editar perfil</span>
+        <span>Meu Perfil</span>
       </button>
       <button mat-menu-item (click)="logout()">
         <mat-icon>arrow_back</mat-icon>
         <span>Sair</span>
       </button>
     </mat-menu>
+  </div>
+</mat-toolbar-row>
+<mat-sidenav-container class="container" autosize>
+  <mat-drawer class="drawer" #drawer mode="side">
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/clientes']">Clientes</a>
       <a mat-list-item [routerLink]="['/fornecedores']">Fornecedores</a>
@@ -33,8 +34,10 @@
       <a mat-list-item [routerLink]="['/contasAPagar']">Contas a Pagar</a>
       <a mat-list-item [routerLink]="['/contasAReceber']">Contas a Receber</a>
     </mat-nav-list>
-  </mat-sidenav>
+  </mat-drawer>
   <!--All children routes go here-->
   <app-route-orientation></app-route-orientation>
-  <router-outlet></router-outlet>
+  <div [ngStyle]="{ 'padding-left': drawer.opened ? '8%' : '0%' }">
+    <router-outlet ></router-outlet>
+  </div>
 </mat-sidenav-container>

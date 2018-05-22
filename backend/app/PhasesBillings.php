@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class Billsreceive extends Model
+class PhasesBillings extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -15,10 +15,9 @@ class Billsreceive extends Model
     protected $fillable = [
         'name',
         'status',
-        'comments',
         'amount',
-        'projects_id',
         'due_date',
+        'projects_phases_id',
     ];
 
 }
