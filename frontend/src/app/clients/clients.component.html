@@ -30,4 +30,10 @@
   </div>
 </div>
 
+<mat-paginator class="center" [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="pageEvent = $event">
+</mat-paginator>
+
 <a class="button-float" mat-fab routerLink="/cliente/novo"><mat-icon>add</mat-icon></a>

@@ -27,23 +27,14 @@ class Projects extends Migration
             $table->timestamps();
         });
 
-        Schema::create('projects_providers', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('projects_id')->unsigned();
-            $table->foreign('projects_id')->references('id')->on('projects');
-
-            $table->integer('providers_id')->unsigned();
-            $table->foreign('providers_id')->references('id')->on('providers');
-
-            $table->timestamps();
-        });
-
         Schema::create('projects_phases', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('status');
             $table->dateTime('expiration_date')->nullable();
+            $table->string('comments');
+            $table->double('amount');
+            $table->double('number');
 
             $table->integer('projects_id')->unsigned();
             $table->foreign('projects_id')->references('id')->on('projects');
@@ -104,7 +95,6 @@ class Projects extends Migration
     public function down()
     {
         Schema::dropIfExists('projects');
-        Schema::dropIfExists('projects_providers');
         Schema::dropIfExists('projects_phases');
         Schema::dropIfExists('billspay');
         Schema::dropIfExists('billsreceive');

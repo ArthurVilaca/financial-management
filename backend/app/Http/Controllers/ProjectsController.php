@@ -71,6 +71,7 @@ class ProjectsController extends Controller
     public function show($id)
     {
         $projects = $this->projects->find($id);
+        $projects->projects_phases = $this->projectsService->getProjectPhases($id);
 
         $this->response->setDataSet("projects", $projects);
         $this->response->setType("S");

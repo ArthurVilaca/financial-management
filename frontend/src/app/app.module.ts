@@ -27,8 +27,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatAutocompleteModule, MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material';
+import { MatAutocompleteModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 import { AppComponent } from './app.component';
@@ -114,6 +116,8 @@ import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatExpansionModule,
+    MatPaginatorModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
   bootstrap: [AppComponent],
