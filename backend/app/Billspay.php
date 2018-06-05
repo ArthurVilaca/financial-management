@@ -21,4 +21,12 @@ class Billspay extends Model
         'due_date',
     ];
 
+    public function findByProject($id) {
+        $phases = DB::table('billspay')
+            ->join('projects_phases', 'projects_phases.id', '=', 'billspay.projects_phases_id')
+            ->where('billspay.projects_phases_id', $id)
+            ->get();
+
+        return $phases;
+    }
 }

@@ -72,6 +72,10 @@ class ProjectsController extends Controller
     {
         $projects = $this->projects->find($id);
         $projects->projects_phases = $this->projectsService->getProjectPhases($id);
+        foreach ($projects->projects_phases as $key => $value) {
+            $value->billspay = $this->projectsService->getProjectBillspay($value->id);
+            $value->billsreceive = $this->projectsService->getProjectBillsreceive($value->id);
+        }
 
         $this->response->setDataSet("projects", $projects);
         $this->response->setType("S");
