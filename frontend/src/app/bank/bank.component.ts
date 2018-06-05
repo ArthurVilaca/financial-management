@@ -30,6 +30,22 @@ export class BankComponent {
     });
   }
 
+  searchZip() {
+    if(this.bank.zip_code) {
+      if(this.bank.zip_code.length >= 7) {
+        this.http.get('/zipcode/' + this.bank.zip_code)
+          .then((data: any) => {
+            this.bank.adress = data.logradouro;
+            this.bank.adress_district = data.bairro;
+            this.bank.city = data.localidade;
+            this.bank.state = data.uf;
+          })
+          .catch((error) => {
+          });
+      }
+    }
+  }
+
   save() {
     if(this.bank.id) {
       this.http.put('/banks/' + this.bank.id, this.bank)

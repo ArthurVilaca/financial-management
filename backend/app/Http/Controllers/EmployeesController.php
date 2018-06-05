@@ -143,7 +143,7 @@ class EmployeesController extends Controller
         $employeer = $this->employees->find($id);
 
         $employeer_data = $request->all();
-        $employeer_data->password = bcrypt($employeer_data->password);
+        $employeer_data['password'] = bcrypt($employeer_data['password']);
         $employeer->fill($employeer_data);
         $employeer->save();
 
