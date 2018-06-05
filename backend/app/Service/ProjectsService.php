@@ -28,6 +28,7 @@ class ProjectsService extends Service
             'notes' => $request->get('notes'),
             'status' => $request->get('status'),
             'amount' => $request->get('amount'),
+            'number' => $request->get('number'),
             'clients_id' => $request->get('clients_id'),
             'banks_id' => $request->get('banks_id'),
         ]);
@@ -57,17 +58,17 @@ class ProjectsService extends Service
                     'due_date' => $date,
                 ]);
             }
+        }
 
-            for ($i=0; $i < $value['number']; $i++) { 
-                $this->billsreceives->create([
-                    'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
-                    'status' => 'Prevista',
-                    'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
-                    'amount' => $value['amount'],
-                    'projects_id' => $returnProject->id,
-                    'due_date' => $date,
-                ]);
-            }
+        for ($i=0; $i < $request->get('number'); $i++) { 
+            $this->billsreceives->create([
+                'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
+                'status' => 'Prevista',
+                'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
+                'amount' => $request->get('amount') / $request->get('number'),
+                'projects_id' => $returnProject->id,
+                'due_date' => $date,
+            ]);
         }
 
         return $returnProject;

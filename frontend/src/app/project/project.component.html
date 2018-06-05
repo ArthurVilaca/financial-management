@@ -33,13 +33,17 @@
         </mat-form-field>
 
         <mat-form-field class="half-width">
+          <input name="number" type="number" matInput placeholder="Parcelas" [(ngModel)]="projects.number">
+        </mat-form-field>
+      </mat-list-item>
+      
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
           <mat-select name="clients_id" placeholder="Cliente" [(ngModel)]="projects.clients_id">
             <mat-option *ngFor="let client of appState.provider.clients" [value]="client.id">{{client.name}}</mat-option>
           </mat-select>
         </mat-form-field>
-      </mat-list-item>
 
-      <mat-list-item role="listitem">
         <mat-form-field class="half-width">
           <mat-select name="banks_id" placeholder="Banco" [(ngModel)]="projects.banks_id">
             <mat-option *ngFor="let bank of appState.provider.banks" [value]="bank.id">{{bank.name}}</mat-option>

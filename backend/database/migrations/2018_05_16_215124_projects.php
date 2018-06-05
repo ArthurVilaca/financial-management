@@ -19,6 +19,7 @@ class Projects extends Migration
             $table->string('notes');
             $table->string('status');
             $table->double('amount');
+            $table->double('number');
             $table->dateTime('expiration_date')->nullable();
 
             $table->integer('banks_id')->unsigned()->nullable();
