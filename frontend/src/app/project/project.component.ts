@@ -35,6 +35,14 @@ export class ProjectComponent {
       .catch((error) => {
         console.log(error);
       });
+
+    this.http.get('/banks')
+      .then((data: any) => {
+        this.appState.set('banks', data.dataset.banks);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   addPhase() {

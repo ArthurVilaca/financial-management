@@ -19,6 +19,7 @@ class Projects extends Model
         'amount',
         'clients_id',
         'expiration_date',
+        'banks_id',
     ];
 
 }

@@ -29,6 +29,7 @@ class ProjectsService extends Service
             'status' => $request->get('status'),
             'amount' => $request->get('amount'),
             'clients_id' => $request->get('clients_id'),
+            'banks_id' => $request->get('banks_id'),
         ]);
 
         $returnProject['projects_phases'] = [];

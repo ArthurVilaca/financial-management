@@ -21,6 +21,9 @@ class Projects extends Migration
             $table->double('amount');
             $table->dateTime('expiration_date')->nullable();
 
+            $table->integer('banks_id')->unsigned()->nullable();
+            $table->foreign('banks_id')->references('id')->on('banks');
+
             $table->integer('clients_id')->unsigned();
             $table->foreign('clients_id')->references('id')->on('clients');
 

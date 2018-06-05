@@ -39,6 +39,14 @@
         </mat-form-field>
       </mat-list-item>
 
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="banks_id" placeholder="Banco" [(ngModel)]="projects.banks_id">
+            <mat-option *ngFor="let bank of appState.provider.banks" [value]="bank.id">{{bank.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
       <hr />
       <div *ngFor="let phase of projects.projects_phases">
         <mat-list-item role="listitem">
