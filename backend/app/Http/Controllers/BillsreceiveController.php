@@ -7,19 +7,19 @@ use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
 use \App\Service\BillsreceiveService;
-use \App\Billsreceive;
+use \App\Billsreceives;
 
 class BillsreceiveController extends Controller
 {
     private $response;
-    private $billsreceive;
+    private $billsreceives;
     private $billsreceiveService;
 
     public function __construct()
     {
         $this->response = new Response();
         $this->billsreceiveService = new BillsreceiveService();
-        $this->billsreceive = new Billsreceive();
+        $this->billsreceives = new Billsreceives();
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class BillsreceiveController extends Controller
      */
     public function index()
     {
-         $billsreceive = $this->billsreceive->get();
+         $billsreceive = $this->billsreceives->get();
 
         $this->response->setDataSet("billsreceive", $billsreceive);
         $this->response->setType("S");

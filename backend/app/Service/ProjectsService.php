@@ -3,22 +3,22 @@ namespace App\Service;
 use Illuminate\Http\Request;
 use App\Projects;
 use App\ProjectsPhases;
-use App\Billspay;
-use App\Billsreceive;
+use App\Billspays;
+use App\Billsreceives;
 
 class ProjectsService extends Service
 {
     private $projects;
     private $projectsPhases;
-    private $billspay;
-    private $billsreceive;
+    private $billspays;
+    private $billsreceives;
 
     public function __construct()
     {
         $this->projects = new Projects();
         $this->projectsPhases = new ProjectsPhases();
-        $this->billspay = new Billspay();
-        $this->billsreceive = new Billsreceive();
+        $this->billspays = new Billspays();
+        $this->billsreceives = new Billsreceives();
     }
 
     public function create(Request $request)
@@ -43,11 +43,11 @@ class ProjectsService extends Service
                 'number' => $value['number'],
                 'expiration_date' => $date,
                 'projects_id' => $returnProject->id,
-                'providers_id' => $value['provider_id']
+                'providers_id' => $value['providers_id']
             ]);
 
             for ($i=0; $i < $value['number']; $i++) { 
-                $this->billspay->create([
+                $this->billspays->create([
                     'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
                     'status' => 'Prevista',
                     'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
@@ -58,7 +58,7 @@ class ProjectsService extends Service
             }
 
             for ($i=0; $i < $value['number']; $i++) { 
-                $this->billsreceive->create([
+                $this->billsreceives->create([
                     'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
                     'status' => 'Prevista',
                     'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
@@ -78,12 +78,12 @@ class ProjectsService extends Service
     }
 
     public function getProjectBillspay($id) {
-        $billspays = $this->billspay->findByProject($id);
+        $billspays = $this->billspays->findByProject($id);
         return $billspays;
     }
 
     public function getProjectBillsreceive($id) {
-        $billsreceives = $this->billsreceive->findByProject($id);
+        $billsreceives = $this->billsreceives->findByProject($id);
         return $billsreceives;
     }
 }

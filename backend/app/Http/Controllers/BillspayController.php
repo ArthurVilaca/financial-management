@@ -7,19 +7,19 @@ use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
 use \App\Service\BillspayService;
-use \App\Billspay;
+use \App\Billspays;
 
 class BillspayController extends Controller
 {
     private $response;
-    private $billspay;
+    private $billspays;
     private $billspayService;
 
     public function __construct()
     {
         $this->response = new Response();
         $this->billspayService = new BillspayService();
-        $this->billspay = new Billspay();
+        $this->billspays = new Billspays();
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class BillspayController extends Controller
      */
     public function index()
     {
-         $billspays = $this->billspay->get();
+         $billspays = $this->billspays->get();
 
         $this->response->setDataSet("billspays", $billspays);
         $this->response->setType("S");

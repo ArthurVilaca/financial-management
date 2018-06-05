@@ -17,6 +17,20 @@ class AuxTables extends Migration
             $table->increments('id');
             $table->string('name');
 
+            $table->string('account')->nullable();
+            $table->string('agency')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('manager')->nullable();
+            $table->string('telephone')->nullable();
+
+            $table->string('adress')->nullable();
+            $table->string('adress_number')->nullable();
+            $table->string('adress_complement')->nullable();
+            $table->string('adress_district')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+
             $table->timestamps();
         });
 

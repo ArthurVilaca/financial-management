@@ -14,6 +14,18 @@ class Banks extends Model
      */
     protected $fillable = [
         'name',
+        'account',
+        'agency',
+        'contact',
+        'manager',
+        'telephone',
+        'adress',
+        'adress_number',
+        'adress_complement',
+        'adress_district',
+        'zip_code',
+        'city',
+        'state',
     ];
 
 }

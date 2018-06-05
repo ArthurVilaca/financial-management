@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class Billsreceive extends Model
+class Billsreceives extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -19,12 +19,19 @@ class Billsreceive extends Model
         'amount',
         'projects_id',
         'due_date',
+        'payment_date',
+        'invoice_number',
+        'invoice_date',
+        'banks_id',
+        'cost_centers_id',
+        'discounts',
+        'additions',
     ];
 
     public function findByProject($id) {
-        $phases = DB::table('billsreceive')
-            ->join('projects', 'projects.id', '=', 'billsreceive.projects_id')
-            ->where('billsreceive.projects_id', $id)
+        $phases = DB::table('billsreceives')
+            ->join('projects', 'projects.id', '=', 'billsreceives.projects_id')
+            ->where('billsreceives.projects_id', $id)
             ->get();
 
         return $phases;

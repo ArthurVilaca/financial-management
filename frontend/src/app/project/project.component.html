@@ -43,7 +43,7 @@
       <div *ngFor="let phase of projects.projects_phases">
         <mat-list-item role="listitem">
           <mat-form-field class="col-md-6">
-            <mat-select name="provider_id-{{phase.provider_id}}" placeholder="Fornecedor" [(ngModel)]="phase.provider_id">
+            <mat-select name="provider_id-{{phase.provider_id}}" placeholder="Fornecedor" [(ngModel)]="phase.providers_id">
               <mat-option *ngFor="let provider of appState.provider.providers" [value]="provider.id">{{provider.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -60,9 +60,8 @@
         <mat-list-item role="listitem">
           <div class="col-md-3">
             <mat-select name="status-{{phase.id}}" placeholder="Status" [(ngModel)]="phase.status">
-              <mat-option [value]="'APROVADO'">APROVADO</mat-option>
-              <mat-option [value]="'ATRASADA'">ATRASADA</mat-option>
-              <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
+              <mat-option [value]="'PREVISTA'">PREVISTA</mat-option>
+              <mat-option [value]="'EFETUADA'">EFETUADA</mat-option>
             </mat-select>
           </div>
 

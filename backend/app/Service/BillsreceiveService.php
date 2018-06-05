@@ -1,20 +1,20 @@
 <?php 
 namespace App\Service;
 use Illuminate\Http\Request;
-use App\Billsreceive;
+use App\Billsreceives;
 
 class BillsreceiveService extends Service
 {
-    private $billsreceive;
+    private $billsreceives;
 
     public function __construct()
     {
-        $this->billsreceive = new Billsreceive();
+        $this->billsreceives = new Billsreceives();
     }
 
     public function create(Request $request)
     {
-        $returnBill = $this->billsreceive->create([
+        $returnBill = $this->billsreceives->create([
             'name' => $request->get('name'),
             'status' => $request->get('status'),
             'comments' => $request->get('comments'),
