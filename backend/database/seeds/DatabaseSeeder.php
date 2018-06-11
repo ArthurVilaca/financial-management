@@ -305,5 +305,54 @@ class DatabaseSeeder extends Seeder
         DB::table('cost_centers')->insert([
             'name' => "Vale Transporte"
         ]);
+
+        DB::table('taxes')->insert([
+            'name' => 'IR',
+            'amount' => 1.5,
+            'description' => 'IR',
+            'collection' => '%',
+            'type' => 'FEDERAL',
+            'reference' => 'RECEITA'
+        ]);
+        DB::table('taxes')->insert([
+            'name' => 'IR(Banco do Brasil)',
+            'amount' => 4.5,
+            'description' => 'IR(Banco do Brasil)',
+            'collection' => '%',
+            'type' => 'FEDERAL',
+            'reference' => 'RECEITA'
+        ]);
+        DB::table('taxes')->insert([
+            'name' => 'CSLL',
+            'amount' => 1,
+            'description' => 'CSLL',
+            'collection' => '%',
+            'type' => 'FEDERAL',
+            'reference' => 'RECEITA'
+        ]);
+        DB::table('taxes')->insert([
+            'name' => 'COFINS',
+            'amount' => 3,
+            'description' => 'COFINS',
+            'collection' => '%',
+            'type' => 'FEDERAL',
+            'reference' => 'RECEITA'
+        ]);
+        DB::table('taxes')->insert([
+            'name' => 'PIS',
+            'amount' => 0.65,
+            'description' => 'PIS',
+            'collection' => '%',
+            'type' => 'MUNICIPAL',
+            'reference' => 'RECEITA'
+        ]);
+        DB::table('taxes')->insert([
+            'name' => 'ISS',
+            'amount' => 2.5,
+            'description' => 'ISS',
+            'collection' => '%',
+            'type' => 'MUNICIPAL',
+            'reference' => 'RECEITA'
+        ]);
     }
 }

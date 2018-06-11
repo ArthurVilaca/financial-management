@@ -1317,7 +1317,7 @@ $icon-color: #4099ff,#f78ea4,#2ed8b6,#f1c40f,#ab7967,#39ADB5,#7C4DFF,#FF5370;
         }
 
         &[pcoded-device-type="tablet"][vertical-layout="box"] .pcoded-container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             margin: 0 auto;
         }
@@ -1345,7 +1345,7 @@ $icon-color: #4099ff,#f78ea4,#2ed8b6,#f1c40f,#ab7967,#39ADB5,#7C4DFF,#FF5370;
         &[pcoded-device-type="tablet"][vertical-layout="widebox"] {
             .pcoded-main-container,
             .pcoded-wrapper {
-                max-width: 900px;
+                max-width: 1000px;
                 width: 100%;
                 margin: 0 auto;
             }
