@@ -70,7 +70,7 @@ class BillsreceiveController extends Controller
      */
     public function show($id)
     {
-        $billsreceive = $this->billsreceive->find($id);
+        $billsreceive = $this->billsreceives->find($id);
 
         $this->response->setDataSet("billsreceive", $billsreceive);
         $this->response->setType("S");

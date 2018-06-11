@@ -17,9 +17,53 @@
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
           <mat-select name="status" placeholder="Status" [(ngModel)]="billspay.status">
-            <mat-option [value]="'APROVADO'">APROVADO</mat-option>
-            <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
+            <mat-option [value]="'Efetuada'">Efetuada</mat-option>
+            <mat-option [value]="'Prevista'">Prevista</mat-option>
           </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="amount" matInput placeholder="Valor" [(ngModel)]="billspay.amount">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="full-width">
+          <input name="comments" matInput placeholder="Observações" [(ngModel)]="billspay.comments">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="banks_id" placeholder="Banco" [(ngModel)]="billspay.banks_id">
+            <mat-option *ngFor="let bank of appState.provider.banks" [value]="bank.id">{{bank.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-select name="cost_centers_id" placeholder="Centro de Custo" [(ngModel)]="billspay.cost_centers_id">
+            <mat-option *ngFor="let costCenter of appState.provider.cost_centers" [value]="costCenter.id">{{costCenter.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="invoice_number" matInput placeholder="Numero Nota Fiscal" [(ngModel)]="billspay.invoice_number">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="invoice_date" matInput [matDatepicker]="picker-incoice-date" placeholder="Data Nota Fiscal" [(ngModel)]="billspay.invoice_date">
+          <mat-datepicker-toggle matSuffix [for]="picker-incoice-date"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="payment_date" matInput [matDatepicker]="picker-payment-date" placeholder="Data Pagamento" [(ngModel)]="billspay.payment_date">
+          <mat-datepicker-toggle matSuffix [for]="picker-payment-date"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </mat-list-item>
 

@@ -82,10 +82,10 @@ class Projects extends Migration
             $table->integer('cost_centers_id')->unsigned()->nullable();
             $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
 
-            $table->integer('projects_phases_id')->unsigned();
+            $table->integer('projects_phases_id')->unsigned()->nullable();
             $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
 
-            $table->integer('projects_id')->unsigned();
+            $table->integer('projects_id')->unsigned()->nullable();
             $table->foreign('projects_id')->references('id')->on('projects');
 
             $table->timestamps();

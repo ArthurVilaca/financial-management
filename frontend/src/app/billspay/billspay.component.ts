@@ -22,12 +22,34 @@ export class BillspayComponent {
         this.http.get('/billspay/' + params['id'])
           .then((data: any) => {
             this.billspay = data.dataset.billspay;
+            if(this.billspay.invoice_date != '') {
+              this.billspay.invoice_date = new Date(this.billspay.invoice_date);
+            }
+            if(this.billspay.payment_date != '') {
+              this.billspay.payment_date = new Date(this.billspay.payment_date);
+            }
           })
           .catch((error) => {
             console.log(error);
           });
       }
     });
+
+    this.http.get('/banks')
+      .then((data: any) => {
+        this.appState.set('banks', data.dataset.banks);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+    this.http.get('/cost_centers')
+      .then((data: any) => {
+        this.appState.set('cost_centers', data.dataset.costCenters);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   save() {
