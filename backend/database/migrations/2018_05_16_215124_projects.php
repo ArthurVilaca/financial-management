@@ -85,6 +85,9 @@ class Projects extends Migration
             $table->integer('projects_phases_id')->unsigned();
             $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
 
+            $table->integer('projects_id')->unsigned();
+            $table->foreign('projects_id')->references('id')->on('projects');
+
             $table->timestamps();
         });
 

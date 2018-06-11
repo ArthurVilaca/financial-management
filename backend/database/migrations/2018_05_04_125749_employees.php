@@ -33,6 +33,28 @@ class Employees extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
 
+            $table->dateTime('sunday_in')->nullable();
+            $table->dateTime('sunday_out')->nullable();
+
+            $table->dateTime('monday_in')->nullable();
+            $table->dateTime('monday_out')->nullable();
+
+            $table->dateTime('tuesday_in')->nullable();
+            $table->dateTime('tuesday_out')->nullable();
+
+            $table->dateTime('wednesday_in')->nullable();
+            $table->dateTime('wednesday_out')->nullable();
+
+            $table->dateTime('thursday_in')->nullable();
+            $table->dateTime('thursday_out')->nullable();
+
+            $table->dateTime('friday_in')->nullable();
+            $table->dateTime('friday_out')->nullable();
+
+            $table->dateTime('saturday_in')->nullable();
+            $table->dateTime('saturday_out')->nullable();
+            $table->enum('use_time_control', ['true', 'false'])->default('false');
+
             $table->dateTime('admission')->nullable();
             $table->dateTime('resignation')->nullable();
             $table->double('salary')->nullable();

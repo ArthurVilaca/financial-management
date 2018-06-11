@@ -5,6 +5,10 @@ use App\Projects;
 use App\ProjectsPhases;
 use App\Billspays;
 use App\Billsreceives;
+use App\Providers;
+use App\Taxes;
+use App\CostCenters;
+use App\ProviderTaxes;
 
 class ProjectsService extends Service
 {
@@ -12,6 +16,10 @@ class ProjectsService extends Service
     private $projectsPhases;
     private $billspays;
     private $billsreceives;
+    private $providers;
+    private $taxes;
+    private $costCenters;
+    private $providerTaxes;
 
     public function __construct()
     {
@@ -19,6 +27,10 @@ class ProjectsService extends Service
         $this->projectsPhases = new ProjectsPhases();
         $this->billspays = new Billspays();
         $this->billsreceives = new Billsreceives();
+        $this->providers = new Providers();
+        $this->taxes = new Taxes();
+        $this->costCenters = new CostCenters();
+        $this->providerTaxes = new ProviderTaxes();
     }
 
     public function create(Request $request)
@@ -57,9 +69,28 @@ class ProjectsService extends Service
                     'projects_phases_id' => $returnPhase->id,
                     'due_date' => $date,
                 ]);
+
+                $taxes = $this->providerTaxes->loadByProvider($value['providers_id']);
+                foreach ($taxes as $tax) {
+
+                    if($tax->collection == '%') {
+                        $valueTax = ($value['amount'] / 100) * $tax->amount;
+                    } else {
+                        $valueTax = $tax->amount;
+                    }
+                    $this->billspays->create([
+                        'name' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'),
+                        'status' => 'Prevista',
+                        'comments' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'),
+                        'amount' => $valueTax,
+                        'projects_phases_id' => $returnPhase->id,
+                        'due_date' => $date,
+                    ]);
+                }
             }
         }
 
+        $costCenter = $this->costCenters->newProject();
         for ($i=0; $i < $request->get('number'); $i++) { 
             $this->billsreceives->create([
                 'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
@@ -68,6 +99,8 @@ class ProjectsService extends Service
                 'amount' => $request->get('amount') / $request->get('number'),
                 'projects_id' => $returnProject->id,
                 'due_date' => $date,
+                'banks_id' => $request->get('banks_id'),
+                'cost_centers_id' => $costCenter->id
             ]);
         }
 

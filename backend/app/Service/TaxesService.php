@@ -50,5 +50,9 @@ class TaxesService extends Service
         return $returnTax;
     }
 
+    public function loadByProvider($id) {
+        return $this->providerTaxes->loadByProvider($id);
+    }
+
 }
 ?>

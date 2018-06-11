@@ -17,4 +17,10 @@ class CostCenters extends Model
         'type',
     ];
 
+    public function newProject() {
+        $costCenter = DB::table('cost_centers')
+            ->where('name', 'Receita de projeto')
+            ->first();
+        return $costCenter;
+    }
 }

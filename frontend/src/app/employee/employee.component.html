@@ -95,9 +95,73 @@
         </mat-form-field>
       </mat-list-item>
 
+      <hr />
+      
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="use_time_control" placeholder="Usar controle de horario" [(ngModel)]="employee.use_time_control">
+            <mat-option [value]="'true'">Sim</mat-option>
+            <mat-option [value]="'false'">Nao</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+      
+      <hr />
+
+      <div class="table-border-style table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Domingo</th>
+              <th>Segunda-feira</th>
+              <th>Terça-feira</th>
+              <th>Quarta-feira</th>
+              <th>Quinta-feira</th>
+              <th>Sexta-feira</th>
+              <th>Sabado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input name="time-1" type="time" matInput [(ngModel)]="employee.sunday_in">
+                <input name="time-2" type="time" matInput [(ngModel)]="employee.sunday_out">
+              </td>
+              <td>
+                <input name="time-3" type="time" matInput [(ngModel)]="employee.monday_in">
+                <input name="time-4" type="time" matInput [(ngModel)]="employee.monday_out">
+              </td>
+              <td>
+                <input name="time-5" type="time" matInput [(ngModel)]="employee.tuesday_in">
+                <input name="time-6" type="time" matInput [(ngModel)]="employee.tuesday_out">
+              </td>
+              <td>
+                <input name="time-7" type="time" matInput [(ngModel)]="employee.wednesday_in">
+                <input name="time-8" type="time" matInput [(ngModel)]="employee.wednesday_out">
+              </td>
+              <td>
+                <input name="time-9" type="time" matInput [(ngModel)]="employee.thursday_in">
+                <input name="time-10" type="time" matInput [(ngModel)]="employee.thursday_out">
+              </td>
+              <td>
+                <input name="time-11" type="time" matInput [(ngModel)]="employee.friday_in">
+                <input name="time-12" type="time" matInput [(ngModel)]="employee.friday_out">
+              </td>
+              <td>
+                <input name="time-13" type="time" matInput [(ngModel)]="employee.saturday_in">
+                <input name="time-14" type="time" matInput [(ngModel)]="employee.saturday_out">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+
       <div class="full-width button-submit">
         <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
       </div>
+
     </mat-list>
   </form>
 </div>
