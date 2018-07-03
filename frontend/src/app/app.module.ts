@@ -31,6 +31,7 @@ import { MatAutocompleteModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@an
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 import { AppComponent } from './app.component';
@@ -60,6 +61,7 @@ import { BillspaysComponent } from './billspays/billspays.component';
 import { BillspayComponent } from './billspay/billspay.component';
 import { BillsreceivesComponent } from './billsreceives/billsreceives.component';
 import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
+import { SearchBillsComponent } from './search-bills/search-bills.component';
 
 
 @NgModule({
@@ -90,7 +92,8 @@ import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
     BillspaysComponent,
     BillspayComponent,
     BillsreceivesComponent,
-    BillsreceiveComponent
+    BillsreceiveComponent,
+    SearchBillsComponent
   ],
   imports: [
     BrowserModule,
@@ -118,9 +121,10 @@ import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
     MatRadioModule,
     MatExpansionModule,
     MatPaginatorModule,
+    MatChipsModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent ]
+  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent, SearchBillsComponent ]
 })
 export class AppModule { }

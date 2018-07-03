@@ -33,7 +33,7 @@
 <mat-paginator class="center" [length]="length"
   [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
-  (page)="pageEvent = $event">
+  (page)="pageEvent = search($event)">
 </mat-paginator>
 
 <a class="button-float" mat-fab routerLink="/fornecedor/novo"><mat-icon>add</mat-icon></a>

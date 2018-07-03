@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
-import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
-import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material';
 
 @Component({
@@ -18,14 +16,23 @@ export class CostCentersComponent {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  constructor(private router: Router, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
+  constructor(private http: HttpService, private appState: ProviderService) {
     this.search();
   }
 
-  search() {
-    this.http.get('/cost_centers')
+  search($event?) {
+    if($event){
+      this.pageEvent = $event;
+      this.pageSize = $event.pageSize;
+    }
+    let page = 0;
+    if(this.pageEvent) {
+      page = this.pageEvent.pageIndex;
+    }
+    this.http.get('/cost_centers?page=' + page + '&pageSize=' + this.pageSize)
       .then((data: any) => {
         this.appState.set('cost_centers', data.dataset.costCenters);
+        this.length = data.dataset.total;
       })
       .catch((error) => {
         console.log(error);

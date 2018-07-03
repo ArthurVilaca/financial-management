@@ -60,34 +60,35 @@ class ProjectsService extends Service
                 'providers_id' => $value['providers_id']
             ]);
 
-            for ($i=0; $i < $value['number']; $i++) { 
-                $this->billspays->create([
-                    'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
-                    'status' => 'Prevista',
-                    'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
-                    'amount' => $value['amount'],
-                    'projects_phases_id' => $returnPhase->id,
-                    'due_date' => $date,
-                ]);
+            //////////// commented to wait for validation
+            // for ($i=0; $i < $value['number']; $i++) { 
+            //     $this->billspays->create([
+            //         'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
+            //         'status' => 'Prevista',
+            //         'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
+            //         'amount' => $value['amount'],
+            //         'projects_phases_id' => $returnPhase->id,
+            //         'due_date' => $date,
+            //     ]);
 
-                $taxes = $this->providerTaxes->loadByProvider($value['providers_id']);
-                foreach ($taxes as $tax) {
+            //     $taxes = $this->providerTaxes->loadByProvider($value['providers_id']);
+            //     foreach ($taxes as $tax) {
 
-                    if($tax->collection == '%') {
-                        $valueTax = ($value['amount'] / 100) * $tax->amount;
-                    } else {
-                        $valueTax = $tax->amount;
-                    }
-                    $this->billspays->create([
-                        'name' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'),
-                        'status' => 'Prevista',
-                        'comments' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'),
-                        'amount' => $valueTax,
-                        'projects_phases_id' => $returnPhase->id,
-                        'due_date' => $date,
-                    ]);
-                }
-            }
+            //         if($tax->collection == '%') {
+            //             $valueTax = ($value['amount'] / 100) * $tax->amount;
+            //         } else {
+            //             $valueTax = $tax->amount;
+            //         }
+            //         $this->billspays->create([
+            //             'name' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'),
+            //             'status' => 'Prevista',
+            //             'comments' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'),
+            //             'amount' => $valueTax,
+            //             'projects_phases_id' => $returnPhase->id,
+            //             'due_date' => $date,
+            //         ]);
+            //     }
+            // }
         }
 
         $costCenter = $this->costCenters->newProject();
@@ -120,6 +121,20 @@ class ProjectsService extends Service
     public function getProjectBillsreceive($id) {
         $billsreceives = $this->billsreceives->findByProject($id);
         return $billsreceives;
+    }
+
+    public function load($page, $pageSize)
+    {
+        $returnProject = $this->projects->loadProjects($page, $pageSize);
+
+        return $returnProject;
+    }
+
+    public function count()
+    {
+        $countProjects = $this->projects->count();
+
+        return $countProjects;
     }
 }
 ?>

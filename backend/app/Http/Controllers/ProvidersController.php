@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
@@ -28,9 +29,21 @@ class ProvidersController extends Controller
      */
     public function index()
     {
-         $providers = $this->providers->get();
+
+        $page = Input::get('page');
+        if( !isset($page)  ) {
+            $page = 0;
+        }
+        $pageSize = Input::get('pageSize');
+        if( !isset($pageSize)  ) {
+            $pageSize = 10;
+        }
+
+        $providers = $this->providersService->load($page, $pageSize);
+        $total = $this->providersService->count();
 
         $this->response->setDataSet("providers", $providers);
+        $this->response->setDataSet("total", $total);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 

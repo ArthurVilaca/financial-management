@@ -21,5 +21,19 @@ class CostCentersService extends Service
         return $returnBank;
     }
 
+    public function load($page, $pageSize)
+    {
+        $returnCostCenter = $this->costCenters->loadCostCenters($page, $pageSize);
+
+        return $returnCostCenter;
+    }
+
+    public function count()
+    {
+        $countCostCenters = $this->costCenters->count();
+
+        return $countCostCenters;
+    }
+
 }
 ?>

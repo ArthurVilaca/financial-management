@@ -474,18 +474,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Calculator</from>
-      <to>Table clients</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Table project</from>
       <to>Table billsreceive project</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Table clients</from>
-      <to>Modified Java Script Value</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -501,6 +491,86 @@
     <hop>
       <from>Filter rows</from>
       <to>Table billspay Project</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Calculator</from>
+      <to>Filter Clientes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter Clientes</from>
+      <to>Table clients</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter Clientes</from>
+      <to>Filter Fornecedores</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Table project 2</from>
+      <to>Table billsreceive project 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Modified Java Script Value 2</from>
+      <to>Filter rows 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter Fornecedores</from>
+      <to>Filter Fornecedores Internos&#x27;</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter Fornecedores Internos&#x27;</from>
+      <to>Table Fornecedores 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter Fornecedores Internos&#x27;</from>
+      <to>Table Fornecedores</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows 2</from>
+      <to>Table project 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Table clients</from>
+      <to>If field value is null</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>If field value is null</from>
+      <to>Modified Java Script Value</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Table Fornecedores</from>
+      <to>If field value is null 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>If field value is null 2</from>
+      <to>Modified Java Script Value 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows 2</from>
+      <to>Table billspay Project 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Table Fornecedores 2</from>
+      <to>Modified Java Script Value 2 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Modified Java Script Value 2 2</from>
+      <to>Filter rows 2</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -629,6 +699,123 @@
     </step>
 
   <step>
+    <name>Filter Clientes</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+<send_true_to>Table clients</send_true_to>
+<send_false_to>Filter Fornecedores</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>Cliente&#x2f;Fornecedor&#x2f; S&#xf3;cio&#x2f;Empregado&#x2f;outros</leftvalue>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>Cliente</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>&#x23;</mask></value> </condition>
+    </compare>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>464</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Filter Fornecedores</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+<send_true_to>Filter Fornecedores Internos&#x27;</send_true_to>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>Cliente&#x2f;Fornecedor&#x2f; S&#xf3;cio&#x2f;Empregado&#x2f;outros</leftvalue>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>Fornecedor</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>&#x23;</mask></value> </condition>
+    </compare>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Filter Fornecedores Internos&#x27;</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+<send_true_to>Table Fornecedores 2</send_true_to>
+<send_false_to>Table Fornecedores</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <leftvalue>Proposta</leftvalue>
+   <function>&#x3d;</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>INN</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>&#x23;</mask></value>   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>OR</operator>
+   <leftvalue>Proposta</leftvalue>
+   <function>&#x3d;</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>COM</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  </conditions>
+ </condition>
+    </compare>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>624</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
     <name>Filter rows</name>
     <type>FilterRows</type>
     <description/>
@@ -644,7 +831,7 @@
     <compare>
 <condition>
  <negated>N</negated>
- <leftvalue>Valor da movimenta&#xfffd;&#xfffd;o</leftvalue>
+ <leftvalue>Valor da movimenta&#xe7;&#xe3;o</leftvalue>
  <function>&#x3e;</function>
  <rightvalue/>
  <value><name>constant</name><type>Number</type><text>0.0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>&#x23;</mask></value> </condition>
@@ -657,8 +844,123 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>240</yloc>
+      <xloc>160</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+<send_true_to>Table project 2</send_true_to>
+<send_false_to>Table billspay Project 3</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>Valor da movimenta&#xe7;&#xe3;o</leftvalue>
+ <function>&#x3e;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Number</type><text>0.0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>&#x23;</mask></value> </condition>
+    </compare>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>560</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>If field value is null</name>
+    <type>IfNull</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+      <replaceAllByValue/>
+      <replaceAllMask/>
+      <selectFields>Y</selectFields>
+      <selectValuesType>N</selectValuesType>
+      <setEmptyStringAll>Y</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
+    <fields>
+      <field>
+        <name>Banco</name>
+        <value> </value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+        </field>
+      </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>160</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>If field value is null 2</name>
+    <type>IfNull</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+      <replaceAllByValue/>
+      <replaceAllMask/>
+      <selectFields>Y</selectFields>
+      <selectValuesType>N</selectValuesType>
+      <setEmptyStringAll>Y</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
+    <fields>
+      <field>
+        <name>Banco</name>
+        <value> </value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+        </field>
+      </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>560</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -690,7 +992,7 @@
     <accept_field/>
     <accept_stepname/>
     <file>
-      <name>&#x2f;home&#x2f;arthur&#x2f;Downloads&#x2f;Contas a Receber &#x28;1&#x29;.xls</name>
+      <name>&#x2f;home&#x2f;arthur&#x2f;Downloads&#x2f;planilha_2.xls</name>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -734,7 +1036,7 @@
         <group/>
       </field>
       <field>
-        <name>Valor da movimenta&#xfffd;&#xfffd;o</name>
+        <name>Valor da movimenta&#xe7;&#xe3;o</name>
         <type>Number</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -746,7 +1048,7 @@
         <group/>
       </field>
       <field>
-        <name>N&#xfffd; do documento fiscal</name>
+        <name>N&#xba; do documento fiscal</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -771,7 +1073,7 @@
       </field>
       <field>
         <name>Ano da Nota Fiscal</name>
-        <type>Number</type>
+        <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -783,7 +1085,7 @@
       </field>
       <field>
         <name>Percentual da receita</name>
-        <type>Number</type>
+        <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
@@ -818,7 +1120,7 @@
         <group/>
       </field>
       <field>
-        <name>Tipo de movimenta&#xfffd;&#xfffd;o</name>
+        <name>Tipo de movimenta&#xe7;&#xe3;o</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -842,7 +1144,7 @@
         <group/>
       </field>
       <field>
-        <name>N&#xfffd;mero do cheque</name>
+        <name>N&#xfa;mero do cheque</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -854,7 +1156,7 @@
         <group/>
       </field>
       <field>
-        <name>Data da movimenta&#xfffd;&#xfffd;o</name>
+        <name>Data da movimenta&#xe7;&#xe3;o</name>
         <type>Date</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -878,7 +1180,7 @@
         <group/>
       </field>
       <field>
-        <name>Nome do cliente&#x2f;fornecedor&#x2f; s&#xfffd;cio&#x2f;empregado&#x2f;outros</name>
+        <name>Nome do cliente&#x2f;fornecedor&#x2f; s&#xf3;cio&#x2f;empregado&#x2f;outros</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -890,7 +1192,7 @@
         <group/>
       </field>
       <field>
-        <name>Cliente&#x2f;Fornecedor&#x2f; S&#xfffd;cio&#x2f;Empregado&#x2f;outros</name>
+        <name>Cliente&#x2f;Fornecedor&#x2f; S&#xf3;cio&#x2f;Empregado&#x2f;outros</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -914,7 +1216,7 @@
         <group/>
       </field>
       <field>
-        <name>Observa&#xfffd;&#xfffd;es</name>
+        <name>Observa&#xe7;&#xf5;es</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -940,7 +1242,7 @@
     </fields>
     <sheets>
       <sheet>
-        <name>Contas a Receber</name>
+        <name>Plan1</name>
         <startrow>0</startrow>
         <startcol>0</startcol>
         </sheet>
@@ -988,11 +1290,11 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <compatible>N</compatible>
+    <compatible>Y</compatible>
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;if&#x28;Banco &#x3d;&#x3d; &#x27;Banco do Brasil&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 1&#x3b;&#xa;&#x7d;&#xa;if&#x28;Banco &#x3d;&#x3d; &#x27;BRADESCO&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;if&#x28;Banco &#x3d;&#x3d; &#x27;ITAU&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;&#xa;var id_project &#x3d; parseInt&#x28;Proposta.substring&#x28;0,5&#x29;&#x29;&#x3b;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;if&#x28;Banco &#x3d;&#x3d; &#x27;Banco do Brasil&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 1&#x3b;&#xa;&#x7d; else if&#x28;Banco &#x3d;&#x3d; &#x27;BRADESCO&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 2&#x3b;&#xa;&#x7d; else if&#x28;Banco &#x3d;&#x3d; &#x27;ITAU&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 3&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	var bank_id &#x3d; null&#x3b;&#xa;&#x7d;&#xa;&#xa;var id_project &#x3d; 1&#x3b;&#xa;if &#x28;Proposta.getString&#x28;&#x29;.indexOf&#x28;&#x27;-&#x27;&#x29; &#x3e; -1 &#x29; &#x7b;&#xa;&#xa;	var parts &#x3d; Proposta.getString&#x28;&#x29;.split&#x28;&#x22; - &#x22;&#x29;&#x3b;&#xa;	var id_project &#x3d; parseFloat&#x28;parts&#x5b;0&#x5d;&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>bank_id</name>
         <rename>bank_id</rename>
         <type>String</type>
@@ -1013,8 +1315,146 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>144</yloc>
+      <xloc>160</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Modified Java Script Value 2</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;if&#x28;Banco &#x3d;&#x3d; &#x27;Banco do Brasil&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 1&#x3b;&#xa;&#x7d;else if&#x28;Banco &#x3d;&#x3d; &#x27;BRADESCO&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 2&#x3b;&#xa;&#x7d; else if&#x28;Banco &#x3d;&#x3d; &#x27;ITAU&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 3&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	var bank_id &#x3d; null&#x3b;&#xa;&#x7d;&#xa;&#xa;var id_project &#x3d; 1&#x3b;&#xa;if &#x28; Proposta.indexOf&#x28;&#x27;-&#x27;&#x29; &#x3e; -1 &#x29; &#x7b;&#xa;	var parts &#x3d; Proposta.split&#x28;&#x22; - &#x22;&#x29;&#x3b;&#xa;	var id_project &#x3d; parseFloat&#x28;parts&#x5b;0&#x5d;&#x29;&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	var id_project &#x3d; 1&#x3b;&#xa;&#x7d;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>bank_id</name>
+        <rename>bank_id</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>id_project</name>
+        <rename>id_project</rename>
+        <type>Number</type>
+        <length>16</length>
+        <precision>2</precision>
+        <replace>N</replace>
+      </field>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>336</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Table Fornecedores</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>local</connection>
+    <schema/>
+    <table>providers</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>Y</return_keys>
+    <return_field>client_id</return_field>
+    <fields>
+        <field>
+          <column_name>name</column_name>
+          <stream_name>Nome do cliente&#x2f;fornecedor&#x2f; s&#xf3;cio&#x2f;empregado&#x2f;outros</stream_name>
+        </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Table Fornecedores 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>local</connection>
+    <schema/>
+    <table>providers</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>Y</return_keys>
+    <return_field>client_id</return_field>
+    <fields>
+        <field>
+          <column_name>name</column_name>
+          <stream_name>Nome do cliente&#x2f;fornecedor&#x2f; s&#xf3;cio&#x2f;empregado&#x2f;outros</stream_name>
+        </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>736</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -1035,7 +1475,7 @@
     <table>billspays</table>
     <commit>1000</commit>
     <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
+    <ignore_errors>Y</ignore_errors>
     <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>
     <partitioning_enabled>N</partitioning_enabled>
@@ -1050,11 +1490,11 @@
     <fields>
         <field>
           <column_name>name</column_name>
-          <stream_name>Observa&#xfffd;&#xfffd;es</stream_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
         </field>
         <field>
           <column_name>amount</column_name>
-          <stream_name>Valor da movimenta&#xfffd;&#xfffd;o</stream_name>
+          <stream_name>Valor da movimenta&#xe7;&#xe3;o</stream_name>
         </field>
         <field>
           <column_name>status</column_name>
@@ -1062,7 +1502,7 @@
         </field>
         <field>
           <column_name>comments</column_name>
-          <stream_name>Observa&#xfffd;&#xfffd;es</stream_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
         </field>
         <field>
           <column_name>banks_id</column_name>
@@ -1074,7 +1514,7 @@
         </field>
         <field>
           <column_name>invoice_number</column_name>
-          <stream_name>N&#xfffd; do documento fiscal</stream_name>
+          <stream_name>N&#xba; do documento fiscal</stream_name>
         </field>
         <field>
           <column_name>cost_centers_id</column_name>
@@ -1082,7 +1522,7 @@
         </field>
         <field>
           <column_name>payment_date</column_name>
-          <stream_name>Data da movimenta&#xfffd;&#xfffd;o</stream_name>
+          <stream_name>Data da movimenta&#xe7;&#xe3;o</stream_name>
         </field>
         <field>
           <column_name>invoice_date</column_name>
@@ -1097,8 +1537,92 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>240</yloc>
+      <xloc>48</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Table billspay Project 3</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>local</connection>
+    <schema/>
+    <table>billspays</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>Y</return_keys>
+    <return_field>billspay_id</return_field>
+    <fields>
+        <field>
+          <column_name>name</column_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
+        </field>
+        <field>
+          <column_name>amount</column_name>
+          <stream_name>Valor da movimenta&#xe7;&#xe3;o</stream_name>
+        </field>
+        <field>
+          <column_name>status</column_name>
+          <stream_name>Efetuada</stream_name>
+        </field>
+        <field>
+          <column_name>comments</column_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
+        </field>
+        <field>
+          <column_name>projects_id</column_name>
+          <stream_name>id_project</stream_name>
+        </field>
+        <field>
+          <column_name>invoice_number</column_name>
+          <stream_name>N&#xba; do documento fiscal</stream_name>
+        </field>
+        <field>
+          <column_name>cost_centers_id</column_name>
+          <stream_name>cost_center_billsreceive_project</stream_name>
+        </field>
+        <field>
+          <column_name>payment_date</column_name>
+          <stream_name>Data da movimenta&#xe7;&#xe3;o</stream_name>
+        </field>
+        <field>
+          <column_name>invoice_date</column_name>
+          <stream_name>Data da nota fiscal</stream_name>
+        </field>
+        <field>
+          <column_name>banks_id</column_name>
+          <stream_name>bank_id</stream_name>
+        </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -1134,11 +1658,11 @@
     <fields>
         <field>
           <column_name>name</column_name>
-          <stream_name>Observa&#xfffd;&#xfffd;es</stream_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
         </field>
         <field>
           <column_name>amount</column_name>
-          <stream_name>Valor da movimenta&#xfffd;&#xfffd;o</stream_name>
+          <stream_name>Valor da movimenta&#xe7;&#xe3;o</stream_name>
         </field>
         <field>
           <column_name>status</column_name>
@@ -1146,7 +1670,7 @@
         </field>
         <field>
           <column_name>comments</column_name>
-          <stream_name>Observa&#xfffd;&#xfffd;es</stream_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
         </field>
         <field>
           <column_name>banks_id</column_name>
@@ -1158,7 +1682,7 @@
         </field>
         <field>
           <column_name>invoice_number</column_name>
-          <stream_name>N&#xfffd; do documento fiscal</stream_name>
+          <stream_name>N&#xba; do documento fiscal</stream_name>
         </field>
         <field>
           <column_name>cost_centers_id</column_name>
@@ -1166,7 +1690,7 @@
         </field>
         <field>
           <column_name>payment_date</column_name>
-          <stream_name>Data da movimenta&#xfffd;&#xfffd;o</stream_name>
+          <stream_name>Data da nota fiscal</stream_name>
         </field>
         <field>
           <column_name>invoice_date</column_name>
@@ -1181,8 +1705,92 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>784</xloc>
-      <yloc>240</yloc>
+      <xloc>272</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Table billsreceive project 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>local</connection>
+    <schema/>
+    <table>billsreceives</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>Y</return_keys>
+    <return_field>billsreceive_id</return_field>
+    <fields>
+        <field>
+          <column_name>name</column_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
+        </field>
+        <field>
+          <column_name>amount</column_name>
+          <stream_name>Valor da movimenta&#xe7;&#xe3;o</stream_name>
+        </field>
+        <field>
+          <column_name>status</column_name>
+          <stream_name>Efetuada</stream_name>
+        </field>
+        <field>
+          <column_name>comments</column_name>
+          <stream_name>Observa&#xe7;&#xf5;es</stream_name>
+        </field>
+        <field>
+          <column_name>banks_id</column_name>
+          <stream_name>bank_id</stream_name>
+        </field>
+        <field>
+          <column_name>projects_id</column_name>
+          <stream_name>id_project</stream_name>
+        </field>
+        <field>
+          <column_name>invoice_number</column_name>
+          <stream_name>N&#xba; do documento fiscal</stream_name>
+        </field>
+        <field>
+          <column_name>cost_centers_id</column_name>
+          <stream_name>cost_center_billsreceive_project</stream_name>
+        </field>
+        <field>
+          <column_name>payment_date</column_name>
+          <stream_name>Data da nota fiscal</stream_name>
+        </field>
+        <field>
+          <column_name>invoice_date</column_name>
+          <stream_name>Data da nota fiscal</stream_name>
+        </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -1229,8 +1837,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>48</yloc>
+      <xloc>272</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
     </step>
@@ -1249,9 +1857,9 @@
     <connection>local</connection>
     <schema/>
     <table>projects</table>
-    <commit>1000</commit>
+    <commit>1</commit>
     <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
+    <ignore_errors>Y</ignore_errors>
     <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>
     <partitioning_enabled>N</partitioning_enabled>
@@ -1305,8 +1913,126 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>624</xloc>
-      <yloc>240</yloc>
+      <xloc>272</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Table project 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>local</connection>
+    <schema/>
+    <table>projects</table>
+    <commit>1</commit>
+    <truncate>N</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>name</column_name>
+          <stream_name>Proposta</stream_name>
+        </field>
+        <field>
+          <column_name>clients_id</column_name>
+          <stream_name>client_id</stream_name>
+        </field>
+        <field>
+          <column_name>banks_id</column_name>
+          <stream_name>bank_id</stream_name>
+        </field>
+        <field>
+          <column_name>amount</column_name>
+          <stream_name>Total do contrato</stream_name>
+        </field>
+        <field>
+          <column_name>notes</column_name>
+          <stream_name>Proposta</stream_name>
+        </field>
+        <field>
+          <column_name>status</column_name>
+          <stream_name>status_projeto</stream_name>
+        </field>
+        <field>
+          <column_name>number</column_name>
+          <stream_name>number_projeto</stream_name>
+        </field>
+        <field>
+          <column_name>id</column_name>
+          <stream_name>id_project</stream_name>
+        </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>672</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Modified Java Script Value 2 2</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;if&#x28;Banco &#x3d;&#x3d; &#x27;Banco do Brasil&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 1&#x3b;&#xa;&#x7d;else if&#x28;Banco &#x3d;&#x3d; &#x27;BRADESCO&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 2&#x3b;&#xa;&#x7d; else if&#x28;Banco &#x3d;&#x3d; &#x27;ITAU&#x27;&#x29; &#x7b;&#xa;	var bank_id &#x3d; 3&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	var bank_id &#x3d; null&#x3b;&#xa;&#x7d;&#xa;&#xa;var id_project &#x3d; 1&#x3b;&#xa;if &#x28; Proposta.indexOf&#x28;&#x27;-&#x27;&#x29; &#x3e; -1 &#x29; &#x7b;&#xa;	var parts &#x3d; Proposta.split&#x28;&#x22; - &#x22;&#x29;&#x3b;&#xa;	var id_project &#x3d; parts&#x5b;0&#x5d;&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	var id_project &#x3d; 1&#x3b;&#xa;&#x7d;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>bank_id</name>
+        <rename>bank_id</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>id_project</name>
+        <rename>id_project</rename>
+        <type>Number</type>
+        <length>16</length>
+        <precision>2</precision>
+        <replace>N</replace>
+      </field>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>672</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
     </step>

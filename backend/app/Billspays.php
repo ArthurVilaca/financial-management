@@ -36,4 +36,20 @@ class Billspays extends Model
 
         return $phases;
     }
+
+    public function loadBills($page, $pageSize) {
+        $phases = DB::table('billspays')
+            ->offset($page * $pageSize)
+            ->limit($pageSize)
+            ->get();
+
+        return $phases;
+    }
+
+    public function count() {
+        $phases = DB::table('billspays')
+            ->count();
+
+        return $phases;
+    }
 }

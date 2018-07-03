@@ -23,4 +23,19 @@ class Projects extends Model
         'number',
     ];
 
+    public function loadProjects($page, $pageSize) {
+        $phases = DB::table('projects')
+            ->offset($page * $pageSize)
+            ->limit($pageSize)
+            ->get();
+
+        return $phases;
+    }
+
+    public function count() {
+        $phases = DB::table('projects')
+            ->count();
+
+        return $phases;
+    }
 }

@@ -1,7 +1,16 @@
 <div class="main-section">
   <div class="row">
+    <div class="col-sm-8">
+      <span class="code-header">
+        <strong>Contas a Pagar</strong>
+      </span>
+    </div>
+    <div class="col-sm-4">
+      <button mat-raised-button color="primary" (click)="openFilter()">Filtro</button>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-12">
-      <span class="code-header"><strong>Contas a Pagar</strong></span>
       <div class="table-border-style table-responsive">
         <table class="table" style="width: 100%;">
           <thead>
@@ -14,7 +23,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let billspay of appState.provider.billspays">
-              <th scope="row">{{billspay.id}}</th>
+              <th scope="row">{{billspay.projects_id}} - {{billspay.id}}</th>
               <td>{{billspay.name}}</td>
               <td class="clickable" routerLink="/contaAPagar/{{billspay.id}}">
                 <i class="fas fa-edit"></i>
@@ -33,7 +42,7 @@
 <mat-paginator class="center" [length]="length"
   [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
-  (page)="pageEvent = $event">
+  (page)="pageEvent = search($event)">
 </mat-paginator>
 
 <a class="button-float" mat-fab routerLink="/contaAPagar/novo"><mat-icon>add</mat-icon></a>

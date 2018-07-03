@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
@@ -28,9 +29,20 @@ class BillspayController extends Controller
      */
     public function index()
     {
-         $billspays = $this->billspays->get();
+        $page = Input::get('page');
+        if( !isset($page)  ) {
+            $page = 0;
+        }
+        $pageSize = Input::get('pageSize');
+        if( !isset($pageSize)  ) {
+            $pageSize = 10;
+        }
+
+        $billspays = $this->billspayService->load($page, $pageSize);
+        $total = $this->billspayService->count();
 
         $this->response->setDataSet("billspays", $billspays);
+        $this->response->setDataSet("total", $total);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 

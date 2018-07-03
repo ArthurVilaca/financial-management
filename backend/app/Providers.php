@@ -25,4 +25,20 @@ class Providers extends Model
         'city',
         'state',
     ];
+
+    public function loadProviders($page, $pageSize) {
+        $phases = DB::table('providers')
+            ->offset($page * $pageSize)
+            ->limit($pageSize)
+            ->get();
+
+        return $phases;
+    }
+
+    public function count() {
+        $phases = DB::table('providers')
+            ->count();
+
+        return $phases;
+    }
 }

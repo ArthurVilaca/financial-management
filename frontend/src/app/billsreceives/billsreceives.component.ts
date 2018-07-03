@@ -22,10 +22,19 @@ export class BillsreceivesComponent {
     this.search();
   }
 
-  search() {
-    this.http.get('/billsreceive')
+  search($event?) {
+    if($event){
+      this.pageEvent = $event;
+      this.pageSize = $event.pageSize;
+    }
+    let page = 0;
+    if(this.pageEvent) {
+      page = this.pageEvent.pageIndex;
+    }
+    this.http.get('/billsreceive?page=' + page + '&pageSize=' + this.pageSize)
       .then((data: any) => {
         this.appState.set('billsreceives', data.dataset.billsreceive);
+        this.length = data.dataset.total;
       })
       .catch((error) => {
         console.log(error);

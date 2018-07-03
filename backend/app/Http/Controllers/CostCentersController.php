@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use JWTAuth;
 use JWTAuthException;
 use \App\Response\Response;
@@ -28,9 +29,20 @@ class CostCentersController extends Controller
      */
     public function index()
     {
-         $costCenters = $this->costCenters->get();
+        $page = Input::get('page');
+        if( !isset($page)  ) {
+            $page = 0;
+        }
+        $pageSize = Input::get('pageSize');
+        if( !isset($pageSize)  ) {
+            $pageSize = 10;
+        }
+
+        $costCenters = $this->costCentersService->load($page, $pageSize);
+        $total = $this->costCentersService->count();
 
         $this->response->setDataSet("costCenters", $costCenters);
+        $this->response->setDataSet("total", $total);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 

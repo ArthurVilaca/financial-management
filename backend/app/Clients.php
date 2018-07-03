@@ -25,4 +25,20 @@ class Clients extends Model
         'city',
         'state',
     ];
+
+    public function loadClients($page, $pageSize) {
+        $phases = DB::table('clients')
+            ->offset($page * $pageSize)
+            ->limit($pageSize)
+            ->get();
+
+        return $phases;
+    }
+
+    public function count() {
+        $phases = DB::table('clients')
+            ->count();
+
+        return $phases;
+    }
 }

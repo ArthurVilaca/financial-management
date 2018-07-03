@@ -23,4 +23,20 @@ class CostCenters extends Model
             ->first();
         return $costCenter;
     }
+
+    public function loadCostCenters($page, $pageSize) {
+        $phases = DB::table('cost_centers')
+            ->offset($page * $pageSize)
+            ->limit($pageSize)
+            ->get();
+
+        return $phases;
+    }
+
+    public function count() {
+        $phases = DB::table('cost_centers')
+            ->count();
+
+        return $phases;
+    }
 }

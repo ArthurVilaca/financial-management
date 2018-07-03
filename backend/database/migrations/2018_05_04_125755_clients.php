@@ -27,6 +27,8 @@ class Clients extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
 
+            $table->string('social_reason')->nullable();
+
             $table->timestamps();
         });
     }
