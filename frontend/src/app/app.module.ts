@@ -62,6 +62,7 @@ import { BillspayComponent } from './billspay/billspay.component';
 import { BillsreceivesComponent } from './billsreceives/billsreceives.component';
 import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
 import { SearchBillsComponent } from './search-bills/search-bills.component';
+import { SearchPersonComponent } from './search-person/search-person.component';
 
 
 @NgModule({
@@ -93,7 +94,8 @@ import { SearchBillsComponent } from './search-bills/search-bills.component';
     BillspayComponent,
     BillsreceivesComponent,
     BillsreceiveComponent,
-    SearchBillsComponent
+    SearchBillsComponent,
+    SearchPersonComponent
   ],
   imports: [
     BrowserModule,

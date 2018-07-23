@@ -37,8 +37,36 @@ class Billsreceives extends Model
         return $phases;
     }
 
-    public function loadBills($page, $pageSize) {
+    public function loadBills($page, $pageSize, $filters) {
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['due_from']) ) {
+            $where[] = [
+                'due_date', '>', $filters['due_from']
+            ];
+        }
+        if( isset($filters['due_to']) ) {
+            $where[] = [
+                'due_date', '<', $filters['due_to']
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('billsreceives')
+            ->where($where)
             ->offset($page * $pageSize)
             ->limit($pageSize)
             ->get();
@@ -46,8 +74,36 @@ class Billsreceives extends Model
         return $phases;
     }
 
-    public function count() {
+    public function count($filters) {
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['due_from']) ) {
+            $where[] = [
+                'due_date', '>', $filters['due_from']
+            ];
+        }
+        if( isset($filters['due_to']) ) {
+            $where[] = [
+                'due_date', '<', $filters['due_to']
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('billsreceives')
+            ->where($where)
             ->count();
 
         return $phases;

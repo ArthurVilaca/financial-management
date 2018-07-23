@@ -35,7 +35,7 @@ export class BillspaysComponent implements OnInit {
     if(this.pageEvent) {
       page = this.pageEvent.pageIndex;
     }
-    this.http.get('/billspay?page=' + page + '&pageSize=' + this.pageSize)
+    this.http.get('/billspay?page=' + page + '&pageSize=' + this.pageSize + '&' + this.http.serialize(this.filter))
       .then((data: any) => {
         this.appState.set('billspays', data.dataset.billspays);
         this.length = data.dataset.total;
@@ -52,7 +52,8 @@ export class BillspaysComponent implements OnInit {
       data: { filter: this.filter }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      this.filter = result;
+      this.search();
     });
   }
 

@@ -25,16 +25,16 @@ class BillspayService extends Service
         return $returnBillspay;
     }
 
-    public function load($page, $pageSize)
+    public function load($page, $pageSize, $filters)
     {
-        $returnBillspay = $this->billspays->loadBills($page, $pageSize);
+        $returnBillspay = $this->billspays->loadBills($page, $pageSize, $filters);
 
         return $returnBillspay;
     }
 
-    public function count()
+    public function count($filters)
     {
-        $countBillspay = $this->billspays->count();
+        $countBillspay = $this->billspays->count($filters);
 
         return $countBillspay;
     }

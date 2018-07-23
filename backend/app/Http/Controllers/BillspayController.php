@@ -38,8 +38,25 @@ class BillspayController extends Controller
             $pageSize = 10;
         }
 
-        $billspays = $this->billspayService->load($page, $pageSize);
-        $total = $this->billspayService->count();
+        $filters = [];
+        if( Input::get('date_from') !== null ) {
+            $filters['date_from'] = Input::get('date_from');
+        }
+        if( Input::get('date_to') !== null ) {
+            $filters['date_to'] = Input::get('date_to');
+        }
+        if( Input::get('due_from') !== null ) {
+            $filters['due_from'] = Input::get('due_from');
+        }
+        if( Input::get('due_to') !== null ) {
+            $filters['due_to'] = Input::get('due_to');
+        }
+        if( Input::get('status') !== null ) {
+            $filters['status'] = Input::get('status');
+        }
+
+        $billspays = $this->billspayService->load($page, $pageSize, $filters);
+        $total = $this->billspayService->count($filters);
 
         $this->response->setDataSet("billspays", $billspays);
         $this->response->setDataSet("total", $total);
@@ -109,7 +126,7 @@ class BillspayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $billspay = $this->billspay->find($id);
+        $billspay = $this->billspays->find($id);
 
         $billspay_data = $request->all();
         $billspay->fill($billspay_data);

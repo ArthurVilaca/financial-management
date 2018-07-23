@@ -25,16 +25,16 @@ class BillsreceiveService extends Service
         return $returnBill;
     }
 
-    public function load($page, $pageSize)
+    public function load($page, $pageSize, $filters)
     {
-        $returnBill = $this->billsreceives->loadBills($page, $pageSize);
+        $returnBill = $this->billsreceives->loadBills($page, $pageSize, $filters);
 
         return $returnBill;
     }
 
-    public function count()
+    public function count($filters)
     {
-        $countBills = $this->billsreceives->count();
+        $countBills = $this->billsreceives->count($filters);
 
         return $countBills;
     }

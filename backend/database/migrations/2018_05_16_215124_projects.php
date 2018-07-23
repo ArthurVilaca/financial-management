@@ -67,6 +67,7 @@ class Projects extends Migration
             $table->string('name');
             $table->string('comments');
             $table->string('status');
+            $table->enum('type', ['COMUM', 'CREDITO'])->default('COMUM');
             $table->double('amount');
             $table->dateTime('due_date')->nullable();
             $table->dateTime('payment_date')->nullable();
@@ -96,6 +97,7 @@ class Projects extends Migration
             $table->string('name');
             $table->string('comments');
             $table->string('status');
+            $table->enum('type', ['COMUM', 'CREDITO'])->default('COMUM');
             $table->double('amount');
             $table->dateTime('due_date')->nullable();
             $table->dateTime('payment_date')->nullable();

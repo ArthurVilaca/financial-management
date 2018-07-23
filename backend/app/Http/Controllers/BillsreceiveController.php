@@ -38,8 +38,25 @@ class BillsreceiveController extends Controller
             $pageSize = 10;
         }
 
-        $billsreceive = $this->billsreceiveService->load($page, $pageSize);
-        $total = $this->billsreceiveService->count();
+        $filters = [];
+        if( Input::get('date_from') !== null ) {
+            $filters['date_from'] = Input::get('date_from');
+        }
+        if( Input::get('date_to') !== null ) {
+            $filters['date_to'] = Input::get('date_to');
+        }
+        if( Input::get('due_from') !== null ) {
+            $filters['due_from'] = Input::get('due_from');
+        }
+        if( Input::get('due_to') !== null ) {
+            $filters['due_to'] = Input::get('due_to');
+        }
+        if( Input::get('status') !== null ) {
+            $filters['status'] = Input::get('status');
+        }
+
+        $billsreceive = $this->billsreceiveService->load($page, $pageSize, $filters);
+        $total = $this->billsreceiveService->count($filters);
 
         $this->response->setDataSet("billsreceive", $billsreceive);
         $this->response->setDataSet("total", $total);
@@ -109,7 +126,7 @@ class BillsreceiveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $billsreceive = $this->billsreceive->find($id);
+        $billsreceive = $this->billsreceives->find($id);
 
         $billsreceive_data = $request->all();
         $billsreceive->fill($billsreceive_data);
