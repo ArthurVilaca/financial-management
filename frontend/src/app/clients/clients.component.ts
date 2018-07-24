@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
-import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
-import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material';
+import { SearchPersonComponent } from '../search-person/search-person.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-clients',
@@ -11,6 +11,7 @@ import { PageEvent } from '@angular/material';
   styleUrls: ['./clients.component.css']
 })
 export class ClientsComponent implements OnInit {
+  filter: any = {};
   length = 100;
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
@@ -18,7 +19,7 @@ export class ClientsComponent implements OnInit {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  constructor(private http: HttpService, private appState: ProviderService) {
+  constructor(public dialog: MatDialog, private http: HttpService, private appState: ProviderService) {
     this.search();
   }
 
@@ -35,7 +36,7 @@ export class ClientsComponent implements OnInit {
     if(this.pageEvent) {
       page = this.pageEvent.pageIndex;
     }
-    this.http.get('/clients?page=' + page + '&pageSize=' + this.pageSize)
+    this.http.get('/clients?page=' + page + '&pageSize=' + this.pageSize + '&' + this.http.serialize(this.filter))
       .then((data: any) => {
         this.appState.set('clients', data.dataset.clients);
         this.length = data.dataset.total;
@@ -47,6 +48,18 @@ export class ClientsComponent implements OnInit {
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+
+  openFilter() {
+    let dialogRef = this.dialog.open(SearchPersonComponent, {
+      width: '70%',
+      height: '400px',
+      data: { filter: this.filter }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.filter = result;
+      this.search();
+    });
   }
 
 }

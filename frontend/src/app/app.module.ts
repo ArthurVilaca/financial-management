@@ -63,6 +63,10 @@ import { BillsreceivesComponent } from './billsreceives/billsreceives.component'
 import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
 import { SearchBillsComponent } from './search-bills/search-bills.component';
 import { SearchPersonComponent } from './search-person/search-person.component';
+import { ReportsComponent } from './reports/reports.component';
+import { ReportBillspayComponent } from './report-billspay/report-billspay.component';
+import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
+import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 
 
 @NgModule({
@@ -95,7 +99,11 @@ import { SearchPersonComponent } from './search-person/search-person.component';
     BillsreceivesComponent,
     BillsreceiveComponent,
     SearchBillsComponent,
-    SearchPersonComponent
+    SearchPersonComponent,
+    ReportsComponent,
+    ReportBillspayComponent,
+    ReportBillsreceiveComponent,
+    ReportCashflowComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +135,6 @@ import { SearchPersonComponent } from './search-person/search-person.component';
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent, SearchBillsComponent ]
+  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent, SearchBillsComponent, SearchPersonComponent ]
 })
 export class AppModule { }

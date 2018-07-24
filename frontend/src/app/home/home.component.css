@@ -1,0 +1,87 @@
+.main-section {
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 20px 10px 20px;
+    position: relative;
+}
+
+.full-width {
+    width: 100%;
+    padding: 20px;
+}
+
+.half-width {
+    width: 49%;
+    padding: 20px;
+}
+
+.div-3-width {
+    width: 21%;
+    padding: 20px;
+}
+
+.div-1-width {
+    width: 9%;
+    padding: 20px;
+}
+
+.button-submit {
+    margin: auto;
+    width: 50%;
+    display: block;
+}
+
+.photo-galery-button {
+    padding-top: 40px;
+}
+
+.border-box {
+    min-height: 300px;
+    border: 1px solid gray;
+    padding: 30px;
+}
+
+.preview {
+    height: 100px;
+    width: 100px;
+}
+
+.image-iten {
+    min-height: 100px;
+}
+
+.button-float {
+    position: fixed;
+    bottom: 15px;
+    right: 20px;
+}
+
+.mat-list .mat-list-item {
+    padding: 20px;
+}
+
+.add-button {
+    background-color: #ff4868;
+}
+
+.button-remove {
+    display: inline-block;
+    width: 100px;
+    padding: 20px;
+}
+
+.side-nav-section {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+}
+
+.side-nav-left {
+    position: fixed;
+    top: 100px;
+    left: 40px;
+}
+
+.comment {
+    bottom: 80px;
+}

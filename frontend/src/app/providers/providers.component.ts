@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
 import { PageEvent } from '@angular/material';
+import { SearchPersonComponent } from '../search-person/search-person.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-providers',
@@ -9,6 +11,7 @@ import { PageEvent } from '@angular/material';
   styleUrls: ['./providers.component.css']
 })
 export class ProvidersComponent implements OnInit {
+  filter: any = {};
   length = 100;
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
@@ -16,7 +19,7 @@ export class ProvidersComponent implements OnInit {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  constructor(private http: HttpService, private appState: ProviderService) {
+  constructor(public dialog: MatDialog, private http: HttpService, private appState: ProviderService) {
   }
 
   ngOnInit() {
@@ -32,7 +35,7 @@ export class ProvidersComponent implements OnInit {
     if(this.pageEvent) {
       page = this.pageEvent.pageIndex;
     }
-    this.http.get('/providers?page=' + page + '&pageSize=' + this.pageSize)
+    this.http.get('/providers?page=' + page + '&pageSize=' + this.pageSize + '&' + this.http.serialize(this.filter))
       .then((data: any) => {
         this.appState.set('providers', data.dataset.providers);
         this.length = data.dataset.total;
@@ -44,6 +47,18 @@ export class ProvidersComponent implements OnInit {
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+
+  openFilter() {
+    let dialogRef = this.dialog.open(SearchPersonComponent, {
+      width: '70%',
+      height: '400px',
+      data: { filter: this.filter }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.filter = result;
+      this.search();
+    });
   }
 
 }

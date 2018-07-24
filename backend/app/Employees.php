@@ -61,6 +61,20 @@ class Employees extends Authenticatable
         'expiration_date',
     ];
 
+    public function load($filters) {
+        $where = [];
+        if( isset($filters['name']) ) {
+            $where[] = [
+                'name', 'like', '%'.$filters['name'].'%'
+            ];
+        }
+
+        $user = DB::table('employees')
+            ->where($where)
+            ->get();
+        return $user;
+    }
+
     public function findUserByEmail($email) {
         $user = DB::table('employees')
             ->where('email', $email)

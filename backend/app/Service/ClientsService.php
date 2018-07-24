@@ -38,16 +38,16 @@ class ClientsService extends Service
         return $taxes;
     }
 
-    public function load($page, $pageSize)
+    public function load($page, $pageSize, $filters)
     {
-        $returnClients = $this->clients->loadClients($page, $pageSize);
+        $returnClients = $this->clients->loadClients($page, $pageSize, $filters);
 
         return $returnClients;
     }
 
-    public function count()
+    public function count($filters)
     {
-        $countClients = $this->clients->count();
+        $countClients = $this->clients->count($filters);
 
         return $countClients;
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use JWTAuth;
 use App\Employees;
 use JWTAuthException;
@@ -28,7 +29,12 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = $this->employees->get();
+        $filters = [];
+        if( Input::get('name') !== null ) {
+            $filters['name'] = Input::get('name');
+        }
+
+        $employees = $this->employees->load($filters);
 
         $this->response->setDataSet("employees", $employees);
         $this->response->setType("S");

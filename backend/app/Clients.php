@@ -26,8 +26,31 @@ class Clients extends Model
         'state',
     ];
 
-    public function loadClients($page, $pageSize) {
+    public function loadClients($page, $pageSize, $filters) {
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['name']) ) {
+            $where[] = [
+                'name', 'like', '%'.$filters['name'].'%'
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('clients')
+            ->where($where)
             ->offset($page * $pageSize)
             ->limit($pageSize)
             ->get();
@@ -35,8 +58,31 @@ class Clients extends Model
         return $phases;
     }
 
-    public function count() {
+    public function count($filters) {
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['name']) ) {
+            $where[] = [
+                'name', 'like', '%'.$filters['name'].'%'
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('clients')
+            ->where($where)
             ->count();
 
         return $phases;

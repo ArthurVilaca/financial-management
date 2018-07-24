@@ -17,6 +17,8 @@
             <tr>
               <th>ID</th>
               <th>Nome</th>
+              <th>Status</th>
+              <th>Valor</th>
               <th>Acessar</th>
               <th>Excluir</th>
             </tr>
@@ -25,6 +27,8 @@
             <tr *ngFor="let billspay of appState.provider.billspays">
               <th scope="row">{{billspay.projects_id}} - {{billspay.id}}</th>
               <td>{{billspay.name}}</td>
+              <td>{{billspay.status}}</td>
+              <td>{{billspay.amount}}</td>
               <td class="clickable" routerLink="/contaAPagar/{{billspay.id}}">
                 <i class="fas fa-edit"></i>
               </td>

@@ -1,7 +1,15 @@
 <div class="main-section">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-3">
       <span class="code-header"><strong>Funcionarios</strong></span>
+    </div>
+    <div class="col-sm-9">
+      <label class="label-search">Pesquisar..</label>
+      <input (change)="search()" name="name" class="input" matInput placeholder="Pesquisar..." [(ngModel)]="filter.name">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
       <div class="table-border-style table-responsive">
         <table class="table" style="width: 100%;">
           <thead>

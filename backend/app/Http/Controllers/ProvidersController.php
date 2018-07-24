@@ -39,8 +39,22 @@ class ProvidersController extends Controller
             $pageSize = 10;
         }
 
-        $providers = $this->providersService->load($page, $pageSize);
-        $total = $this->providersService->count();
+        $filters = [];
+        if( Input::get('date_from') !== null ) {
+            $filters['date_from'] = Input::get('date_from');
+        }
+        if( Input::get('date_to') !== null ) {
+            $filters['date_to'] = Input::get('date_to');
+        }
+        if( Input::get('name') !== null ) {
+            $filters['name'] = Input::get('name');
+        }
+        if( Input::get('status') !== null ) {
+            $filters['status'] = Input::get('status');
+        }
+
+        $providers = $this->providersService->load($page, $pageSize, $filters);
+        $total = $this->providersService->count($filters);
 
         $this->response->setDataSet("providers", $providers);
         $this->response->setDataSet("total", $total);

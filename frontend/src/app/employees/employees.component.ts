@@ -10,13 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./employees.component.scss']
 })
 export class EmployeesComponent {
+  filter: any = {};
 
   constructor(private router: Router, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.search();
   }
 
   search() {
-    this.http.get('/employees')
+    this.http.get('/employees' + '?' + this.http.serialize(this.filter))
       .then((data: any) => {
         this.appState.set('employees', data.dataset.employees);
       })

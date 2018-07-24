@@ -38,16 +38,16 @@ class ProvidersService extends Service
         return $taxes;
     }
 
-    public function load($page, $pageSize)
+    public function load($page, $pageSize, $filters)
     {
-        $returnProviders = $this->providers->loadProviders($page, $pageSize);
+        $returnProviders = $this->providers->loadProviders($page, $pageSize, $filters);
 
         return $returnProviders;
     }
 
-    public function count()
+    public function count($filters)
     {
-        $countProviders = $this->providers->count();
+        $countProviders = $this->providers->count($filters);
 
         return $countProviders;
     }

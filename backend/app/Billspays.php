@@ -108,4 +108,26 @@ class Billspays extends Model
 
         return $phases;
     }
+
+    public function loadAlerts() {
+        $dataset = [];
+        $where = [];
+
+        $where[] = [
+            'due_date', '=', (new \DateTime())->format('Y-m-d')
+        ];
+
+        $bills = DB::table('billspays')
+            ->where($where)
+            ->count();
+
+        $amount = DB::table('billspays')
+            ->where($where)
+            ->sum('billspays.amount');
+
+        $dataset[] = [
+            'msg' => 'Contas vencendo hoje: '.$bills.' no total de R$ '.number_format($amount, 2)
+        ];
+        return $dataset;
+    }
 }

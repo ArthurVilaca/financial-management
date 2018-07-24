@@ -39,6 +39,9 @@ class AuxTables extends Migration
             $table->string('name');
             $table->string('type')->nullable();
 
+            $table->integer('cost_centers_id')->unsigned()->nullable();
+            $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
+
             $table->timestamps();
         });
     }
