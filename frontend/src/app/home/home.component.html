@@ -1,4 +1,12 @@
 <div class="main-section">
-  <p>Atenção:</p>
-  <p *ngFor="let alert of alerts">{{ alert.msg }}</p>
+
+  <mat-card *ngFor="let alert of alerts">
+    <mat-card-header>
+      <strong>Atenção</strong>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ alert.msg }}</p>
+    </mat-card-content>
+  </mat-card>
+
 </div>

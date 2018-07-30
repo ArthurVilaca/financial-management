@@ -1,3 +1,41 @@
-<p>
-  report-billspay works!
-</p>
+<div class="main-section">
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="code-header"><strong>Relarorio</strong></span>
+    </div>
+    <div class="col-sm-2">
+      <input type="checkbox" (change)="search()" [(ngModel)]="filter.prevista">PREVISTA
+    </div>
+    <div class="col-sm-2">
+      <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA
+    </div>
+    <div class="col-sm-4">
+      <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="table-border-style table-responsive">
+        <table class="table" style="width: 100%;" matSort (matSortChange)="sortData($event)">
+          <thead>
+            <tr>
+              <th mat-sort-header="name">Centro de Custo</th>
+              <th mat-sort-header="bills">Contas</th>
+              <th mat-sort-header="amount">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bill of sortedData">
+              <td scope="row">{{bill.name}}</td>
+              <td>{{bill.bills}}</td>
+              <td>{{bill.amount | currency:'BRL':true }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

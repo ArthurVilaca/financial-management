@@ -23,22 +23,25 @@ Route::post('/login', 'EmployeesController@login');
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     //Rotas de usuario
-    Route::resource('employees', 'EmployeesController');
-    Route::resource('clients', 'ClientsController');
-    Route::resource('providers', 'ProvidersController');
-    Route::resource('taxes', 'TaxesController');
-    Route::resource('banks', 'BanksController');
-    Route::resource('cost_centers', 'CostCentersController');
-    Route::resource('projects', 'ProjectsController');
-    Route::resource('billspay', 'BillspayController');
-    Route::resource('billsreceive', 'BillsreceiveController');
-    Route::resource('alerts', 'AlertsController');
 
-    Route::post('tax/provider/{provider_id}', 'TaxesController@provider');
-    Route::post('tax/client/{client_id}', 'TaxesController@client');
-
-    Route::resource('reports', 'ReportsController');
-
-    Route::post('/profile', 'EmployeesController@profile');
-    Route::get('/zipcode/{number}', 'FunctionsController@zipcode');
 });
+Route::resource('employees', 'EmployeesController');
+Route::resource('clients', 'ClientsController');
+Route::resource('providers', 'ProvidersController');
+Route::resource('taxes', 'TaxesController');
+Route::resource('banks', 'BanksController');
+Route::resource('cost_centers', 'CostCentersController');
+Route::resource('projects', 'ProjectsController');
+Route::resource('billspay', 'BillspayController');
+Route::resource('billsreceive', 'BillsreceiveController');
+Route::resource('alerts', 'AlertsController');
+
+Route::post('tax/provider/{provider_id}', 'TaxesController@provider');
+Route::post('tax/client/{client_id}', 'TaxesController@client');
+
+Route::post('/profile', 'EmployeesController@profile');
+Route::get('/zipcode/{number}', 'FunctionsController@zipcode');
+
+Route::get('/reports/billspay', 'ReportsController@billspay');
+Route::get('/reports/billsreceive', 'ReportsController@billsreceive');
+Route::resource('reports', 'ReportsController');

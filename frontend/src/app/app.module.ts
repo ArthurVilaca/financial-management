@@ -1,9 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 import { ProviderService } from './provider.service';
 import { HttpService } from './http.service';
@@ -32,6 +36,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSortModule } from '@angular/material/sort';
 
 
 import { AppComponent } from './app.component';
@@ -132,8 +137,9 @@ import { ReportCashflowComponent } from './report-cashflow/report-cashflow.compo
     MatExpansionModule,
     MatPaginatorModule,
     MatChipsModule,
+    MatSortModule,
   ],
-  providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, ],
+  providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
   entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent, SearchBillsComponent, SearchPersonComponent ]
 })

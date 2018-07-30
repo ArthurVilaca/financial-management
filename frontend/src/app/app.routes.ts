@@ -22,6 +22,9 @@ import { BillsreceiveComponent } from './billsreceive/billsreceive.component';
 import { BillsreceivesComponent } from './billsreceives/billsreceives.component';
 import { ProjectComponent } from './project/project.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { ReportsComponent } from './reports/reports.component';
+import { ReportBillspayComponent } from './report-billspay/report-billspay.component';
+import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -55,6 +58,9 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'projetos', component: ProjectsComponent },
 	{ path: 'projeto/novo', component: ProjectComponent },
 	{ path: 'projeto/:id', component: ProjectComponent },
+	{ path: 'relatorios', component: ReportsComponent },
+	{ path: 'relatorio/contasAPagar', component: ReportBillspayComponent },
+	{ path: 'relatorio/contasAReceber', component: ReportBillsreceiveComponent },
 ];
 
 export const rootRouterConfig: Routes = [

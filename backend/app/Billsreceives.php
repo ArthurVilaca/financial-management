@@ -108,4 +108,22 @@ class Billsreceives extends Model
 
         return $phases;
     }
+
+    public function getReport($filter) {
+        $phases = DB::table('cost_centers')
+            ->get();    
+
+        foreach ($phases as $key => $value) {
+
+            $value->bills = DB::table('billsreceives')
+                ->where('billsreceives.cost_centers_id', $value->id)
+                ->count();
+
+            $value->amount = DB::table('billsreceives')
+                ->where('billsreceives.cost_centers_id', $value->id)
+                ->sum('billsreceives.amount');
+        }
+
+        return $phases;
+    }
 }
