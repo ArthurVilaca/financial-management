@@ -52,19 +52,25 @@
           <input name="invoice_number" matInput placeholder="Numero Nota Fiscal" [(ngModel)]="billspay.invoice_number" [disabled]=" billspay.status == 'Efetuada' ">
         </mat-form-field>
 
-        <mat-form-field class="half-width">
-          <input name="invoice_date" matInput [matDatepicker]="picker-incoice-date" placeholder="Data Nota Fiscal" [(ngModel)]="billspay.invoice_date" [disabled]=" billspay.status == 'Efetuada' ">
-          <mat-datepicker-toggle matSuffix [for]="picker-incoice-date"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+       <mat-form-field class="half-width">
+          <input name="invoice_date" matInput [matDatepicker]="pickerIncoiceDate" placeholder="Data Nota Fiscal" [(ngModel)]="billspay.invoice_date" [disabled]=" billspay.status == 'Efetuada' ">
+          <mat-datepicker-toggle matSuffix [for]="pickerIncoiceDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerIncoiceDate></mat-datepicker>
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="payment_date" matInput [matDatepicker]="picker-payment-date" placeholder="Data Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Efetuada' ">
-          <mat-datepicker-toggle matSuffix [for]="picker-payment-date"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input name="payment_date" matInput [matDatepicker]="pickerPaymentDate" placeholder="Data Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Efetuada' ">
+          <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerPaymentDate></mat-datepicker>
         </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input type="number" name="numberInstallments" matInput placeholder="Número de Parcelas" [(ngModel)]="billspay.numberInstallments
+          ">
+        </mat-form-field>
+
       </mat-list-item>
 
       <div class="full-width button-submit">

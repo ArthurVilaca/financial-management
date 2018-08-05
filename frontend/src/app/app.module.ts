@@ -39,6 +39,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 
 
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -72,6 +73,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { ReportBillspayComponent } from './report-billspay/report-billspay.component';
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
 import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
+import { SearchProjectsComponent } from './search-projects/search-projects.component';
 
 
 @NgModule({
@@ -108,7 +110,8 @@ import { ReportCashflowComponent } from './report-cashflow/report-cashflow.compo
     ReportsComponent,
     ReportBillspayComponent,
     ReportBillsreceiveComponent,
-    ReportCashflowComponent
+    ReportCashflowComponent,
+    SearchProjectsComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +134,6 @@ import { ReportCashflowComponent } from './report-cashflow/report-cashflow.compo
     MatSelectModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
     MatExpansionModule,
@@ -141,6 +143,6 @@ import { ReportCashflowComponent } from './report-cashflow/report-cashflow.compo
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent, SearchBillsComponent, SearchPersonComponent ]
+  entryComponents: [ DialogOverviewExampleDialog, TaxSelectionComponent, SearchBillsComponent, SearchPersonComponent, SearchProjectsComponent ]
 })
 export class AppModule { }

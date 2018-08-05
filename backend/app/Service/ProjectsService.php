@@ -123,16 +123,16 @@ class ProjectsService extends Service
         return $billsreceives;
     }
 
-    public function load($page, $pageSize)
+    public function load($page, $pageSize, $filters)
     {
-        $returnProject = $this->projects->loadProjects($page, $pageSize);
+        $returnProject = $this->projects->loadProjects($page, $pageSize,$filters);
 
         return $returnProject;
     }
 
-    public function count()
+    public function count($filters)
     {
-        $countProjects = $this->projects->count();
+        $countProjects = $this->projects->count($filters);
 
         return $countProjects;
     }

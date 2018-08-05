@@ -23,8 +23,32 @@ class Projects extends Model
         'number',
     ];
 
-    public function loadProjects($page, $pageSize) {
+    public function loadProjects($page, $pageSize,$filters) {
+
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['name']) ) {
+            $where[] = [
+                'name', 'like', '%'.$filters['name'].'%'
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('projects')
+            ->where($where)
             ->offset($page * $pageSize)
             ->limit($pageSize)
             ->get();
@@ -32,8 +56,31 @@ class Projects extends Model
         return $phases;
     }
 
-    public function count() {
+    public function count($filters) {
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['name']) ) {
+            $where[] = [
+                'name', 'like', '%'.$filters['name'].'%'
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('projects')
+            ->where($where)
             ->count();
 
         return $phases;

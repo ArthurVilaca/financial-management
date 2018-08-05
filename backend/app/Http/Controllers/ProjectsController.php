@@ -39,8 +39,22 @@ class ProjectsController extends Controller
             $pageSize = 10;
         }
 
-        $projects = $this->projectsService->load($page, $pageSize);
-        $total = $this->projectsService->count();
+        $filters = [];
+        if( Input::get('date_from') !== null ) {
+            $filters['date_from'] = Input::get('date_from');
+        }
+        if( Input::get('date_to') !== null ) {
+            $filters['date_to'] = Input::get('date_to');
+        }
+        if( Input::get('name') !== null ) {
+            $filters['name'] = Input::get('name');
+        }
+        if( Input::get('status') !== null ) {
+            $filters['status'] = Input::get('status');
+        }
+
+        $projects = $this->projectsService->load($page, $pageSize,$filters);
+        $total = $this->projectsService->count($filters);
 
         $this->response->setDataSet("projects", $projects);
         $this->response->setDataSet("total", $total);

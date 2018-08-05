@@ -26,6 +26,8 @@ class Billspays extends Model
         'cost_centers_id',
         'discounts',
         'additions',
+        'numberInstallments',
+        'cost_centers_id'
     ];
 
     public function findByProject($id) {

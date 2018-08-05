@@ -11,11 +11,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class BillspayComponent {
   billspay: any = {};
+  filter : String = "DESPESA";
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadBillspay();
   }
-  
+
   loadBillspay() {
     this.route.params.subscribe(params => {
       if(params['id']) {
@@ -42,9 +43,10 @@ export class BillspayComponent {
       .catch((error) => {
         console.log(error);
       });
-    
-    this.http.get('/cost_centers')
+
+    this.http.get('/cost_centers?filter='+this.filter)
       .then((data: any) => {
+
         this.appState.set('cost_centers', data.dataset.costCenters);
       })
       .catch((error) => {
