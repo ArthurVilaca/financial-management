@@ -73,15 +73,25 @@
 
       </mat-list-item>
       <mat-list-item role="listitem">
-          <mat-form-field class="half-width">
-              <mat-select name="projects_id" placeholder="Projeto" [(ngModel)]="billspay.projects_id" [disabled]=" billspay.status == 'Efetuada' ">
-                <mat-option *ngFor="let project of appState.provider.projects" [value]="project.id">{{project.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+              <mat-form-field class="half-width">
+                <mat-select name="value" placeholder="Desconto/Acréscimo" [(ngModel)]="billspay.value" [disabled]=" billspay.status == 'Efetuada' ">
+                  <mat-option [value]="'Desconto'">DESCONTO</mat-option>
+                  <mat-option [value]="'Acréscimo'">ACRÉSCIMO</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="half-width">
+                  <input type="number" name="discount" matInput placeholder="Valor Desconto/Acréscimo" [(ngModel)]="billspay.changeValue
+                  ">
+              </mat-form-field>
       </mat-list-item>
 
       <div class="full-width button-submit">
         <button type="submit" mat-raised-button color="primary" class="button-submit" [disabled]=" billspay.status == 'Efetuada' " >Salvar</button>
+      </div>
+      <br>
+      <div class="full-width button-submit" *ngIf="billspay.status == 'Prevista'">
+          <button type="button" mat-raised-button color="primary" class="button-submit" [disabled]=" billspay.status == 'Efetuada' " >Gerar Nota Fiscal</button>
       </div>
     </mat-list>
   </form>
