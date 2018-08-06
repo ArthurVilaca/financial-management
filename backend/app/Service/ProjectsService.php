@@ -97,8 +97,7 @@ class ProjectsService extends Service
                         'projects_phases_id' => $returnPhase->id,
                         'due_date' => $date,
                     ]);
-                }
-                $i  = 30;                            
+                }                         
             }
 
             //////////// commented to wait for validation
