@@ -72,6 +72,13 @@
         </mat-form-field>
 
       </mat-list-item>
+      <mat-list-item role="listitem">
+          <mat-form-field class="half-width">
+              <mat-select name="projects_id" placeholder="Projeto" [(ngModel)]="billspay.projects_id" [disabled]=" billspay.status == 'Efetuada' ">
+                <mat-option *ngFor="let project of appState.provider.projects" [value]="project.id">{{project.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+      </mat-list-item>
 
       <div class="full-width button-submit">
         <button type="submit" mat-raised-button color="primary" class="button-submit" [disabled]=" billspay.status == 'Efetuada' " >Salvar</button>

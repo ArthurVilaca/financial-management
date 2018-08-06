@@ -18,7 +18,7 @@ class ProjectsService extends Service
     private $billsreceives;
     private $providers;
     private $taxes;
-    private $costCenters;
+    private $costCenters;    
     private $providerTaxes;
 
     public function __construct()
@@ -34,7 +34,7 @@ class ProjectsService extends Service
     }
 
     public function create(Request $request)
-    {
+    {    
         $returnProject = $this->projects->create([
             'name' => $request->get('name'),
             'notes' => $request->get('notes'),
@@ -47,7 +47,10 @@ class ProjectsService extends Service
 
         $returnProject['projects_phases'] = [];
         $projects_phases = $request->get('projects_phases');
+        $i = 0;
         foreach ($projects_phases as $key => $value) {
+            
+           // $date->add(new DateInterval('P'.$i.'D'));
 
             $date = new \DateTime($value['expiration_date']);
             $returnPhase = $this->projectsPhases->create([
@@ -59,6 +62,44 @@ class ProjectsService extends Service
                 'projects_id' => $returnProject->id,
                 'providers_id' => $value['providers_id']
             ]);
+
+            //Contas a pagar referente a fornecedor
+            $id_provider = $value['providers_id'];
+            $provider_name = $this->providers->getNameProvider($id_provider);                        
+
+            $taxes = $this->providerTaxes->loadByProvider($value['providers_id']);
+            for($i = 0 ; $i < $value['number']; $i ++){
+                if(isset($taxes) && $taxes != ''){
+                    foreach ($taxes as $tax) {
+
+                        if($tax->collection == '%') {
+                            $valueTax = ($value['amount'] / 100) * $tax->amount;
+                        } else {
+                            $valueTax = $tax->amount;
+                        }
+                        //$valueTax = ($valueTax - ($valueTax * $tax->amount));
+
+                        $this->billspays->create([
+                            'name' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'). 'e ao fornecedor'.$provider_name,
+                            'status' => 'Prevista',
+                            'comments' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'). 'e ao fornecedor'.$provider_name,
+                            'amount' => $valueTax,
+                            'projects_phases_id' => $returnPhase->id,
+                            'due_date' => $date,
+                        ]);
+                   }
+                }else{
+                    $this->billspays->create([
+                        'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
+                        'status' => 'Prevista',
+                        'comments' => 'Conta referente ao fornecedor '.$provider_name.' - REF '.$date->format('Y-m'),
+                        'amount' => $valueTax,
+                        'projects_phases_id' => $returnPhase->id,
+                        'due_date' => $date,
+                    ]);
+                }
+                $i  = 30;                            
+            }
 
             //////////// commented to wait for validation
             // for ($i=0; $i < $value['number']; $i++) { 
@@ -91,6 +132,7 @@ class ProjectsService extends Service
             // }
         }
 
+        //Conas a receber o projeto cadastrado
         $costCenter = $this->costCenters->newProject();
         for ($i=0; $i < $request->get('number'); $i++) { 
             $this->billsreceives->create([
@@ -104,6 +146,8 @@ class ProjectsService extends Service
                 'cost_centers_id' => $costCenter->id
             ]);
         }
+        
+
 
         return $returnProject;
     }

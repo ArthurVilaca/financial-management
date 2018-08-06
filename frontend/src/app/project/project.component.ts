@@ -14,6 +14,8 @@ export class ProjectComponent {
     projects_phases: []
   };
 
+  billspay: any ={}
+
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadProject();
     this.loadFillData();
@@ -30,6 +32,7 @@ export class ProjectComponent {
 
     this.http.get('/providers')
       .then((data: any) => {
+        console.log('Providers',data);
         this.appState.set('providers', data.dataset.providers);
       })
       .catch((error) => {
@@ -43,12 +46,20 @@ export class ProjectComponent {
       .catch((error) => {
         console.log(error);
       });
+
+      this.http.get('/taxes')
+      .then((data: any) => {
+        this.appState.set('taxes', data.dataset.taxes);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   addPhase() {
     this.projects.projects_phases.push({});
   }
-  
+
   loadProject() {
     this.route.params.subscribe(params => {
       if(params['id']) {
@@ -76,6 +87,16 @@ export class ProjectComponent {
       this.http.post('/projects', this.projects)
         .then((data: any) => {
           this.router.navigate(['projetos']).then(_ => {});
+
+         /* this.http.post('/billspay', this.billspay)
+        .then((data: any) => {
+          this.router.navigate(['contasAPagar']).then(_ => {});
+        })
+        .catch((error) => {
+          this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+        });*/
+
+
         })
         .catch((error) => {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');

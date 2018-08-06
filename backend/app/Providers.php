@@ -58,6 +58,11 @@ class Providers extends Model
         return $phases;
     }
 
+    public function getNameProvider($id){
+        $provider = DB::table('providers')->select('name')->where('id','=', $id)->get();
+        return $provider;
+    }
+
     public function count($filters) {
         $where = [];
         if( isset($filters['date_from']) ) {

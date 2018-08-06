@@ -38,6 +38,13 @@ class ProvidersService extends Service
         return $taxes;
     }
 
+    public function loadNameProvider($id){
+
+        $providerName = $this->providers->getNameProvider($id);
+
+        return $providerName;
+    }
+
     public function load($page, $pageSize, $filters)
     {
         $returnProviders = $this->providers->loadProviders($page, $pageSize, $filters);
