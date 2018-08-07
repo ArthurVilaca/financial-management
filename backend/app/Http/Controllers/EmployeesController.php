@@ -53,7 +53,7 @@ class EmployeesController extends Controller
         $credentials = $request->only('username', 'password');
         $token = null;
         try 
-        {
+        {   
            if (!$token = JWTAuth::attempt($credentials)) 
            {
                $this->response->setType("N");
@@ -69,7 +69,7 @@ class EmployeesController extends Controller
         }
         
         $user = JWTAuth::toUser($token);
-
+        
         if($user->status != "APROVADO")
         {
             $this->response->setType("N");    

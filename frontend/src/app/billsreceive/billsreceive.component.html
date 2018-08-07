@@ -66,9 +66,14 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </mat-list-item>
+      <br>
       <div class="full-width button-submit">
         <button type="submit" mat-raised-button color="primary" class="button-submit" [disabled]=" billsreceive.status == 'Efetuada' " >Salvar</button>
       </div>
+      <br>
+      <div class="full-width button-submit" *ngIf="billsreceive.status == 'Prevista'">
+        <button type="button" (click)="generateInvoice()" mat-raised-button color="primary" class="button-submit" [disabled]=" billsreceive.status == 'Efetuada' " >Gerar Nota Fiscal</button>
+    </div>
     </mat-list>
   </form>
 </div>

@@ -21,7 +21,7 @@ export class BillspaysComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private http: HttpService, private appState: ProviderService) {
   }
-  
+
   ngOnInit() {
     this.search();
   }

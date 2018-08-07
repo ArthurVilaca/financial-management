@@ -11,17 +11,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class BillsreceiveComponent {
   billsreceive: any = {};
+  filter: string = "RECEITA";
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadBillsreceive();
   }
-  
+
   loadBillsreceive() {
     this.route.params.subscribe(params => {
       if(params['id']) {
         this.http.get('/billsreceive/' + params['id'])
           .then((data: any) => {
             this.billsreceive = data.dataset.billsreceive;
+            console.log('Billsreceive',this.billsreceive);
             if(this.billsreceive.invoice_date != '') {
               this.billsreceive.invoice_date = new Date(this.billsreceive.invoice_date);
             }
@@ -42,14 +44,30 @@ export class BillsreceiveComponent {
       .catch((error) => {
         console.log(error);
       });
-    
-    this.http.get('/cost_centers')
+
+    this.http.get('/cost_centers?filter='+this.filter)
       .then((data: any) => {
         this.appState.set('cost_centers', data.dataset.costCenters);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  generateInvoice(){
+
+    this.billsreceive.projectInvoice = 'INVOICE';
+
+    this.http.post('/billsreceive', this.billsreceive)
+        .then((data: any) => {
+
+          this.message.openDialog('Aviso !!!', 'Nota afiscal gerada com sucesso!');
+          this.router.navigate(['contasAReceber']).then(_ => {});
+        })
+        .catch((error) => {
+          this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+        });
+
   }
 
   save() {
@@ -71,4 +89,5 @@ export class BillsreceiveComponent {
         });
     }
   }
+
 }

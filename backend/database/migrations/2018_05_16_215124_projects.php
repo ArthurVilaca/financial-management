@@ -23,10 +23,10 @@ class Projects extends Migration
             $table->dateTime('expiration_date')->nullable();
 
             $table->integer('banks_id')->unsigned()->nullable();
-            $table->foreign('banks_id')->references('id')->on('banks');
+            $table->foreign('banks_id')->references('id')->on('banks')->onDelete('cascade');
 
             $table->integer('clients_id')->unsigned();
-            $table->foreign('clients_id')->references('id')->on('clients');
+            $table->foreign('clients_id')->references('id')->on('clients')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -41,10 +41,10 @@ class Projects extends Migration
             $table->double('number');
 
             $table->integer('projects_id')->unsigned();
-            $table->foreign('projects_id')->references('id')->on('projects');
+            $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');
 
             $table->integer('providers_id')->unsigned();
-            $table->foreign('providers_id')->references('id')->on('providers');
+            $table->foreign('providers_id')->references('id')->on('providers')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -72,7 +72,7 @@ class Projects extends Migration
             $table->dateTime('due_date')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->double('discounts')->nullable();
-            $table->double('additions')->nullable();
+            $table->double('additions')->nullable();            
 
             $table->string('invoice_number')->nullable();  // numero nfe
             $table->dateTime('invoice_date')->nullable();
@@ -88,6 +88,7 @@ class Projects extends Migration
 
             $table->integer('projects_id')->unsigned()->nullable();
             $table->foreign('projects_id')->references('id')->on('projects');
+            $table->integer('numberInstallments');
 
             $table->timestamps();
         });
@@ -127,7 +128,7 @@ class Projects extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('projects');     
         Schema::dropIfExists('projects_phases');
         Schema::dropIfExists('billspay');
         Schema::dropIfExists('billsreceive');

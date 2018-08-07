@@ -15,7 +15,7 @@ export class CostCenterComponent {
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadData();
   }
-  
+
   loadData() {
     this.route.params.subscribe(params => {
       if(params['id']) {

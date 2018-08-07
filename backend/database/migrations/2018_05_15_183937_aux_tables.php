@@ -38,7 +38,7 @@ class AuxTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type')->nullable();
-
+            $table->enum('typeCost', ['VARIAVEL', 'FIXA'])->default('FIXA');
             $table->integer('cost_centers_id')->unsigned()->nullable();
             $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
 
@@ -53,6 +53,7 @@ class AuxTables extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('banks');
         Schema::dropIfExists('cost_centers');
     }

@@ -82,7 +82,11 @@ class BillsreceiveController extends Controller
      */
     public function store(Request $request)
     {
-        $returnBill = $this->billsreceiveService->create($request);
+        if($request->projectInvoice){
+            $returnBill = $this->billsreceiveService->generateInvoice($request->projects_id);
+        }else{
+            $returnBill = $this->billsreceiveService->create($request);
+        }        
             
         $this->response->setType("S");
         $this->response->setDataSet("billsreceive", $returnBill);

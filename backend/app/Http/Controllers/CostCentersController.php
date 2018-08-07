@@ -30,6 +30,7 @@ class CostCentersController extends Controller
     public function index()
     {
         $page = Input::get('page');
+
         if( !isset($page)  ) {
             $page = 0;
         }
@@ -38,13 +39,19 @@ class CostCentersController extends Controller
             $pageSize = 10;
         }
 
-        $costCenters = $this->costCentersService->load($page, $pageSize);
+        $filters = [];
+        if( Input::get('filter') !== null ) {
+            $filters['filter'] = Input::get('filter');            
+        }
+
+        $costCenters = $this->costCentersService->load($page, $pageSize,$filters);
         $total = $this->costCentersService->count();
 
         $this->response->setDataSet("costCenters", $costCenters);
         $this->response->setDataSet("total", $total);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
+
 
         return response()->json($this->response->toString());
     }

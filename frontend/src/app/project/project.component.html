@@ -1,10 +1,11 @@
 <div class="main-section">
+
   <form class="form" name="advertiserForm" (ngSubmit)="save()">
 
     <mat-list role="list">
       <mat-list-item role="listitem">
         <div class="full-width">
-          <span class="code-header"><strong>Projeto</strong></span>
+          <span class="code-header"><strong>Projetos</strong></span>
         </div>
       </mat-list-item>
 
@@ -36,7 +37,7 @@
           <input name="number" type="number" matInput placeholder="Parcelas" [(ngModel)]="projects.number">
         </mat-form-field>
       </mat-list-item>
-      
+
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
           <mat-select name="clients_id" placeholder="Cliente" [(ngModel)]="projects.clients_id">
@@ -59,11 +60,11 @@
               <mat-option *ngFor="let provider of appState.provider.providers" [value]="provider.id">{{provider.name}}</mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field class="col-md-3">
             <input name="amount-{{phase.provider_id}}" type="number" matInput placeholder="Valor" [(ngModel)]="phase.amount">
           </mat-form-field>
-  
+
           <mat-form-field class="col-md-3">
             <input name="number-{{phase.provider_id}}" type="number" matInput placeholder="Parcelas" [(ngModel)]="phase.number">
           </mat-form-field>
@@ -86,10 +87,12 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+
+
         </mat-list-item>
       </div>
 
-      <hr />
+      <hr/>
       <mat-list-item role="listitem">
         <div class="half-width">
           <button type="button" mat-raised-button color="primary" (click)="addPhase()">Adicionar Fase</button>
