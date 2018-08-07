@@ -89,6 +89,7 @@ class ProjectsService extends Service
                         ]);
                    }
                 }else{
+                    $valueTax = $value['amount'] / $value['number'];
                     $this->billspays->create([
                         'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
                         'status' => 'Prevista',

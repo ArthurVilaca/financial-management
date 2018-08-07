@@ -126,4 +126,34 @@ class Billsreceives extends Model
 
         return $phases;
     }
+
+    public function getProjectInvoice($id){
+
+        //$projectInvoice = DB::table('projects')->select('id')->where('id', $id)->first(); 
+        $projectInvoice = DB::table('projects')
+            ->join('projects_phases', 'projects.id', '=', 'projects_phases.projects_id')          
+            ->select('projects.name', 'projects_phases.name', 'projects_phases.providers_id')
+            ->where('projects.id',$id)
+            ->get();
+
+        return $projectInvoice;
+    }
+
+    public function getPhaseProject($idProject){
+        
+        $projectInvoicePhase = DB::table('projects_phases')->where('projects_id', $idProject)->get();        
+        return $projectInvoicePhase;
+    }
+
+    public function getProviderTax($data){
+        
+        $providerTaxes = DB::table('providers')
+            ->join('provider_taxes', 'providers.id', '=', 'provider_taxes.providers_id')
+            ->join('taxes', 'provider_taxes.taxes_id', '=', 'taxes.id')
+            ->join('projects_phases', 'provider_taxes.providers_id', '=', 'projects_phases.providers_id')
+            ->select('providers.*', 'taxes.name', 'taxes.amount','projects_phases.amount','projects_phases.number')->where('providers.id',$data)
+            ->get();
+        
+        return $providerTaxes;
+    }
 }
