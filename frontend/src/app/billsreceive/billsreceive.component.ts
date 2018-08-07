@@ -23,6 +23,7 @@ export class BillsreceiveComponent {
         this.http.get('/billsreceive/' + params['id'])
           .then((data: any) => {
             this.billsreceive = data.dataset.billsreceive;
+            console.log('Billsreceive',this.billsreceive);
             if(this.billsreceive.invoice_date != '') {
               this.billsreceive.invoice_date = new Date(this.billsreceive.invoice_date);
             }
@@ -53,6 +54,22 @@ export class BillsreceiveComponent {
       });
   }
 
+  generateInvoice(){
+
+    this.billsreceive.projectInvoice = 'INVOICE';
+
+    this.http.post('/billsreceive', this.billsreceive)
+        .then((data: any) => {
+
+          this.message.openDialog('Aviso !!!', 'Nota afiscal gerada com sucesso!');
+          this.router.navigate(['contasAReceber']).then(_ => {});
+        })
+        .catch((error) => {
+          this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+        });
+
+  }
+
   save() {
     if(this.billsreceive.id) {
       this.http.put('/billsreceive/' + this.billsreceive.id, this.billsreceive)
@@ -72,4 +89,5 @@ export class BillsreceiveComponent {
         });
     }
   }
+
 }
