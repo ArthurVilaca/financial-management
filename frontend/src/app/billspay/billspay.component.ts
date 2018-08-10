@@ -56,6 +56,10 @@ export class BillspayComponent {
 
   save() {
     if(this.billspay.id) {
+      console.log('this.billspay',this.billspay);
+      console.log('typeOf',typeof (new Date(this.billspay.payment_date)));
+      this.billspay.payment_date = new Date(this.billspay.payment_date);
+      this.billspay.invoice_date = new Date(this.billspay.invoice_date);
       this.http.put('/billspay/' + this.billspay.id, this.billspay)
         .then((data: any) => {
           this.router.navigate(['contasAPagar']).then(_ => {});

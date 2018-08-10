@@ -2,6 +2,7 @@
 namespace App\Service;
 use Illuminate\Http\Request;
 use App\Billsreceives;
+use App\Billspays;
 
 class BillsreceiveService extends Service
 {
@@ -28,34 +29,38 @@ class BillsreceiveService extends Service
 
     public function generateInvoice($request){
         $idProject =  $this->billsreceives->getProjectInvoice($request);
-        var_dump($idProject);die;
+        
         if($idProject){
-            //$phaseProject = $this->billsreceives->getPhaseProject($idProject);           
-            if($phaseProject){
-
-                foreach ($phaseProject as $key => $value) {
-                    $providerTaxes = $this->billsreceives->getProviderTax($value->providers_id);
-                    if($providerTaxes){
-                        foreach ($providerTaxes as $key => $value) {
-                            $number = $value->number;
-                            $numberCost = $value->amount / $number;
-                            foreach ($number as $key => $value) {
-
-                                $this->billspays->create([
-                                    'name' => 'Nota fiscal N° '. $$request->invoive_number .' referente ao projeto '.$request->name. 'e ao fornecedor'.$provider_name,
-                                    'status' => 'Prevista',
-                                    'comments' => 'Taxa referente ao imposto '. $tax->name .' e ao projeto '.$request->get('name'). 'e ao fornecedor'.$provider_name,
-                                    'amount' => $valueTax,
-                                    'projects_phases_id' => $returnPhase->id,
-                                    'due_date' => $date,
-                                ]);
-                                
-                            }
-                        }                        
-                    }
+            foreach ($idProject as $key => $value) {
+                $projectName = $value->ProjectName;
+                $phaseAmount = $value->phaseAmount; 
+                $phaseId = $value->idProjectPhase;
                 
-                }
+                $providerTax = $this->billsreceives->getProviderTax($value->phaseProviderId);
+                $installmentNumber = intval ($value->installmentNumber);
+                
+                $date = new \DateTime();
 
+                if($providerTax){                    
+                    foreach ($providerTax as $key => $value){
+                        
+                        $provider_name = $value->providerName;
+                        $numberAmount = 0;
+                        $numberAmount = $phaseAmount * ($value->TaxAmount / 100);     
+                        for ($i=0; $i < $installmentNumber ; $i++) {  
+                            $this->billspays->create([
+                                'name' => 'Conta a Pagar referente ao imposto'. $value->TaxName 
+                                .' referente ao projeto '.$projectName. 'e ao fornecedor '.$provider_name,
+                                'status' => 'Prevista',
+                                'comments' => 'Conta gerada por nota fiscal. ',
+                                'amount' => number_format($numberAmount / $installmentNumber, 2),
+                                //'projects_phases_id' => $phaseId,
+                                'due_date' => $date,
+                            ]);
+                            $date->modify('+30 day');
+                        }                                                 
+                    }
+                }
             }            
         }
     }
