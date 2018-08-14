@@ -131,27 +131,22 @@ class Billsreceives extends Model
 
         //$projectInvoice = DB::table('projects')->select('id')->where('id', $id)->first(); 
         $projectInvoice = DB::table('projects')
-            ->join('projects_phases', 'projects.id', '=', 'projects_phases.projects_id')          
-            ->select('projects.name', 'projects_phases.name', 'projects_phases.providers_id')
+            ->join('projects_phases', 'projects.id', '=', 'projects_phases.projects_id')     
+            ->select('projects.name AS  ProjectName', 'projects_phases.providers_id AS phaseProviderId',
+            'projects_phases.amount AS phaseAmount', 'projects_phases.number AS installmentNumber', 
+            'projects_phases.projects_id as idProjectPhase', 'projects_phases.expiration_date as expiration_date ')
             ->where('projects.id',$id)
             ->get();
 
         return $projectInvoice;
     }
 
-    public function getPhaseProject($idProject){
-        
-        $projectInvoicePhase = DB::table('projects_phases')->where('projects_id', $idProject)->get();        
-        return $projectInvoicePhase;
-    }
-
-    public function getProviderTax($data){
+    public function getProviderTax($id){
         
         $providerTaxes = DB::table('providers')
             ->join('provider_taxes', 'providers.id', '=', 'provider_taxes.providers_id')
             ->join('taxes', 'provider_taxes.taxes_id', '=', 'taxes.id')
-            ->join('projects_phases', 'provider_taxes.providers_id', '=', 'projects_phases.providers_id')
-            ->select('providers.*', 'taxes.name', 'taxes.amount','projects_phases.amount','projects_phases.number')->where('providers.id',$data)
+            ->select( 'taxes.name AS TaxName','taxes.amount AS TaxAmount', 'providers.name as providerName')->where('providers.id',$id)
             ->get();
         
         return $providerTaxes;

@@ -23,6 +23,7 @@ export class BillspayComponent {
         this.http.get('/billspay/' + params['id'])
           .then((data: any) => {
             this.billspay = data.dataset.billspay;
+            console.log('billspay',this.billspay);
             if(this.billspay.invoice_date != '') {
               this.billspay.invoice_date = new Date(this.billspay.invoice_date);
             }
@@ -64,6 +65,7 @@ export class BillspayComponent {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
+
       this.http.post('/billspay', this.billspay)
         .then((data: any) => {
           this.router.navigate(['contasAPagar']).then(_ => {});

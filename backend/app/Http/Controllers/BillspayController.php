@@ -80,8 +80,11 @@ class BillspayController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        $request->payment_date = new \DateTime($request->payment_date);
+        $request->payment_date->format('Y-m-d H:i:s');
+        $request->invoice_date = new \DateTime($request->invoice_date);
+        $request->invoice_date->format('Y-m-d H:i:s');
         $returnBill = $this->billspayService->create($request);
             
         $this->response->setType("S");
@@ -125,9 +128,19 @@ class BillspayController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {        
+        if($request->changeValue && $request->changeValueText){
+            if($request->changeValueText == 'discount'){
+                if($request->amount > $request->changeValue){
+                    $request->amount = $request->amount - $request->changeValue;
+                }
+            }if($request->changeValueText == 'addition'){
+                $request->amount = $request->amount + $request->changeValue;
+            }
+        }
+        $request->payment_date = new \DateTime($request->payment_date);
+        $request->invoice_date = new \DateTime($request->invoice_date);
         $billspay = $this->billspays->find($id);
-
         $billspay_data = $request->all();
         $billspay->fill($billspay_data);
         $billspay->save();
