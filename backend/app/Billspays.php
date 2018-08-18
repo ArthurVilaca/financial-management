@@ -39,6 +39,13 @@ class Billspays extends Model
         return $phases;
     }
 
+    public function convertDate($request){
+        var_dump($request);die;
+        $request = new \DateTime($request);
+        $request = $request->format('Y-m-d H:i:s');
+
+        return $request;
+    }
     public function loadBills($page, $pageSize, $filters) {
         $where = [];
         if( isset($filters['date_from']) ) {

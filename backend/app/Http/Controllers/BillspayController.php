@@ -81,12 +81,9 @@ class BillspayController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $request->payment_date = new \DateTime($request->payment_date);
-        $request->payment_date->format('Y-m-d H:i:s');
-        $request->invoice_date = new \DateTime($request->invoice_date);
-        $request->invoice_date->format('Y-m-d H:i:s');
+
         $returnBill = $this->billspayService->create($request);
-            
+       
         $this->response->setType("S");
         $this->response->setDataSet("billspay", $returnBill);
         $this->response->setMessages("Created billspay successfully!");
@@ -138,11 +135,27 @@ class BillspayController extends Controller
                 $request->amount = $request->amount + $request->changeValue;
             }
         }
-        $request->payment_date = new \DateTime($request->payment_date);
-        $request->invoice_date = new \DateTime($request->invoice_date);
+
         $billspay = $this->billspays->find($id);
-        $billspay_data = $request->all();
-        $billspay->fill($billspay_data);
+        //$billspay_data = $request->all();
+        //$billspay->fill($billspay_data);
+        $billspay->fill([
+            'name' => $request->get('name'),
+            'comments' => $request->get('comments'),
+            'status' => $request->get('status'),
+            'type' => $request->get('type'),
+            'amount' => $request->get('amount'), 
+            'due_date' => $request->get('due_date'),
+            'payment_date' => new \DateTime($request->get('payment_date')),
+            'banks_id' => $request->get('banks_id'),
+            'cost_centers_id' => $request->get('cost_centers_id'),
+            'projects_phases_id' => $request->get('projects_phases_id'),
+            'projects_id' => $request->get('projects_id'),
+            'numberInstallments' => $request->get('numberInstallments'),
+            'invoice_number' => $request->get('invoice_number'),
+            'invoice_date' => new \DateTime($request->get('invoice_date')),
+        ]);
+
         $billspay->save();
 
         $this->response->setDataSet("billspay", $billspay);

@@ -132,8 +132,21 @@ class BillsreceiveController extends Controller
     {
         $billsreceive = $this->billsreceives->find($id);
 
-        $billsreceive_data = $request->all();
-        $billsreceive->fill($billsreceive_data);
+        //$billsreceive_data = $request->all();
+        //$billsreceive->fill($billsreceive_data);
+        $billsreceive->fill([
+            'name' => $request->get('name'),
+            'comments' => $request->get('comments'),
+            'status' => $request->get('status'),
+            'type' => $request->get('type'),	
+            'amount' => $request->get('amount'),
+            'due_date' => $request->get('due_date'),
+            'payment_date' => new \DateTime($request->get('payment_date')),
+            'invoice_number' => $request->get('invoice_number'),
+            'invoice_date' => new \DateTime($request->get('invoice_date')),
+            'banks_id' => $request->get('banks_id'),
+            'projects_id' => $request->get('projects_id'),
+        ]);
         $billsreceive->save();
 
         $this->response->setDataSet("billsreceive", $billsreceive);
