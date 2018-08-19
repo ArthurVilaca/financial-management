@@ -51,6 +51,7 @@ export class ReportBillspayComponent {
     });
   }
 
+
   sortData(sort: Sort) {
     const data = this.billspays.slice();
     if (!sort.active || sort.direction === '') {

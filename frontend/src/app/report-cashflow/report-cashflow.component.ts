@@ -14,12 +14,13 @@ import { Sort } from '@angular/material';
 })
 export class ReportCashflowComponent  {
 
-  billspays: any[] = [];
+  billsExpenses: any[] = [];
   sortedData: any[] = [];
-  filter: any = {
+  filter: string = 'Efetuada';
+  /*filter: any = {
     prevista: true,
     efetuada: true
-  }
+  }*/
 
   constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent,
     private http: HttpService, private appState: ProviderService) {
@@ -27,10 +28,11 @@ export class ReportCashflowComponent  {
    }
 
   search() {
-    this.http.get('/reports/billspay?' + this.http.serialize(this.filter))
+    this.http.get('/reports/expenses?filter=' + this.filter)
       .then((data: any) => {
-        this.billspays = data.dataset.billspays;
-        this.sortedData = this.billspays;
+        console.log('Expenses',data);
+        this.billsExpenses = data.dataset.billspays;
+        this.sortedData = this.billsExpenses;
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +40,7 @@ export class ReportCashflowComponent  {
   }
 
   sortData(sort: Sort) {
-    const data = this.billspays.slice();
+    const data = this.billsExpenses.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedData = data;
       return;

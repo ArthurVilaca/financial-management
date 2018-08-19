@@ -3,12 +3,13 @@
     <div class="col-sm-4">
       <span class="code-header"><strong>Relatório de Fluxo de Caixa por Centro de Custos</strong></span>
     </div>
+    <!--
     <div class="col-sm-2">
       <input type="checkbox" (change)="search()" [(ngModel)]="filter.prevista">PREVISTA
     </div>
     <div class="col-sm-2">
       <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA
-    </div>
+    </div>-->
     <div class="col-sm-4">
       <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
     </div>
@@ -28,10 +29,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let bill of sortedData">
-              <td scope="row">{{bill.name}}</td>
-              <td>{{bill.bills}}</td>
-              <td>{{bill.amount | currency:'BRL':true }}</td>
+            <tr *ngFor="let billExoense of sortedData">
+              <td scope="row">{{billExoense.name}}</td>
+              <td>{{billExoense.bills}}</td>
+              <td>{{billExoense.amount | currency:'BRL':true}}</td>
+              <td>{{billExoense.profit | currency:'BRL':true }}</td>
             </tr>
           </tbody>
         </table>
