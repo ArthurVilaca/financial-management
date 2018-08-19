@@ -140,21 +140,80 @@ class Billspays extends Model
         return $dataset;
     }
 
-    public function getReport($filter) {
+    public function getReport($filters) {
+
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['due_from']) ) {
+            $where[] = [
+                'due_date', '>', $filters['due_from']
+            ];
+        }
+        if( isset($filters['due_to']) ) {
+            $where[] = [
+                'due_date', '<', $filters['due_to']
+            ];
+        }
+        if( isset($filters['status']) ) { 
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('cost_centers')
             ->get();    
 
         foreach ($phases as $key => $value) {
 
-            $value->bills = DB::table('billspays')
+            
+            /*$value->bills = DB::table('billspays')
                 ->where('billspays.cost_centers_id', $value->id)
-                ->count();
+
+                ->count();*/
+            $value->bills = DB::table('billspays')
+            ->where('billspays.cost_centers_id', $value->id)
+            ->where($where)
+            ->count();
 
             $value->amount = DB::table('billspays')
                 ->where('billspays.cost_centers_id', $value->id)
+                ->where($where)
                 ->sum('billspays.amount');
         }
 
         return $phases;
+    }
+
+    public function getExpenses(){
+
+        $expenses = DB::table('cost_centers')->get();
+
+
+        foreach ($expenses as $key => $value) {
+            $now = new \DateTime();
+            $lessOneYear = $now->modify('-12 month');
+
+            $value->bills = DB::table('billspays')
+                ->where('billspays.cost_centers_id', $value->id)
+                ->where('billspays.status','Efetuada')
+                ->whereBetween('billspays.updated_at', [$lessOneYear, $now])
+                ->count();
+
+            $value->amount = DB::table('billspays')
+                ->where('billspays.cost_centers_id', $value->id)
+                ->where('billspays.status','Efetuada')
+                ->whereBetween('billspays.updated_at', [$lessOneYear, $now])
+                ->sum('billspays.amount');
+        }
+
+        return $expenses;
     }
 }

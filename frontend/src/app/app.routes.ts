@@ -1,3 +1,4 @@
+import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 import { Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
@@ -60,7 +61,9 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'projeto/:id', component: ProjectComponent },
 	{ path: 'relatorios', component: ReportsComponent },
 	{ path: 'relatorio/contasAPagar', component: ReportBillspayComponent },
-	{ path: 'relatorio/contasAReceber', component: ReportBillsreceiveComponent },
+  { path: 'relatorio/contasAReceber', component: ReportBillsreceiveComponent },
+  { path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent },
+
 ];
 
 export const rootRouterConfig: Routes = [

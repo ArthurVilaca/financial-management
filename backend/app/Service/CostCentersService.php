@@ -22,9 +22,8 @@ class CostCentersService extends Service
     }
 
     public function load($page, $pageSize,$filters)
-    {
-
-        if(isset($filters) && $filters!= ''){
+    {        
+        if(isset($filters) && $filters!= '' && $filters){
             $returnCostCenter = $this->costCenters->loadCostCentersFilters($page, $pageSize,$filters);            
         }else{
             $returnCostCenter = $this->costCenters->loadCostCenters($page, $pageSize);

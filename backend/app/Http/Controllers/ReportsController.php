@@ -42,4 +42,17 @@ class ReportsController extends Controller
 
         return response()->json($this->response->toString());
     }
+
+    public function getExpenses(){
+        $expenses = $this->billspays->getExpenses();
+        return $expenses;
+    }
+
+    public function getRecipes(){
+
+        $recipes = $this->billsreceives->getRecipes();
+        return $recipes;
+    }
+
+
 }

@@ -85,5 +85,11 @@ class BillsreceiveService extends Service
         return $countBills;
     }
 
+    public function getRecipes(){
+
+        $recipes = $this->billsreceives->getRecipes();
+        return $recipes;
+    }
+
 }
 ?>

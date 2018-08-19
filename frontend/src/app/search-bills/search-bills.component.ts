@@ -14,7 +14,7 @@ export class SearchBillsComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.filter = data.filter;
   }
-  
+
   onNoClick(): void {
     this.dialogRef.close(this.filter);
   }

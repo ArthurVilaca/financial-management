@@ -40,6 +40,18 @@
             <mat-datepicker #pickerDueTo></mat-datepicker>
         </div>
     </div>
+   <!-- <div class="row">
+      <mat-form-field>
+        <input name="" matInput [matDatepicker]="dp" placeholder="Mês de referência" [(ngModel)]="filter.month_year">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+      </mat-form-field>
+    </div>-->
     <div class="row">
         <label class="col-md-4">Status</label>
         <div class="col-md-6">

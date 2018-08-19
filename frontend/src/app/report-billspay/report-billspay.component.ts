@@ -20,12 +20,13 @@ export class ReportBillspayComponent {
     efetuada: true
   }
 
-  constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
+  constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent,
+    private http: HttpService, private appState: ProviderService) {
     this.search();
   }
 
   search() {
-    this.http.get('/reports/billspay?' + this.http.serialize(this.filter))
+    this.http.get('/reports/getExpenses?' + this.http.serialize(this.filter))
       .then((data: any) => {
         this.billspays = data.dataset.billspays;
         this.sortedData = this.billspays;
