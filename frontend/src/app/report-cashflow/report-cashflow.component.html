@@ -1,22 +1,20 @@
 <div class="main-section">
   <div class="row">
-    <div class="col-sm-4">
-      <span class="code-header"><strong>Relatório de Fluxo de Caixa por Centro de Custos</strong></span>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <h3>
+        <span class="code-header"><strong>Relatório de Fluxo de Caixa por centor de Custo (Período de 1 ano)</strong></span>
+      </h3>
+      <hr>
     </div>
-    <!--
     <div class="col-sm-2">
-      <input type="checkbox" (change)="search()" [(ngModel)]="filter.prevista">PREVISTA
     </div>
-    <div class="col-sm-2">
-      <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA
-    </div>-->
-    <div class="col-sm-4">
-      <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
-    </div>
+
   </div>
 
   <div class="row">
-    <div class="col-md-12">
+      <div class="col-md-2"></div>
+    <div class="col-md-8">
 
       <div class="table-border-style table-responsive">
         <table class="table" style="width: 100%;" matSort (matSortChange)="sortData($event)">
@@ -29,16 +27,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let billExoense of sortedData">
-              <td scope="row">{{billExoense.name}}</td>
-              <td>{{billExoense.bills}}</td>
-              <td>{{billExoense.amount | currency:'BRL':true}}</td>
-              <td>{{billExoense.profit | currency:'BRL':true }}</td>
+            <tr *ngFor="let billExpense of sortedData">
+              <td scope="row">{{billExpense.name}}</td>
+              <td>{{billExpense.amountReceive | currency:'BRL':true}}</td>
+              <td>{{billExpense.amountPay | currency:'BRL':true}}</td>
+              <td>{{billExpense.profit | currency:'BRL':true }}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
     </div>
+    <div class="col-md-2"></div>
   </div>
 </div>
+
+<mat-paginator class="center" [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="pageEvent = search($event)">
+</mat-paginator>

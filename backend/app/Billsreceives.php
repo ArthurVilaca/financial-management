@@ -165,17 +165,13 @@ class Billsreceives extends Model
             $now = new \DateTime();
             $lessOneYear = $now->modify('-12 month');
 
-            $value->bills = DB::table('billsreceives')
+            $value->amountReceive = DB::table('billsreceives')
                 ->where('billsreceives.cost_centers_id', $value->id)
                 ->where('billsreceives.status','Efetuada')
                 ->whereBetween('billsreceives.updated_at', [$lessOneYear, $now])
                 ->count();
 
-            $value->amount = DB::table('billsreceives')
-                ->where('billsreceives.cost_centers_id', $value->id)
-                ->where('billsreceives.status','Efetuada')
-                ->whereBetween('billsreceives.updated_at', [$lessOneYear, $now])
-                ->sum('billsreceives.amount');
+           
         }
 
         return $recipes;

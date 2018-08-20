@@ -28,6 +28,7 @@ import { ReportBillspayComponent } from './report-billspay/report-billspay.compo
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
 
 import { AuthGuard } from './auth.guard';
+import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
 
 const SECURE_ROUTES: Routes = [
 	{ path: 'home', component: HomeComponent },
@@ -63,6 +64,7 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'relatorio/contasAPagar', component: ReportBillspayComponent },
   { path: 'relatorio/contasAReceber', component: ReportBillsreceiveComponent },
   { path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent },
+  { path: 'relatorio/fluxoCaixaMes', component: ReportCashflowMonthComponent }
 
 ];
 

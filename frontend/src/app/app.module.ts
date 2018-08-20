@@ -74,6 +74,8 @@ import { ReportBillspayComponent } from './report-billspay/report-billspay.compo
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
 import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 import { SearchProjectsComponent } from './search-projects/search-projects.component';
+import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
+import { SearchCostcenterComponent } from './search-costcenter/search-costcenter.component';
 
 
 @NgModule({
@@ -111,7 +113,9 @@ import { SearchProjectsComponent } from './search-projects/search-projects.compo
     ReportBillspayComponent,
     ReportBillsreceiveComponent,
     ReportCashflowComponent,
-    SearchProjectsComponent
+    SearchProjectsComponent,
+    ReportCashflowMonthComponent,
+    SearchCostcenterComponent
   ],
   imports: [
     BrowserModule,

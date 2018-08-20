@@ -192,28 +192,56 @@ class Billspays extends Model
         return $phases;
     }
 
-    public function getExpenses(){
-
-        $expenses = DB::table('cost_centers')->get();
+    public function getExpenses($page, $pageSize){               
 
 
-        foreach ($expenses as $key => $value) {
-            $now = new \DateTime();
-            $lessOneYear = $now->modify('-12 month');
-
-            $value->bills = DB::table('billspays')
-                ->where('billspays.cost_centers_id', $value->id)
-                ->where('billspays.status','Efetuada')
-                ->whereBetween('billspays.updated_at', [$lessOneYear, $now])
-                ->count();
-
-            $value->amount = DB::table('billspays')
-                ->where('billspays.cost_centers_id', $value->id)
-                ->where('billspays.status','Efetuada')
-                ->whereBetween('billspays.updated_at', [$lessOneYear, $now])
-                ->sum('billspays.amount');
+        $where = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
         }
 
-        return $expenses;
+        $expenses = DB::table('cost_centers')
+        ->offset($page * $pageSize)
+        ->limit($pageSize)
+        ->get(); 
+        
+        if($filters){
+
+
+
+
+        }else{
+
+            $now = new \DateTime();
+            $lessOneYear = $now->modify('-12 month'); 
+
+            $vectorPay = array();
+
+            foreach ($expenses as $key => $value) {
+                $now = new \DateTime();
+                $lessOneYear = $now->modify('-12 month'); 
+                
+                $value->amountPay = DB::table('billspays')
+                    ->where('billspays.status', 'Efetuada')
+                    ->where('billspays.cost_centers_id', $value->id)
+                    ->whereDate('created_at', '>' ,$lessOneYear->format('Y-m-d'))
+                    ->whereDate('created_at', '<= ', $now->format('Y-m-d'))
+                    //->whereBetween('billspays.updated_at', [$lessOneYear->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')])
+                    ->sum('billspays.amount'); 
+
+                $value->amountReceive = DB::table('billsreceives')
+                ->where('billsreceives.status','Efetuada')
+                ->where('billsreceives.cost_centers_id', $value->id)
+                ->whereDate('created_at', '>' ,$lessOneYear->format('Y-m-d'))
+                ->whereDate('created_at', '<= ', $now->format('Y-m-d'))
+                //->whereBetween('billsreceives.updated_at', [$lessOneYear->format('Y-m-d'), $now->format('Y-m-d')])
+                ->sum('billsreceives.amount'); 
+
+                $value->profit = $value->amountReceive - $value->amountPay;
+            }
+        }        
+        return $expenses;        
     }
 }

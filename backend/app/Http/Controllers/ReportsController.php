@@ -9,18 +9,53 @@ use JWTAuthException;
 use \App\Response\Response;
 use \App\Billspays;
 use \App\Billsreceives;
+use \App\CostCenters;
 
 class ReportsController extends Controller
 {
     private $response;
     private $billspays;
-    private $billsreceives;
+    private $billsreceives;    
 
     public function __construct()
     {
         $this->response = new Response();
         $this->billspays = new Billspays();
         $this->billsreceives = new Billsreceives();
+        $this->costCenter = new CostCenters();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $page = Input::get('page');
+        if( !isset($page)  ) {
+            $page = 0;
+        }
+        $pageSize = Input::get('pageSize');
+        if( !isset($pageSize)  ) {
+            $pageSize = 10;
+        }
+
+        $filters = [];
+        if( Input::get('date_month') !== null ) {
+            $filters['date_month'] = Input::get('date_month');
+        }
+        var_dump($filters);die;
+
+        $billspaysExpens = $this->billspays->getExpenses($page, $pageSize);
+        $total = $this->costCenter->count();
+
+        $this->response->setDataSet("billPayReceive", $billspaysExpens);
+        $this->response->setDataSet("total", $total);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
     }
 
     public function billspay(Request $request) {
@@ -43,15 +78,22 @@ class ReportsController extends Controller
         return response()->json($this->response->toString());
     }
 
-    public function getExpenses(){
-        $expenses = $this->billspays->getExpenses();
-        return $expenses;
+    public function getExpenses(Request $request){
+        $expenses = $this->billspays->getExpenses($_GET);
+
+        $this->response->setDataSet("billspaysExpenses", $expenses);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+        return response()->json($this->response->toString());
     }
 
-    public function getRecipes(){
+    public function getRecipes(Request $request){
+        $recipes = $this->billsreceives->getRecipes($_GET);
 
-        $recipes = $this->billsreceives->getRecipes();
-        return $recipes;
+        $this->response->setDataSet("billsreceivesrecipes", $recipes);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+        return response()->json($this->response->toString());
     }
 
 

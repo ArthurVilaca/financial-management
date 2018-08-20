@@ -3,7 +3,7 @@ import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
 import { SearchBillsComponent } from '../search-bills/search-bills.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, PageEvent } from '@angular/material';
 import { Router } from '@angular/router';
 import { Sort } from '@angular/material';
 
@@ -14,7 +14,16 @@ import { Sort } from '@angular/material';
 })
 export class ReportCashflowComponent  {
 
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25, 100];
+
+  // MatPaginator Output
+  pageEvent: PageEvent;
+
+
   billsExpenses: any[] = [];
+  billsReceive: any[] = [];
   sortedData: any[] = [];
   filter: string = 'Efetuada';
   /*filter: any = {
@@ -27,16 +36,35 @@ export class ReportCashflowComponent  {
     this.search();
    }
 
-  search() {
-    this.http.get('/reports/expenses?filter=' + this.filter)
+  search($event?) {
+    /*this.http.get('/reports/expenses?filter=' + this.filter)
       .then((data: any) => {
-        console.log('Expenses',data);
-        this.billsExpenses = data.dataset.billspays;
+        this.billsExpenses = data.dataset.billspaysExpenses;
         this.sortedData = this.billsExpenses;
+        console.log('this.billsExpenses',this.billsExpenses)
       })
       .catch((error) => {
         console.log(error);
-      });
+      });*/
+
+      if($event){
+        this.pageEvent = $event;
+        this.pageSize = $event.pageSize;
+      }
+      let page = 0;
+      if(this.pageEvent) {
+        page = this.pageEvent.pageIndex;
+      }
+      this.http.get('/reports?page=' + page + '&pageSize=' + this.pageSize)
+        .then((data: any) => {
+          console.log('DataGet',data);
+          this.appState.set('billPayReceive', data.dataset.billPayReceive);
+          this.sortedData = this.appState.provider.billPayReceive;
+          this.length = data.dataset.total;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
 
   sortData(sort: Sort) {
