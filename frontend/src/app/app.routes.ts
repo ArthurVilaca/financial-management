@@ -1,6 +1,4 @@
-import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 import { Routes } from '@angular/router';
-
 import { HomeComponent } from './home/home.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LoginComponent } from './login/login.component';
@@ -26,9 +24,10 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ReportsComponent } from './reports/reports.component';
 import { ReportBillspayComponent } from './report-billspay/report-billspay.component';
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
+import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
+
 
 import { AuthGuard } from './auth.guard';
-import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
 
 const SECURE_ROUTES: Routes = [
 	{ path: 'home', component: HomeComponent },
@@ -63,9 +62,7 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'relatorios', component: ReportsComponent },
 	{ path: 'relatorio/contasAPagar', component: ReportBillspayComponent },
   { path: 'relatorio/contasAReceber', component: ReportBillsreceiveComponent },
-  { path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent },
-  { path: 'relatorio/fluxoCaixaMes', component: ReportCashflowMonthComponent }
-
+  { path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent }
 ];
 
 export const rootRouterConfig: Routes = [

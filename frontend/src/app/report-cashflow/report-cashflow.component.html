@@ -1,17 +1,36 @@
 <div class="main-section">
   <div class="row">
+    <br><br><br>
+  </div>
+  <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
-      <h3>
         <span class="code-header"><strong>Relatório de Fluxo de Caixa por centor de Custo (Período de 1 ano)</strong></span>
-      </h3>
-      <hr>
-    </div>
+        <hr>
+      </div>
     <div class="col-sm-2">
     </div>
-
   </div>
-
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">Filtro</div>
+    <div class="col-sm-4">
+      <mat-form-field>
+        <input matInput [matDatepicker]="dp" placeholder="Month and Year" [(ngModel)]="filterDate">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+            startView="multi-year"
+            (yearSelected)="chosenYearHandler($event)"
+            (monthSelected)="chosenMonthHandler($event, dp)"
+            panelClass="example-month-picker">
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-2">
+        <button mat-stroked-button color="warn" (click)="search()">Buscar</button>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
   <div class="row">
       <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -20,18 +39,16 @@
         <table class="table" style="width: 100%;" matSort (matSortChange)="sortData($event)">
           <thead>
             <tr>
-              <th mat-sort-header="name">Centro de Custo</th>
-              <th mat-sort-header="recipes">Receitas</th>
-              <th mat-sort-header="expenses">Despesas</th>
-              <th mat-sort-header="profit">Lucro/Prejuízo</th>
+              <th mat-sort-header="name">Fluxo de Caixa</th>
+
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let billExpense of sortedData">
               <td scope="row">{{billExpense.name}}</td>
-              <td>{{billExpense.amountReceive | currency:'BRL':true}}</td>
+              <!--<td>{{billExpense.amountReceive | currency:'BRL':true}}</td>
               <td>{{billExpense.amountPay | currency:'BRL':true}}</td>
-              <td>{{billExpense.profit | currency:'BRL':true }}</td>
+              <td>{{billExpense.profit | currency:'BRL':true }}</td>-->
             </tr>
           </tbody>
         </table>
