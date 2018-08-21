@@ -1,9 +1,12 @@
 <div class="main-section">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-3">
       <span class="code-header">
         <strong>Contas a Receber</strong>
       </span>
+    </div>
+    <div class="col-sm-5">
+      <input (change)="search()" name="name" class="input" matInput placeholder="Pesquisar..." [(ngModel)]="filter.searchWords">
     </div>
     <div class="col-sm-4">
       <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
@@ -19,24 +22,20 @@
               <th>Cliente</th>
               <th>Nome</th>
               <th>Status</th>
+              <th>Banco</th>
               <th>Valor</th>
-              <th>Acessar</th>
-              <th>Excluir</th>
+              <th>Data Ven</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let billsreceive of appState.provider.billsreceives">
+            <tr class="clickable" *ngFor="let billsreceive of appState.provider.billsreceives" routerLink="/contaAReceber/{{billsreceive.id}}">
               <th scope="row">{{billsreceive.projects_id}}</th>
               <td>{{billsreceive.client.name}}</td>
               <td>{{billsreceive.comments}}</td>
               <td>{{billsreceive.status}}</td>
+              <td>{{getBank(billsreceive.banks_id)}}</td>
               <td>{{billsreceive.amount | currency:'BRL'}}</td>
-              <td class="clickable" routerLink="/contaAReceber/{{billsreceive.id}}">
-                <i class="fas fa-edit"></i>
-              </td>
-              <td>
-                <i class="fas fa-trash-alt"></i>
-              </td>
+              <td>{{billsreceive.due_date | date}}</td>
             </tr>
           </tbody>
         </table>

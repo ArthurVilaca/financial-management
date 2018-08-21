@@ -44,7 +44,9 @@ class BillspayController extends Controller
         $billspays = $this->billspayService->load($page, $pageSize, $_GET);
         $total = $this->billspayService->count($_GET);
         foreach ($billspays as $key => $value) {
-            $value->client = $this->clients->find($value->clients_id);
+            if(isset($value->clients_id)) {
+                $value->client = $this->clients->find($value->clients_id);
+            }
         }
 
         $this->response->setDataSet("billspays", $billspays);

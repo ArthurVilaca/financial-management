@@ -33,7 +33,7 @@ class CostCenters extends Model
         return $phases;
     }
 
-    public function loadCostCentersFilters($page, $pageSize,$filters) {
+    public function loadCostCentersFilters($page, $pageSize, $filters) {
         $phases = DB::table('cost_centers')->where('type', '=', $filters)->get();
 
         return $phases;

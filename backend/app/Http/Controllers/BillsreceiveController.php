@@ -44,7 +44,9 @@ class BillsreceiveController extends Controller
         $billsreceive = $this->billsreceiveService->load($page, $pageSize, $_GET);
         $total = $this->billsreceiveService->count($_GET);
         foreach ($billsreceive as $key => $value) {
-            $value->client = $this->clients->find($value->clients_id);
+            if(isset($value->clients_id)) {
+                $value->client = $this->clients->find($value->clients_id);
+            }
         }
 
         $this->response->setDataSet("billsreceive", $billsreceive);

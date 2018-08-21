@@ -54,7 +54,7 @@
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input name="invoice_date" matInput [matDatepicker]="pickerIncoiceDate" placeholder="Data Nota Fiscal" [(ngModel)]="billsreceive.invoice_date" [disabled]=" billsreceive.status == 'Conciliado' ">
+          <input name="invoice_date" matInput (focus)="pickerIncoiceDate.open()" [matDatepicker]="pickerIncoiceDate" placeholder="Data Nota Fiscal" [(ngModel)]="billsreceive.invoice_date" [disabled]=" billsreceive.status == 'Conciliado' ">
           <mat-datepicker-toggle matSuffix [for]="pickerIncoiceDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerIncoiceDate></mat-datepicker>
         </mat-form-field>
@@ -62,7 +62,7 @@
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="payment_date" matInput [matDatepicker]="pickerPaymentDate" placeholder="Data Pagamento" [(ngModel)]="billsreceive.payment_date" [disabled]=" billsreceive.status == 'Conciliado' ">
+          <input name="payment_date" matInput (focus)="pickerPaymentDate.open()" [matDatepicker]="pickerPaymentDate" placeholder="Data Pagamento" [(ngModel)]="billsreceive.payment_date" [disabled]=" billsreceive.status == 'Conciliado' ">
           <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerPaymentDate></mat-datepicker>
         </mat-form-field>

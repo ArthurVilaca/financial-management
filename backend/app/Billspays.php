@@ -49,6 +49,7 @@ class Billspays extends Model
     }
     public function loadBills($page, $pageSize, $filters) {
         $where = [];
+        $orWhere = [];
         if( isset($filters['date_from']) ) {
             $where[] = [
                 'billspays.created_at', '>', $filters['date_from']
@@ -84,10 +85,20 @@ class Billspays extends Model
                 'projects.clients_id', '=', $filters['clients_id']
             ];
         }
+        if( isset($filters['searchWords']) ) {
+            $orWhere = [
+                // [ 'clients.name', 'like', '%'.$filters['searchWords'].'%' ],
+                // [ 'billspays.status', 'like', '%'.$filters['searchWords'].'%' ],
+                [ 'billspays.comments', 'like', '%'.$filters['searchWords'].'%' ]
+            ];
+        }
 
         $phases = DB::table('billspays')
+            ->select('billspays.*', 'projects.clients_id')
             ->join('projects', 'projects.id', '=', 'billspays.projects_id')
+            ->join('clients', 'clients.id', '=', 'projects.clients_id')
             ->where($where)
+            ->orWhere($orWhere)
             ->offset($page * $pageSize)
             ->limit($pageSize)
             ->get();
@@ -97,6 +108,7 @@ class Billspays extends Model
 
     public function count($filters) {
         $where = [];
+        $orWhere = [];
         if( isset($filters['date_from']) ) {
             $where[] = [
                 'billspays.created_at', '>', $filters['date_from']
@@ -132,10 +144,19 @@ class Billspays extends Model
                 'projects.clients_id', '=', $filters['clients_id']
             ];
         }
+        if( isset($filters['searchWords']) ) {
+            $orWhere = [
+                // [ 'clients.name', 'like', '%'.$filters['searchWords'].'%' ],
+                // [ 'billspays.status', 'like', '%'.$filters['searchWords'].'%' ],
+                [ 'billspays.comments', 'like', '%'.$filters['searchWords'].'%' ]
+            ];
+        }
 
         $phases = DB::table('billspays')
             ->join('projects', 'projects.id', '=', 'billspays.projects_id')
+            ->join('clients', 'clients.id', '=', 'projects.clients_id')
             ->where($where)
+            ->orWhere($orWhere)
             ->count();
 
         return $phases;

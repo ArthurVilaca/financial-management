@@ -3,7 +3,7 @@
     <div class="row">
         <label class="col-md-4">Data Gerado</label>
         <div class="col-md-6">
-            <input name="generation_date-from" matInput [matDatepicker]="pickerFrom" placeholder="Data Gerado de" [(ngModel)]="filter.date_from">
+            <input name="generation_date-from" matInput (focus)="pickerFrom.open()" [matDatepicker]="pickerFrom" placeholder="Data Gerado de" [(ngModel)]="filter.date_from">
         </div>
         <div class="col-md-2">
             <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
@@ -13,7 +13,7 @@
     <div class="row">
         <label class="col-md-4">Data Gerado Ate</label>
         <div class="col-md-6">
-            <input name="generation_date-to" matInput [matDatepicker]="pickerTo" placeholder="Data Gerado Ate" [(ngModel)]="filter.date_to">
+            <input name="generation_date-to" matInput (focus)="pickerTo.open()" [matDatepicker]="pickerTo" placeholder="Data Gerado Ate" [(ngModel)]="filter.date_to">
         </div>
         <div class="col-md-2">
             <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
@@ -23,7 +23,7 @@
     <div class="row">
         <label class="col-md-4">Data Vencimento</label>
         <div class="col-md-6">
-            <input name="due_date-from" matInput [matDatepicker]="pickerDueFrom" placeholder="Data Vencimento de" [(ngModel)]="filter.due_from">
+            <input name="due_date-from" matInput (focus)="pickerDueFrom.open()" [matDatepicker]="pickerDueFrom" placeholder="Data Vencimento de" [(ngModel)]="filter.due_from">
         </div>
         <div class="col-md-2">
             <mat-datepicker-toggle matSuffix [for]="pickerDueFrom"></mat-datepicker-toggle>
@@ -33,7 +33,7 @@
     <div class="row">
         <label class="col-md-4">Data Vencimento Ate</label>
         <div class="col-md-6">
-            <input name="due_date-to" matInput [matDatepicker]="pickerDueTo" placeholder="Data Vencimento Ate" [(ngModel)]="filter.due_to">
+            <input name="due_date-to" matInput (focus)="pickerDueTo.open()" [matDatepicker]="pickerDueTo" placeholder="Data Vencimento Ate" [(ngModel)]="filter.due_to">
         </div>
         <div class="col-md-2">
             <mat-datepicker-toggle matSuffix [for]="pickerDueTo"></mat-datepicker-toggle>
@@ -46,6 +46,7 @@
             <mat-select name="status" placeholder="Status" [(ngModel)]="filter.status">
                 <mat-option [value]="'PREVISTA'">PREVISTA</mat-option>
                 <mat-option [value]="'EFETUADA'">EFETUADA</mat-option>
+                <mat-option [value]="'Conciliado'">Conciliado</mat-option>
             </mat-select>
         </div>
     </div>

@@ -57,4 +57,13 @@ export class BillspaysComponent implements OnInit {
     });
   }
 
+  getBank(id) {
+    for(let i in this.appState.provider.banks) {
+      if(this.appState.provider.banks[i].id == id) {
+        return this.appState.provider.banks[i].name;
+      }
+    }
+    return '';
+  }
+
 }
