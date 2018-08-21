@@ -9,18 +9,21 @@ use JWTAuthException;
 use \App\Response\Response;
 use \App\Service\BillspayService;
 use \App\Billspays;
+use \App\Clients;
 
 class BillspayController extends Controller
 {
     private $response;
     private $billspays;
     private $billspayService;
+    private $clients;
 
     public function __construct()
     {
         $this->response = new Response();
         $this->billspayService = new BillspayService();
         $this->billspays = new Billspays();
+        $this->clients = new Clients();
     }
     /**
      * Display a listing of the resource.
@@ -38,25 +41,11 @@ class BillspayController extends Controller
             $pageSize = 10;
         }
 
-        $filters = [];
-        if( Input::get('date_from') !== null ) {
-            $filters['date_from'] = Input::get('date_from');
+        $billspays = $this->billspayService->load($page, $pageSize, $_GET);
+        $total = $this->billspayService->count($_GET);
+        foreach ($billspays as $key => $value) {
+            $value->client = $this->clients->find($value->clients_id);
         }
-        if( Input::get('date_to') !== null ) {
-            $filters['date_to'] = Input::get('date_to');
-        }
-        if( Input::get('due_from') !== null ) {
-            $filters['due_from'] = Input::get('due_from');
-        }
-        if( Input::get('due_to') !== null ) {
-            $filters['due_to'] = Input::get('due_to');
-        }
-        if( Input::get('status') !== null ) {
-            $filters['status'] = Input::get('status');
-        }
-
-        $billspays = $this->billspayService->load($page, $pageSize, $filters);
-        $total = $this->billspayService->count($filters);
 
         $this->response->setDataSet("billspays", $billspays);
         $this->response->setDataSet("total", $total);

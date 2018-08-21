@@ -41,31 +41,42 @@ class Billsreceives extends Model
         $where = [];
         if( isset($filters['date_from']) ) {
             $where[] = [
-                'created_at', '>', $filters['date_from']
+                'billsreceives.created_at', '>', $filters['date_from']
             ];
         }
         if( isset($filters['date_to']) ) {
             $where[] = [
-                'created_at', '<', $filters['date_to']
+                'billsreceives.created_at', '<', $filters['date_to']
             ];
         }
         if( isset($filters['due_from']) ) {
             $where[] = [
-                'due_date', '>', $filters['due_from']
+                'billsreceives.due_date', '>', $filters['due_from']
             ];
         }
         if( isset($filters['due_to']) ) {
             $where[] = [
-                'due_date', '<', $filters['due_to']
+                'billsreceives.due_date', '<', $filters['due_to']
             ];
         }
         if( isset($filters['status']) ) {
             $where[] = [
-                'status', '=', $filters['status']
+                'billsreceives.status', '=', $filters['status']
+            ];
+        }
+        if( isset($filters['project_id']) ) {
+            $where[] = [
+                'projects_id', '=', $filters['project_id']
+            ];
+        }
+        if( isset($filters['clients_id']) ) {
+            $where[] = [
+                'projects.clients_id', '=', $filters['clients_id']
             ];
         }
 
         $phases = DB::table('billsreceives')
+            ->join('projects', 'projects.id', '=', 'billsreceives.projects_id')
             ->where($where)
             ->offset($page * $pageSize)
             ->limit($pageSize)
@@ -78,31 +89,42 @@ class Billsreceives extends Model
         $where = [];
         if( isset($filters['date_from']) ) {
             $where[] = [
-                'created_at', '>', $filters['date_from']
+                'billsreceives.created_at', '>', $filters['date_from']
             ];
         }
         if( isset($filters['date_to']) ) {
             $where[] = [
-                'created_at', '<', $filters['date_to']
+                'billsreceives.created_at', '<', $filters['date_to']
             ];
         }
         if( isset($filters['due_from']) ) {
             $where[] = [
-                'due_date', '>', $filters['due_from']
+                'billsreceives.due_date', '>', $filters['due_from']
             ];
         }
         if( isset($filters['due_to']) ) {
             $where[] = [
-                'due_date', '<', $filters['due_to']
+                'billsreceives.due_date', '<', $filters['due_to']
             ];
         }
         if( isset($filters['status']) ) {
             $where[] = [
-                'status', '=', $filters['status']
+                'billsreceives.status', '=', $filters['status']
+            ];
+        }
+        if( isset($filters['project_id']) ) {
+            $where[] = [
+                'projects_id', '=', $filters['project_id']
+            ];
+        }
+        if( isset($filters['clients_id']) ) {
+            $where[] = [
+                'projects.clients_id', '=', $filters['clients_id']
             ];
         }
 
         $phases = DB::table('billsreceives')
+            ->join('projects', 'projects.id', '=', 'billsreceives.projects_id')
             ->where($where)
             ->count();
 

@@ -72,20 +72,24 @@ export class ClientComponent {
   pushTax() {
     let dialogRef = this.dialog.open(TaxSelectionComponent, {
       width: '80%',
-      data: { }
+      data: {
+        header: 'Imposto retido'
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      if(result) {
-        this.route.params.subscribe(params => {
-          this.http.post('/tax/client/' + params['id'], result)
-            .then((data: any) => {
-              this.loadClient();
-            })
-            .catch((error) => {
-              this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
-            });
-        });
+      for(let i in result) {
+        if(result[i].checked) {
+          this.route.params.subscribe(params => {
+            this.http.post('/tax/client/' + params['id'], result[i])
+              .then((data: any) => {
+                this.loadClient();
+              })
+              .catch((error) => {
+                this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
+              });
+          });
+        }
       }
     });
   }

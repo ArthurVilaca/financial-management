@@ -10,38 +10,39 @@
 
       <mat-list-item role="listitem">
         <mat-form-field class="full-width">
-          <input name="name" matInput placeholder="Nome" [(ngModel)]="billspay.name" [disabled]=" billspay.status == 'Efetuada' ">
+          <input name="name" matInput placeholder="Nome" [(ngModel)]="billspay.name" [disabled]=" billspay.status == 'Conciliado' ">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <mat-select name="status" placeholder="Status" [(ngModel)]="billspay.status" [disabled]=" billspay.status == 'Efetuada' ">
+          <mat-select name="status" placeholder="Status" [(ngModel)]="billspay.status" [disabled]=" billspay.status == 'Conciliado' ">
             <mat-option [value]="'Efetuada'">Efetuada</mat-option>
             <mat-option [value]="'Prevista'">Prevista</mat-option>
+            <mat-option [value]="'Conciliado'">Conciliado</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input name="amount" matInput placeholder="Valor" [(ngModel)]="billspay.amount" [disabled]=" billspay.status == 'Efetuada' ">
+          <input name="amount" matInput placeholder="Valor" [(ngModel)]="billspay.amount" [disabled]=" billspay.status == 'Conciliado' ">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="full-width">
-          <input name="comments" matInput placeholder="Observações" [(ngModel)]="billspay.comments" [disabled]=" billspay.status == 'Efetuada' ">
+          <input name="comments" matInput placeholder="Observações" [(ngModel)]="billspay.comments" [disabled]=" billspay.status == 'Conciliado' ">
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <mat-select name="banks_id" placeholder="Banco" [(ngModel)]="billspay.banks_id" [disabled]=" billspay.status == 'Efetuada' ">
+          <mat-select name="banks_id" placeholder="Banco" [(ngModel)]="billspay.banks_id" [disabled]=" billspay.status == 'Conciliado' ">
             <mat-option *ngFor="let bank of appState.provider.banks" [value]="bank.id">{{bank.name}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <mat-select name="cost_centers_id" placeholder="Centro de Custo" [(ngModel)]="billspay.cost_centers_id" [disabled]=" billspay.status == 'Efetuada' ">
+          <mat-select name="cost_centers_id" placeholder="Centro de Custo" [(ngModel)]="billspay.cost_centers_id" [disabled]=" billspay.status == 'Conciliado' ">
             <mat-option *ngFor="let costCenter of appState.provider.cost_centers" [value]="costCenter.id">{{costCenter.name}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -49,11 +50,11 @@
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="invoice_number" matInput placeholder="Numero Nota Fiscal" [(ngModel)]="billspay.invoice_number" [disabled]=" billspay.status == 'Efetuada' ">
+          <input name="invoice_number" matInput placeholder="Numero Nota Fiscal" [(ngModel)]="billspay.invoice_number" [disabled]=" billspay.status == 'Conciliado' ">
         </mat-form-field>
 
        <mat-form-field class="half-width">
-          <input name="invoice_date" matInput [matDatepicker]="pickerIncoiceDate" placeholder="Data Nota Fiscal" [(ngModel)]="billspay.invoice_date" [disabled]=" billspay.status == 'Efetuada' ">
+          <input name="invoice_date" matInput [matDatepicker]="pickerIncoiceDate" placeholder="Data Nota Fiscal" [(ngModel)]="billspay.invoice_date" [disabled]=" billspay.status == 'Conciliado' ">
           <mat-datepicker-toggle matSuffix [for]="pickerIncoiceDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerIncoiceDate></mat-datepicker>
         </mat-form-field>
@@ -61,7 +62,7 @@
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="payment_date" matInput [matDatepicker]="pickerPaymentDate" placeholder="Data Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Efetuada' ">
+          <input name="payment_date" matInput [matDatepicker]="pickerPaymentDate" placeholder="Data Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Conciliado' ">
           <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerPaymentDate></mat-datepicker>
         </mat-form-field>
@@ -74,7 +75,7 @@
       </mat-list-item>
       <mat-list-item role="listitem">
               <mat-form-field class="half-width">
-                <mat-select name="changeValueText" placeholder="Desconto/Acréscimo" [(ngModel)]="billspay.changeValueText" [disabled]=" billspay.status == 'Efetuada' ">
+                <mat-select name="changeValueText" placeholder="Desconto/Acréscimo" [(ngModel)]="billspay.changeValueText" [disabled]=" billspay.status == 'Conciliado' ">
                   <mat-option [value]="'discount'">DESCONTO</mat-option>
                   <mat-option [value]="'addition'">ACRÉSCIMO</mat-option>
                 </mat-select>
@@ -87,7 +88,7 @@
       </mat-list-item>
 
       <div class="full-width button-submit">
-        <button type="submit" mat-raised-button color="primary" class="button-submit" [disabled]=" billspay.status == 'Efetuada' " >Salvar</button>
+        <button type="submit" mat-raised-button color="primary" class="button-submit" [disabled]=" billspay.status == 'Conciliado' " >Salvar</button>
       </div>
       <br>
     </mat-list>

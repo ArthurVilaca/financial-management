@@ -15,7 +15,8 @@
         <table class="table" style="width: 100%;">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>PROJETO</th>
+              <th>Cliente</th>
               <th>Nome</th>
               <th>Status</th>
               <th>Valor</th>
@@ -25,10 +26,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let billspay of appState.provider.billspays">
-              <th scope="row">{{billspay.projects_id}} - {{billspay.id}}</th>
-              <td>{{billspay.name}}</td>
+              <th scope="row">{{billspay.projects_id}}</th>
+              <td>{{billspay.client.name}}</td>
+              <td>{{billspay.comments}}</td>
               <td>{{billspay.status}}</td>
-              <td>{{billspay.amount}}</td>
+              <td>{{billspay.amount | currency:'BRL'}}</td>
               <td class="clickable" routerLink="/contaAPagar/{{billspay.id}}">
                 <i class="fas fa-edit"></i>
               </td>

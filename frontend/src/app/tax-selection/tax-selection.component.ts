@@ -9,11 +9,13 @@ import { HttpService } from '../http.service';
   styleUrls: ['./tax-selection.component.scss']
 })
 export class TaxSelectionComponent {
+  header: any;
   taxes: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TaxSelectionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpService, private appState: ProviderService) {
+      this.header = data.header
       this.loadTaxes();
   }
 
@@ -31,8 +33,8 @@ export class TaxSelectionComponent {
     this.dialogRef.close();
   }
 
-  setSelected(tax) {
-    this.dialogRef.close(tax);
+  setSelected() {
+    this.dialogRef.close(this.taxes);
   }
 
 }
