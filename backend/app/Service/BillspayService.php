@@ -17,12 +17,19 @@ class BillspayService extends Service
         
         $returnBillspay = $this->billspays->create([
             'name' => $request->get('name'),
-            'status' => $request->get('status'),
             'comments' => $request->get('comments'),
+            'status' => $request->get('status'),
+            'type' => $request->get('type'),
             'amount' => $request->get('amount'), 
-            'numberInstallments' => $request->get('numberInstallments'),
-            'projects_phases_id' => $request->get('projects_phases_id'),
+            'due_date' => $request->get('due_date'),
+            'payment_date' => new \DateTime($request->get('payment_date')),
+            'banks_id' => $request->get('banks_id'),
             'cost_centers_id' => $request->get('cost_centers_id'),
+            'projects_phases_id' => $request->get('projects_phases_id'),
+            'projects_id' => $request->get('projects_id'),
+            'numberInstallments' => $request->get('numberInstallments'),
+            'invoice_number' => $request->get('invoice_number'),
+            'invoice_date' => new \DateTime($request->get('invoice_date')),
         ]);
         return $returnBillspay;
     }
