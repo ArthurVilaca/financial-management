@@ -168,4 +168,14 @@ class BillsreceiveController extends Controller
         $user->delete();
     }
 
+    public function loadDeductions($billsreceive_id)
+    {
+        $deductions = $this->billsreceiveService->loadDeductions($billsreceive_id);
+
+        $this->response->setDataSet("deductions", $deductions);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
+    }
 }

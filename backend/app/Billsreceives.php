@@ -194,4 +194,13 @@ class Billsreceives extends Model
         
         return $providerTaxes;
     }
+
+    public function loadDeductions($billsreceive_id){
+        
+        $providerTaxes = DB::table('billspays')
+            ->where('billsreceives_id','=', $billsreceive_id)
+            ->get();
+
+        return $providerTaxes;
+    }
 }

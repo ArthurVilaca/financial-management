@@ -34,6 +34,7 @@ Route::resource('cost_centers', 'CostCentersController');
 Route::resource('projects', 'ProjectsController');
 Route::resource('billspay', 'BillspayController');
 Route::resource('billsreceive', 'BillsreceiveController');
+Route::get('/loadDeductions/{billsreceive_id}', 'BillsreceiveController@loadDeductions');
 Route::resource('alerts', 'AlertsController');
 
 Route::post('tax/provider/{provider_id}', 'TaxesController@provider');

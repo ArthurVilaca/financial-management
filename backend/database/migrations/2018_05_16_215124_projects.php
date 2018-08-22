@@ -62,37 +62,6 @@ class Projects extends Migration
             $table->timestamps();
         });
 
-        Schema::create('billspays', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('comments');
-            $table->string('status');
-            $table->enum('type', ['COMUM', 'CREDITO'])->default('COMUM');
-            $table->double('amount');
-            $table->dateTime('due_date')->nullable();
-            $table->dateTime('payment_date')->nullable();
-            $table->double('discounts')->nullable();
-            $table->double('additions')->nullable();            
-
-            $table->string('invoice_number')->nullable();  // numero nfe
-            $table->dateTime('invoice_date')->nullable();
-
-            $table->integer('banks_id')->unsigned()->nullable();
-            $table->foreign('banks_id')->references('id')->on('banks');
-
-            $table->integer('cost_centers_id')->unsigned()->nullable();
-            $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
-
-            $table->integer('projects_phases_id')->unsigned()->nullable();
-            $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
-
-            $table->integer('projects_id')->unsigned()->nullable();
-            $table->foreign('projects_id')->references('id')->on('projects');
-            $table->integer('numberInstallments');
-
-            $table->timestamps();
-        });
-
         Schema::create('billsreceives', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -116,6 +85,41 @@ class Projects extends Migration
 
             $table->integer('projects_id')->unsigned();
             $table->foreign('projects_id')->references('id')->on('projects');
+
+            $table->timestamps();
+        });
+
+        Schema::create('billspays', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('comments');
+            $table->string('status');
+            $table->enum('type', ['COMUM', 'CREDITO', 'DEDUCOES'])->default('COMUM');
+            $table->double('amount');
+            $table->dateTime('due_date')->nullable();
+            $table->dateTime('payment_date')->nullable();
+            $table->double('discounts')->nullable();
+            $table->double('additions')->nullable();            
+
+            $table->string('invoice_number')->nullable();  // numero nfe
+            $table->dateTime('invoice_date')->nullable();
+
+            $table->integer('banks_id')->unsigned()->nullable();
+            $table->foreign('banks_id')->references('id')->on('banks');
+
+            $table->integer('cost_centers_id')->unsigned()->nullable();
+            $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
+
+            $table->integer('projects_phases_id')->unsigned()->nullable();
+            $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
+
+            $table->integer('projects_id')->unsigned()->nullable();
+            $table->foreign('projects_id')->references('id')->on('projects');
+
+            $table->integer('billsreceives_id')->unsigned();
+            $table->foreign('billsreceives_id')->references('id')->on('billsreceives');
+
+            $table->integer('numberInstallments');
 
             $table->timestamps();
         });

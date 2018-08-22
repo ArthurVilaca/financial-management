@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BillsreceiveComponent {
   billsreceive: any = {};
   filter: string = "RECEITA";
+  deductions: any [];
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadBillsreceive();
@@ -35,6 +36,14 @@ export class BillsreceiveComponent {
             console.log(error);
           });
       }
+
+      this.http.get('/loadDeductions/' + params['id'])
+        .then((data: any) => {
+          this.deductions = data.dataset.banks;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
 
     this.http.get('/banks')

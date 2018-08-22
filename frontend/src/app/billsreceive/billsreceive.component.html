@@ -77,4 +77,18 @@
     </div>
     </mat-list>
   </form>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-12">
+      <span class="code-header"><strong>Deduções</strong></span>
+    </div>
+  </div>
+
+  <div class="row" *ngFor="let deduction of deductions">
+    <div class="col-md-8">
+      {{deduction.name}}
+    </div>
+  </div>
 </div>

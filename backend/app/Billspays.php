@@ -93,6 +93,10 @@ class Billspays extends Model
             ];
         }
 
+        $where[] = [
+            'billspays.type', '<>', 'DEDUCOES'
+        ];
+
         $phases = DB::table('billspays')
             ->select('billspays.*', 'projects.clients_id')
             ->join('projects', 'projects.id', '=', 'billspays.projects_id')
@@ -151,6 +155,10 @@ class Billspays extends Model
                 [ 'billspays.comments', 'like', '%'.$filters['searchWords'].'%' ]
             ];
         }
+
+        $where[] = [
+            'billspays.type', '<>', 'DEDUCOES'
+        ];
 
         $phases = DB::table('billspays')
             ->join('projects', 'projects.id', '=', 'billspays.projects_id')
