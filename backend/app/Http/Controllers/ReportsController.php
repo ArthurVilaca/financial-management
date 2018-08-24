@@ -41,13 +41,9 @@ class ReportsController extends Controller
             $pageSize = 10;
         }
 
-        $filters = [];
-        if( Input::get('date_month') !== null ) {
-            $filters['date_month'] = Input::get('date_month');
-        }
-        var_dump($filters);die;
+        $filter = Input::get('filter');
 
-        $billspaysExpens = $this->billspays->getExpenses($page, $pageSize);
+        $billspaysExpens = $this->billspays->getExpenses($page, $pageSize,$filter);
         $total = $this->costCenter->count();
 
         $this->response->setDataSet("billPayReceive", $billspaysExpens);

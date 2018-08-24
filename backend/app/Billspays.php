@@ -192,7 +192,7 @@ class Billspays extends Model
         return $phases;
     }
 
-    public function getExpenses($page, $pageSize){               
+    public function getExpenses($page, $pageSize,$filter){               
 
 
         $where = [];
@@ -206,42 +206,51 @@ class Billspays extends Model
         ->offset($page * $pageSize)
         ->limit($pageSize)
         ->get(); 
-        
-        if($filters){
 
+        if($filter){
+            $filter = json_decode($filter,true);
+            $dateArray = array();
 
-
-
-        }else{
-
-            $now = new \DateTime();
-            $lessOneYear = $now->modify('-12 month'); 
-
-            $vectorPay = array();
-
-            foreach ($expenses as $key => $value) {
-                $now = new \DateTime();
-                $lessOneYear = $now->modify('-12 month'); 
-                
-                $value->amountPay = DB::table('billspays')
-                    ->where('billspays.status', 'Efetuada')
-                    ->where('billspays.cost_centers_id', $value->id)
-                    ->whereDate('created_at', '>' ,$lessOneYear->format('Y-m-d'))
-                    ->whereDate('created_at', '<= ', $now->format('Y-m-d'))
-                    //->whereBetween('billspays.updated_at', [$lessOneYear->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')])
-                    ->sum('billspays.amount'); 
-
-                $value->amountReceive = DB::table('billsreceives')
-                ->where('billsreceives.status','Efetuada')
-                ->where('billsreceives.cost_centers_id', $value->id)
-                ->whereDate('created_at', '>' ,$lessOneYear->format('Y-m-d'))
-                ->whereDate('created_at', '<= ', $now->format('Y-m-d'))
-                //->whereBetween('billsreceives.updated_at', [$lessOneYear->format('Y-m-d'), $now->format('Y-m-d')])
-                ->sum('billsreceives.amount'); 
-
-                $value->profit = $value->amountReceive - $value->amountPay;
+            for ($i=1; $i <= $filter['numberDays']; $i++) { 
+                $fullDate = strval($filter['year']).strval('-').strval($filter['month']).strval('-').strval($i); 
+                array_push($dateArray, new \DateTime($fullDate));                
             }
-        }        
-        return $expenses;        
+                        
+            $arrayExpense = new \ArrayObject();
+            $fullExpense = new \ArrayObject();
+
+            foreach ($expenses as $key => $value) {     
+            
+                $id = $value->id;
+                $name = $value->name;
+
+                for ($i=1; $i <= $filter['numberDays']; $i++) { 
+
+                    $fullDate = strval($filter['year']).strval('-').strval($filter['month']).strval('-').strval($i); 
+                    $fullDate = new \DateTime($fullDate);
+
+                    $amountPay = DB::table('billspays')
+                        ->where('status', '=', 'Efetuada')
+                        ->where('cost_centers_id', '=', $value->id)
+                        ->whereDate('created_at', '=' ,$fullDate->format('Y-m-d'))
+                        ->sum('amount');
+
+                    $amountReceive = DB::table('billsreceives')
+                        ->where('status', '=', 'Efetuada')
+                        ->where('cost_centers_id', '=', $value->id)
+                        ->whereDate('created_at', '=' ,$fullDate->format('Y-m-d'))
+                        ->sum('amount');
+                    
+                    $profit = $amountReceive - $amountPay;
+                    $date = $fullDate->format('Y-m-d');  
+
+
+                    $arrayExpense->append(array('SumBillsPay' => $amountPay, 'SumBillsReceive' => $amountReceive,
+                    'SumProfit' => $profit,'Date' => $date));                                         
+                }                
+                $fullExpense->append(array('id' => $id, 'name' => $name, $arrayExpense));
+            }
+        }   
+        return $fullExpense;        
     }
 }
