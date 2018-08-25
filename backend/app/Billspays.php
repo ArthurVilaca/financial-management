@@ -40,7 +40,6 @@ class Billspays extends Model
     }
 
     public function convertDate($request){
-        var_dump($request);die;
         $request = new \DateTime($request);
         $request = $request->format('Y-m-d H:i:s');
 
@@ -190,67 +189,5 @@ class Billspays extends Model
         }
 
         return $phases;
-    }
-
-    public function getExpenses($page, $pageSize,$filter){               
-
-
-        $where = [];
-        if( isset($filters['date_from']) ) {
-            $where[] = [
-                'created_at', '>', $filters['date_from']
-            ];
-        }
-
-        $expenses = DB::table('cost_centers')
-        ->offset($page * $pageSize)
-        ->limit($pageSize)
-        ->get(); 
-
-        if($filter){
-            $filter = json_decode($filter,true);
-            $dateArray = array();
-
-            for ($i=1; $i <= $filter['numberDays']; $i++) { 
-                $fullDate = strval($filter['year']).strval('-').strval($filter['month']).strval('-').strval($i); 
-                array_push($dateArray, new \DateTime($fullDate));                
-            }
-                        
-            $arrayExpense = new \ArrayObject();
-            $fullExpense = new \ArrayObject();
-
-            foreach ($expenses as $key => $value) {     
-            
-                $id = $value->id;
-                $name = $value->name;
-
-                for ($i=1; $i <= $filter['numberDays']; $i++) { 
-
-                    $fullDate = strval($filter['year']).strval('-').strval($filter['month']).strval('-').strval($i); 
-                    $fullDate = new \DateTime($fullDate);
-
-                    $amountPay = DB::table('billspays')
-                        ->where('status', '=', 'Efetuada')
-                        ->where('cost_centers_id', '=', $value->id)
-                        ->whereDate('created_at', '=' ,$fullDate->format('Y-m-d'))
-                        ->sum('amount');
-
-                    $amountReceive = DB::table('billsreceives')
-                        ->where('status', '=', 'Efetuada')
-                        ->where('cost_centers_id', '=', $value->id)
-                        ->whereDate('created_at', '=' ,$fullDate->format('Y-m-d'))
-                        ->sum('amount');
-                    
-                    $profit = $amountReceive - $amountPay;
-                    $date = $fullDate->format('Y-m-d');  
-
-
-                    $arrayExpense->append(array('SumBillsPay' => $amountPay, 'SumBillsReceive' => $amountReceive,
-                    'SumProfit' => $profit,'Date' => $date));                                         
-                }                
-                $fullExpense->append(array('id' => $id, 'name' => $name, $arrayExpense));
-            }
-        }   
-        return $fullExpense;        
     }
 }

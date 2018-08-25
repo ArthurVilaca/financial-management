@@ -117,12 +117,16 @@ class CostCentersController extends Controller
     public function update(Request $request, $id)
     {
         $costCenter = $this->costCenters->find($id);
-
+        
         $costCenter_data = $request->all();
-        $costCenter->fill($costCenter_data);
+        $costCenter->fill([
+            'name' => $request->get('name'),
+            'type' => $request->get('type'),
+            'typeCost' => $request->get('typeCost'),
+        ]);
         $costCenter->save();
 
-        $this->response->setDataSet("tax", $costCenter);
+        $this->response->setDataSet("costCenter", $costCenter);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 

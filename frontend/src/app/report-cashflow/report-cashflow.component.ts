@@ -52,6 +52,19 @@ export class ReportCashflowComponent  {
 
   filterDate = moment();
 
+  /*columnDefs = [
+    {headerName: 'Make', field: 'make' },
+    {headerName: 'Model', field: 'model' },
+    {headerName: 'Price', field: 'price'}
+  ];*/
+  columnDefs = [];
+
+  rowData = [
+      { make: 'Toyota', model: 'Celica', price: 35000 },
+      { make: 'Ford', model: 'Mondeo', price: 32000 },
+      { make: 'Porsche', model: 'Boxter', price: 72000 }
+  ];
+
   chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.filterDate;
     ctrlValue.year(normalizedYear.year());
@@ -74,7 +87,7 @@ export class ReportCashflowComponent  {
 
 
   billsExpenses: any[] = [];
-  billsReceive: any[] = [];
+  billsCostCenter: any[] = [];
   sortedData: any[] = [];
   filter: string = 'Efetuada';
   /*filter: any = {
@@ -88,15 +101,6 @@ export class ReportCashflowComponent  {
    }
 
   search($event?) {
-    /*this.http.get('/reports/expenses?filter=' + this.filter)
-      .then((data: any) => {
-        this.billsExpenses = data.dataset.billspaysExpenses;
-        this.sortedData = this.billsExpenses;
-        console.log('this.billsExpenses',this.billsExpenses)
-      })
-      .catch((error) => {
-        console.log(error);
-      });*/
 
       if($event){
         this.pageEvent = $event;
@@ -108,7 +112,8 @@ export class ReportCashflowComponent  {
       }
 
       let date = this.filterDate.toDate();
-      let month = date.getMonth();
+
+      let month = date.getMonth() + 1;
       let year = date.getFullYear();
       let numberDays = this.getDaysInMonth(month,year);
       let filter = ({
@@ -121,9 +126,30 @@ export class ReportCashflowComponent  {
 
       this.http.get('/reports?page=' + page + '&pageSize=' + this.pageSize+ '&filter=' + filterJson)
         .then((data: any) => {
-          console.log('DataGet',data);
-          this.appState.set('billPayReceive', data.dataset.billPayReceive);
+          this.appState.set('billsCostCenter', data.dataset.billsCostCenter);
           this.sortedData = this.appState.provider.billPayReceive;
+          this.billsCostCenter = this.appState.provider.billsCostCenter;
+          this.billsCostCenter[0] = Object.values(this.billsCostCenter[0]);
+          this.billsCostCenter[1] = Object.values(this.billsCostCenter[1]);
+          //console.log('billsCostCenter',this.billsCostCenter[1]);
+
+
+          var billsPay = new Array();
+
+          this.billsCostCenter[0].forEach( element =>   {
+            this.columnDefs.push({
+              headerName: element.toString(),
+              field: element.toString()
+            });
+          });
+
+          /*this.columnDefs.forEach(element => {
+            let field =
+            this.rowData.push({
+                element.field:
+            })
+            console.log('S',element);
+          });*/
           this.length = data.dataset.total;
         })
         .catch((error) => {

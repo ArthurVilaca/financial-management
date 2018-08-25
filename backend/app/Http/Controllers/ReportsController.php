@@ -10,6 +10,7 @@ use \App\Response\Response;
 use \App\Billspays;
 use \App\Billsreceives;
 use \App\CostCenters;
+use \App\Service\ReportCashFlowService;
 
 class ReportsController extends Controller
 {
@@ -23,6 +24,7 @@ class ReportsController extends Controller
         $this->billspays = new Billspays();
         $this->billsreceives = new Billsreceives();
         $this->costCenter = new CostCenters();
+        $this->reportCashFlow = new ReportCashFlowService();
     }
 
     /**
@@ -43,10 +45,10 @@ class ReportsController extends Controller
 
         $filter = Input::get('filter');
 
-        $billspaysExpens = $this->billspays->getExpenses($page, $pageSize,$filter);
+        $billsCostCenter = $this->reportCashFlow->getCashFlow($page, $pageSize,$filter);
         $total = $this->costCenter->count();
 
-        $this->response->setDataSet("billPayReceive", $billspaysExpens);
+        $this->response->setDataSet("billsCostCenter", $billsCostCenter);
         $this->response->setDataSet("total", $total);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");

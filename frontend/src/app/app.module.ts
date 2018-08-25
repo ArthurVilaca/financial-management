@@ -74,6 +74,7 @@ import { ReportBillspayComponent } from './report-billspay/report-billspay.compo
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
 import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 import { SearchProjectsComponent } from './search-projects/search-projects.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { SearchProjectsComponent } from './search-projects/search-projects.compo
     MatPaginatorModule,
     MatChipsModule,
     MatSortModule,
+    AgGridModule.withComponents([]),
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
