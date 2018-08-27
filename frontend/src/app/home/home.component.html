@@ -9,4 +9,67 @@
     </mat-card-content>
   </mat-card>
 
+  <mat-card>
+    <mat-card-header>
+      <strong>Contas</strong>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-border-style table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>
+                <strong>Contas a Receber</strong>
+              </th>
+              <th>
+                <strong>Contas a Pagar</strong>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Previsto para recebimento(Mês): R$ 0,00
+              </td>
+              <td>
+                Previsto para pagar(Mês): R$ 0,00
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Contas Baixadas no Mês: R$ 0,00
+              </td>
+              <td>
+                Contas Pagas no Mês: R$ 0,00
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <strong>Caixa</strong>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <ngx-charts-line-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="data"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [autoScale]="autoScale"
+            (select)="onSelect($event)">
+          </ngx-charts-line-chart>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

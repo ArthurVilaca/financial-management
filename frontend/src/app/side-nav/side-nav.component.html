@@ -24,16 +24,17 @@
 <mat-sidenav-container class="container" autosize>
   <mat-drawer class="drawer" #drawer mode="side">
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/clientes']">Clientes</a>
-      <a mat-list-item [routerLink]="['/fornecedores']">Fornecedores</a>
-      <a mat-list-item [routerLink]="['/impostos']">Impostos</a>
-      <a mat-list-item [routerLink]="['/bancos']">Bancos</a>
-      <a mat-list-item [routerLink]="['/centroDeCustos']">Centro de custos</a>
-      <a mat-list-item [routerLink]="['/funcionarios']">Funcionarios</a>
-      <a mat-list-item [routerLink]="['/projetos']">Projetos</a>
-      <a mat-list-item [routerLink]="['/contasAPagar']">Contas a Pagar</a>
-      <a mat-list-item [routerLink]="['/contasAReceber']">Contas a Receber</a>
-      <a mat-list-item [routerLink]="['/relatorios']">Relatorios</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/home']">Dashboard</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/clientes']">Clientes</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/fornecedores']">Fornecedores</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/impostos']">Impostos</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/bancos']">Bancos</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/centroDeCustos']">Centro de custos</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/funcionarios']">Funcionarios</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/projetos']">Projetos</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/contasAPagar']">Contas a Pagar</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/contasAReceber']">Contas a Receber</a>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/relatorios']">Relatorios</a>
     </mat-nav-list>
   </mat-drawer>
   <!--All children routes go here-->

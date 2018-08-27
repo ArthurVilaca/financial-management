@@ -1,100 +1,97 @@
 <div class="main-section">
   <form class="form" name="providerForm" (ngSubmit)="save()">
 
-    <mat-list role="list">
-      <mat-list-item role="listitem">
-        <div class="full-width">
-          <span class="code-header"><strong>Fornecedor</strong></span>
+    <mat-tab-group>
+      <mat-tab label="Dados">
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <div class="full-width">
+              <span class="code-header"><strong>Fornecedor</strong></span>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <mat-form-field class="full-width">
+              <input name="name" matInput placeholder="Nome" [(ngModel)]="provider.name">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <mat-form-field class="half-width">
+              <mat-select name="status" placeholder="Status" [(ngModel)]="provider.status">
+                <mat-option [value]="'APROVADO'">APROVADO</mat-option>
+                <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <input name="phone" type="text" matInput placeholder="Telefone" [(ngModel)]="provider.phone">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <mat-form-field class="half-width">
+              <input name="email" type="text" matInput placeholder="Email" [(ngModel)]="provider.email">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <input name="zip_code" type="text" matInput placeholder="CEP" [(ngModel)]="provider.zip_code" (change)="searchZip()">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <mat-form-field class="half-width">
+              <input name="adress" type="text" matInput placeholder="Endereço" [(ngModel)]="provider.adress">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <input name="adress_number" type="text" matInput placeholder="Numero" [(ngModel)]="provider.adress_number">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <mat-form-field class="half-width">
+              <input name="adress_complement" type="text" matInput placeholder="Complemento" [(ngModel)]="provider.adress_complement">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <input name="adress_district" type="text" matInput placeholder="Bairro" [(ngModel)]="provider.adress_district">
+            </mat-form-field>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <mat-form-field class="half-width">
+              <input name="city" type="text" matInput placeholder="Cidade" [(ngModel)]="provider.city">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <input name="state" type="text" matInput placeholder="Estado" [(ngModel)]="provider.state">
+            </mat-form-field>
+          </mat-list-item>
+
+          <div class="full-width button-submit">
+            <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
+          </div>
+        </mat-list>
+      </mat-tab>
+      <mat-tab label="Impostos">
+        <div class="row" *ngFor="let tax of provider.taxes">
+          <div class="col-md-8">
+            {{tax.name}} - {{tax.amount}} {{tax.collection}}
+          </div>
+          <div class="col-md-4">
+            <i class="fas fa-trash-alt"></i>
+          </div>
         </div>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="full-width">
-          <input name="name" matInput placeholder="Nome" [(ngModel)]="provider.name">
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="half-width">
-          <mat-select name="status" placeholder="Status" [(ngModel)]="provider.status">
-            <mat-option [value]="'APROVADO'">APROVADO</mat-option>
-            <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input name="phone" type="text" matInput placeholder="Telefone" [(ngModel)]="provider.phone">
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="half-width">
-          <input name="email" type="text" matInput placeholder="Email" [(ngModel)]="provider.email">
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input name="zip_code" type="text" matInput placeholder="CEP" [(ngModel)]="provider.zip_code" (change)="searchZip()">
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="half-width">
-          <input name="adress" type="text" matInput placeholder="Endereço" [(ngModel)]="provider.adress">
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input name="adress_number" type="text" matInput placeholder="Numero" [(ngModel)]="provider.adress_number">
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="half-width">
-          <input name="adress_complement" type="text" matInput placeholder="Complemento" [(ngModel)]="provider.adress_complement">
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input name="adress_district" type="text" matInput placeholder="Bairro" [(ngModel)]="provider.adress_district">
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item role="listitem">
-        <mat-form-field class="half-width">
-          <input name="city" type="text" matInput placeholder="Cidade" [(ngModel)]="provider.city">
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input name="state" type="text" matInput placeholder="Estado" [(ngModel)]="provider.state">
-        </mat-form-field>
-      </mat-list-item>
-
-      <div class="full-width button-submit">
-        <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
-      </div>
-    </mat-list>
-
-    <hr />
-
-    <div class="row">
-      <div class="col-md-12">
-        <span class="code-header"><strong>Impostos</strong></span>
-      </div>
-    </div>
-
-    <div class="row" *ngFor="let tax of provider.taxes">
-      <div class="col-md-8">
-        {{tax.name}} - {{tax.amount}} {{tax.collection}}
-      </div>
-      <div class="col-md-4">
-        <i class="fas fa-trash-alt"></i>
-      </div>
-    </div>
-
-    <hr />
-    <div class="row" *ngIf="provider.id">
-      <div class="col-md-6">
-        <button type="button" (click)="pushTax()" mat-raised-button color="primary" class="button-submit">Novo</button>
-      </div>
-    </div>
-
+    
+        <div class="row" *ngIf="provider.id">
+          <div class="col-md-6">
+            <button type="button" (click)="pushTax()" mat-raised-button color="primary" class="button-submit">Novo</button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Comentarios">
+      </mat-tab>
+    </mat-tab-group>
   </form>
 </div>

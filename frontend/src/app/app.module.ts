@@ -76,6 +76,8 @@ import { ReportCashflowComponent } from './report-cashflow/report-cashflow.compo
 import { SearchProjectsComponent } from './search-projects/search-projects.component';
 
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,6 +142,7 @@ import { SearchProjectsComponent } from './search-projects/search-projects.compo
     MatPaginatorModule,
     MatChipsModule,
     MatSortModule,
+    NgxChartsModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],

@@ -17,7 +17,8 @@
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
           <mat-select name="status" placeholder="Status" [(ngModel)]="employee.status">
-            <mat-option [value]="'APROVADO'">APROVADO</mat-option>
+            <mat-option [value]="'ATIVO'">ATIVO</mat-option>
+            <mat-option [value]="'DEMITIDO'">DEMITIDO</mat-option>
             <mat-option [value]="'BLOQUEADO'">BLOQUEADO</mat-option>
           </mat-select>
         </mat-form-field>
