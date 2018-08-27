@@ -59,11 +59,13 @@ export class ReportCashflowComponent  {
   ];*/
   columnDefs = [];
 
-  rowData = [
+ /* rowData = [
       { make: 'Toyota', model: 'Celica', price: 35000 },
       { make: 'Ford', model: 'Mondeo', price: 32000 },
       { make: 'Porsche', model: 'Boxter', price: 72000 }
-  ];
+  ];*/
+  rowData= [];
+
 
   chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.filterDate;
@@ -87,17 +89,14 @@ export class ReportCashflowComponent  {
 
 
   billsExpenses: any[] = [];
-  billsCostCenter: any[] = [];
+  billsCostCenter: any ;
   sortedData: any[] = [];
   filter: string = 'Efetuada';
-  /*filter: any = {
-    prevista: true,
-    efetuada: true
-  }*/
 
   constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent,
     private http: HttpService, private appState: ProviderService) {
     this.search();
+    console.log('Typeof',typeof (this.rowData));
    }
 
   search($event?) {
@@ -129,8 +128,17 @@ export class ReportCashflowComponent  {
           this.appState.set('billsCostCenter', data.dataset.billsCostCenter);
           this.sortedData = this.appState.provider.billPayReceive;
           this.billsCostCenter = this.appState.provider.billsCostCenter;
-          this.billsCostCenter[0] = Object.values(this.billsCostCenter[0]);
-          this.billsCostCenter[1] = Object.values(this.billsCostCenter[1]);
+          this.columnDefs = this.billsCostCenter[0];
+          console.log('columnDefs',this.columnDefs);
+          let obj = this.billsCostCenter[1].reduce(function(acc, cur, i) {
+            acc[i] = cur;
+            return acc;
+          }, {});
+          JSON.stringify
+          console.log('billsCostCenter3',this.billsCostCenter[1]);
+
+          this.rowData=this.billsCostCenter[3];
+          console.log('RowData',this.rowData);
           //console.log('billsCostCenter',this.billsCostCenter[1]);
 
 
@@ -144,9 +152,9 @@ export class ReportCashflowComponent  {
           });
 
           /*this.columnDefs.forEach(element => {
-            let field =
+            let field = element.field;
             this.rowData.push({
-                element.field:
+              field : '',
             })
             console.log('S',element);
           });*/
