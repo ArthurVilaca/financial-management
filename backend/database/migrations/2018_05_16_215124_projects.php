@@ -83,7 +83,7 @@ class Projects extends Migration
             $table->integer('cost_centers_id')->unsigned()->nullable();
             $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
 
-            $table->integer('projects_id')->unsigned();
+            $table->integer('projects_id')->unsigned()->nullable();
             $table->foreign('projects_id')->references('id')->on('projects');
 
             $table->timestamps();
@@ -116,10 +116,10 @@ class Projects extends Migration
             $table->integer('projects_id')->unsigned()->nullable();
             $table->foreign('projects_id')->references('id')->on('projects');
 
-            $table->integer('billsreceives_id')->unsigned();
+            $table->integer('billsreceives_id')->unsigned()->nullable();
             $table->foreign('billsreceives_id')->references('id')->on('billsreceives');
 
-            $table->integer('numberInstallments');
+            $table->integer('numberInstallments')->nullable();
 
             $table->timestamps();
         });

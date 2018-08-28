@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
         DB::table('employees')->insert([
             'name' => 'Arthur Vilaca', 'username' => 'arthur_vilaca',
             'email' => 'vilaca.arthur.f@gmail.com',
-            'password' => bcrypt('123'), 'status' => 'APROVADO'
+            'password' => bcrypt('123'), 'status' => 'ATIVO'
         ]);
         DB::table('employees')->insert([
             'name' => 'Luciana', 'username' => 'luciana',
             'email' => 'luciana@innovarepesquisa.com.br',
-            'password' => bcrypt('123'), 'status' => 'APROVADO'
+            'password' => bcrypt('123'), 'status' => 'ATIVO'
         ]);
 
         DB::table('clients')->insert([

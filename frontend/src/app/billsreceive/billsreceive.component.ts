@@ -61,6 +61,14 @@ export class BillsreceiveComponent {
       .catch((error) => {
         console.log(error);
       });
+
+    this.http.get('/projects')
+      .then((data: any) => {
+        this.appState.set('projects', data.dataset.projects);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   generateInvoice(){
