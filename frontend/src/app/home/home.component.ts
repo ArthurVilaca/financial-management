@@ -13,16 +13,24 @@ export class HomeComponent {
       "name": "A Pagar",
       "series": [
         {
-          "name": "2017",
+          "name": "06-2018",
           "value": 200,
         },
         {
-          "name": "2018",
+          "name": "07-2018",
           "value": 300,
         },
         {
-          "name": "2019",
+          "name": "08-2018",
           "value": 280,
+        },
+        {
+          "name": "09-2018",
+          "value": 120,
+        },
+        {
+          "name": "10-2018",
+          "value": 30,
         }
       ]
     },
@@ -31,16 +39,24 @@ export class HomeComponent {
       "name": "A Receber",
       "series": [
         {
-          "name": "2017",
+          "name": "06-2018",
           "value": 120,
         },
         {
-          "name": "2018",
+          "name": "07-2018",
           "value": 150,
         },
         {
-          "name": "2019",
+          "name": "08-2018",
           "value": 160,
+        },
+        {
+          "name": "09-2018",
+          "value": 80,
+        },
+        {
+          "name": "10-2018",
+          "value": 40,
         }
       ]
     }
