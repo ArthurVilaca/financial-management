@@ -27,35 +27,6 @@ class ReportsController extends Controller
         $this->reportCashFlow = new ReportCashFlowService();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $page = Input::get('page');
-        if( !isset($page)  ) {
-            $page = 0;
-        }
-        $pageSize = Input::get('pageSize');
-        if( !isset($pageSize)  ) {
-            $pageSize = 10;
-        }
-
-        $filter = Input::get('filter');
-
-        $billsCostCenter = $this->reportCashFlow->getCashFlow($page, $pageSize,$filter);
-        $total = $this->costCenter->count();
-
-        $this->response->setDataSet("billsCostCenter", $billsCostCenter);
-        $this->response->setDataSet("total", $total);
-        $this->response->setType("S");
-        $this->response->setMessages("Sucess!");
-
-        return response()->json($this->response->toString());
-    }
-
     public function billspay(Request $request) {
         $billspays = $this->billspays->getReport($_GET);
 
@@ -77,7 +48,7 @@ class ReportsController extends Controller
     }
 
     public function getExpenses(Request $request){
-        $expenses = $this->billspays->getExpenses($_GET);
+        $expenses = $this->billspays->getReport($_GET);
 
         $this->response->setDataSet("billspaysExpenses", $expenses);
         $this->response->setType("S");

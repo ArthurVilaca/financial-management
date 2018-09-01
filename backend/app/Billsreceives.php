@@ -138,19 +138,18 @@ class Billsreceives extends Model
         }
 
         $phases = DB::table('cost_centers')
+            ->where('type', '=','RECEITA')
             ->get();    
 
         foreach ($phases as $key => $value) {
 
             $value->bills = DB::table('billsreceives')
-                ->where('billsreceives.cost_centers_id', $value->id)
-                ->where($where)
+                ->where('cost_centers_id','=', $value->id)
                 ->count();
 
             $value->amount = DB::table('billsreceives')
-                ->where('billsreceives.cost_centers_id', $value->id)
-                ->where($where)
-                ->sum('billsreceives.amount');
+                ->where('cost_centers_id','=', $value->id)
+                ->sum('amount');
         }
 
         return $phases;

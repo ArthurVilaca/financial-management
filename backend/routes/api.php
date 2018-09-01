@@ -35,7 +35,7 @@ Route::resource('projects', 'ProjectsController');
 Route::resource('billspay', 'BillspayController');
 Route::resource('billsreceive', 'BillsreceiveController');
 Route::resource('alerts', 'AlertsController');
-Route::resource('reports', 'ReportsController');
+/*Route::resource('reports', 'ReportsController');*/
 
 Route::post('tax/provider/{provider_id}', 'TaxesController@provider');
 Route::post('tax/client/{client_id}', 'TaxesController@client');
@@ -47,5 +47,3 @@ Route::get('/reports/billspay', 'ReportsController@billspay');
 Route::get('/reports/billsreceive', 'ReportsController@billsreceive');
 Route::get('/reports/expenses', 'ReportsController@getExpenses');
 Route::get('/reports/recipes', 'ReportsController@getRecipes');
-
-Route::resource('reports', 'ReportsController');

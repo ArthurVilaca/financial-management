@@ -58,18 +58,8 @@ export class ReportCashflowComponent {
 
   filterDate = moment();
 
-  /*columnDefs = [
-    {headerName: 'Make', field: 'make' },
-    {headerName: 'Model', field: 'model' },
-    {headerName: 'Price', field: 'price'}
-  ];*/
   columnDefs = [];
 
- /* rowData = [
-      { make: 'Toyota', model: 'Celica', price: 35000 },
-      { make: 'Ford', model: 'Mondeo', price: 32000 },
-      { make: 'Porsche', model: 'Boxter', price: 72000 }
-  ];*/
   rowData: any;
 
 
@@ -134,6 +124,7 @@ export class ReportCashflowComponent {
           this.sortedData = this.appState.provider.billPayReceive;
           this.billsCostCenter = this.appState.provider.billsCostCenter;
           this.columnDefs = this.billsCostCenter[0];
+          console.log('billsCostCenter',this.billsCostCenter[2]);
           this.rowData = this.billsCostCenter[2];
 
           var billsPay = new Array();

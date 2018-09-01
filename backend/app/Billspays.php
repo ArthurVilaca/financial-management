@@ -168,23 +168,17 @@ class Billspays extends Model
         }
 
         $phases = DB::table('cost_centers')
+            ->where('type', '=', 'DESPESA')
             ->get();    
 
         foreach ($phases as $key => $value) {
 
-            
-            /*$value->bills = DB::table('billspays')
-                ->where('billspays.cost_centers_id', $value->id)
-
-                ->count();*/
             $value->bills = DB::table('billspays')
-            ->where('billspays.cost_centers_id', $value->id)
-            ->where($where)
-            ->count();
+              ->where('billspays.cost_centers_id', $value->id)
+              ->count();
 
             $value->amount = DB::table('billspays')
-                ->where('billspays.cost_centers_id', $value->id)
-                ->where($where)
+                ->where('billspays.cost_centers_id', $value->id)                
                 ->sum('billspays.amount');
         }
 

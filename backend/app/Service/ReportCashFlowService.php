@@ -49,80 +49,91 @@ class ReportCashFlowService extends Service
 
         $date_pay = $filter_date;
         $date_rec = $filter_date;        
-        $rowBillsPay;
-        $t =0; $validate = 0;
+        $rowBillsPay = new \stdClass();
+        $t =0; $validate = 0;$subtotalPay = 0.00;
+
+        $rowBillsPay->{'cod'.$validate} = 'DESPESAS';
+        $validate++;
+        $rowBillsPay->{'cod'.$validate} = ' '; 
+        array_push($arrayFullExpenses,$rowBillsPay);
+
         foreach ($expenses as  $value) {                              
-            $rowBillsPay= new \stdClass();            
-            
-            if($validate == 0){
-                $rowBillsPay->{'cod'.$t} = 'DESPESAS';
-            }else{
-                $rowBillsPay->{'cod'.$t} = $value->name;
-            }            
+            $rowBillsPay = new \stdClass();    
+
+            $rowBillsPay->{'cod'.$t} = $value->name;   
 
             for($i = 1 ; $i <= $filter['numberDays']; $i++){  
 
-                if($validate == 0){
-                    $rowBillsPay->{'cod'.$i} = ' '; 
-                }
-                else{
-                    $amountPay = DB::table('billspays')
-                    ->where('billspays.status', 'Efetuada')
-                    ->where('billspays.cost_centers_id', $value->id)
-                    ->whereDate('billspays.payment_date' ,$date_pay->format('d-m-Y'))
-                    ->sum('amount');                  
+                $value->amountPay = DB::table('billspays')
+                    ->where('status','=', 'Efetuada')
+                    ->where('cost_centers_id','=', $value->id)
+                    ->whereDate('payment_date' ,$date_pay->format('Y-m-d'))
+                    ->sum('amount');                
                 
-                $rowBillsPay->{'cod'.$i} = $amountPay;                 
+                $rowBillsPay->{'cod'.$i} = $value->amountPay;                
+                $subtotalPay += $value->amountPay;
                 $date_pay =  $date_pay->modify('+1 day');
-                }               
+                        
             }
 
-            array_push($arrayFullExpenses,$rowBillsPay);
-            
+            array_push($arrayFullExpenses,$rowBillsPay);            
             $validate ++;
         }
+        $rowBillsPay = new \stdClass();
+        $s = 0; 
+        $rowBillsPay->{'cod'.$s} = 'SUBTOTAL - DEPESAS';
+        $s++;
+        $rowBillsPay->{'cod'.$s} = $subtotalPay;
+        array_push($arrayFullExpenses,$rowBillsPay);
         
+        $rowBillsPay = new \stdClass();
+        $validateRecipe = 0;$x =0; $subtotalRec = 0;
+        $rowBillsPay->{'cod'.$validateRecipe} = 'RECEITAS';
+        $validateRecipe++;
+        $rowBillsPay->{'cod'.$validateRecipe} = ' '; 
+        array_push($arrayFullExpenses,$rowBillsPay);
 
-        $validateRecipe = 0;$x =0;
         foreach ($recipe as  $value) {
-            //$rowBillsRec = new \stdClass();
-            $rowBillsPay= new \stdClass();            
-
-            if($validateRecipe == 0){
-                $rowBillsPay->{'cod'.$x} = 'RECEITAS';
-            }else{
-                $rowBillsPay->{'cod'.$x} = $value->name;
-            }            
+            $rowBillsPay = new \stdClass();  
+            $subtotalReceive = new \stdClass();       
+            
+            $rowBillsPay->{'cod'.$x} = $value->name;
+                       
 
             for($i = 1 ; $i <= $filter['numberDays']; $i++){
-
                 
-                if($validateRecipe == 0){
-                    $rowBillsPay->{'cod'.$i} = ' '; 
-                }else{
-                    
-                    $amountReceive = DB::table('billsreceives')
-                        ->where('status', '=', 'Efetuada')
-                        ->where('cost_centers_id', '=', $value->id)
-                        ->whereDate('created_at',$date_rec->format('d-m-Y'))
-                        ->sum('amount');              
-
+                $amountReceive = DB::table('billsreceives')
+                    ->where('status', '=', 'Efetuada')
+                    ->where('cost_centers_id', '=', $value->id)
+                    ->whereDate('created_at',$date_rec->format('d-m-Y'))
+                    ->sum('amount');              
             
                     $rowBillsPay->{'cod'.$i} = $amountReceive;
-                    $date_rec =  $date_rec->modify('+1 day');
-                }                             
+                    $subtotalRec = $subtotalRec + $amountReceive;
+                    $date_rec =  $date_rec->modify('+1 day');                            
             }
-            //array_push($arrayFullReceive,$rowBillsRec);
             array_push($arrayFullExpenses,$rowBillsPay);
             $validateRecipe ++;
         }
+
+        $rowBillsPay = new \stdClass();
+        $s = 0; 
+        $rowBillsPay->{'cod'.$s} = 'SUBTOTAL - RECEITAS';
+        $s++;
+        $rowBillsPay->{'cod'.$s} = $subtotalRec;
+        array_push($arrayFullExpenses,$rowBillsPay);
+
+        $rowBillsPay = new \stdClass();
+        $s = 0; 
+        $rowBillsPay->{'cod'.$s} = 'TOTAL';
+        $s++;
+        $rowBillsPay->{'cod'.$s} = $subtotalRec + $subtotalPay;
+        array_push($arrayFullExpenses,$rowBillsPay);
         
         $billspayCostcenter = array();
-        //$arrayCostCenter = json_encode($arrayCostCenter);
         array_push($billspayCostcenter,$FullColumn);
         array_push($billspayCostcenter,$arrayCostCenter);
         array_push($billspayCostcenter,$arrayFullExpenses);
-        //array_push($billspayCostcenter,$arrayFullReceive);
         return  $billspayCostcenter;        
     }
 }
