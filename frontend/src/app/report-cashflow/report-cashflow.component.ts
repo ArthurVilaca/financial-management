@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
@@ -10,6 +10,11 @@ import {FormControl} from '@angular/forms';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
+import { HttpClient } from '@angular/common/http';
+import { AgGridModule, AgGridNg2 } from 'ag-grid-angular';
+import 'ag-grid-enterprise';
+
+
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -48,7 +53,8 @@ export const MY_FORMATS = {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class ReportCashflowComponent  {
+export class ReportCashflowComponent {
+  @ViewChild('agGrid') agGrid: AgGridNg2;
 
   filterDate = moment();
 
@@ -64,7 +70,7 @@ export class ReportCashflowComponent  {
       { make: 'Ford', model: 'Mondeo', price: 32000 },
       { make: 'Porsche', model: 'Boxter', price: 72000 }
   ];*/
-  rowData= [];
+  rowData: any;
 
 
   chosenYearHandler(normalizedYear: Moment) {
@@ -94,9 +100,8 @@ export class ReportCashflowComponent  {
   filter: string = 'Efetuada';
 
   constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent,
-    private http: HttpService, private appState: ProviderService) {
+    private http: HttpService, private appState: ProviderService, private httpClient: HttpClient) {
     this.search();
-    console.log('Typeof',typeof (this.rowData));
    }
 
   search($event?) {
@@ -129,18 +134,7 @@ export class ReportCashflowComponent  {
           this.sortedData = this.appState.provider.billPayReceive;
           this.billsCostCenter = this.appState.provider.billsCostCenter;
           this.columnDefs = this.billsCostCenter[0];
-          console.log('columnDefs',this.columnDefs);
-          let obj = this.billsCostCenter[1].reduce(function(acc, cur, i) {
-            acc[i] = cur;
-            return acc;
-          }, {});
-          JSON.stringify
-          console.log('billsCostCenter3',this.billsCostCenter[1]);
-
-          this.rowData=this.billsCostCenter[3];
-          console.log('RowData',this.rowData);
-          //console.log('billsCostCenter',this.billsCostCenter[1]);
-
+          this.rowData = this.billsCostCenter[2];
 
           var billsPay = new Array();
 
@@ -150,14 +144,6 @@ export class ReportCashflowComponent  {
               field: element.toString()
             });
           });
-
-          /*this.columnDefs.forEach(element => {
-            let field = element.field;
-            this.rowData.push({
-              field : '',
-            })
-            console.log('S',element);
-          });*/
           this.length = data.dataset.total;
         })
         .catch((error) => {

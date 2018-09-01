@@ -34,7 +34,9 @@
               <ag-grid-angular
                 style="width: 900px; height: 500px;"
                 class="ag-theme-balham"
-                [rowData]="rowData"
+                [enableSorting]="true"
+                [enableFilter]="true"
+                [rowData]="rowData "
                 [columnDefs]="columnDefs">
               </ag-grid-angular>
         </div>
@@ -43,8 +45,3 @@
   </div>
 </div>
 
-<mat-paginator class="center" [length]="length"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="pageSizeOptions"
-  (page)="pageEvent = search($event)">
-</mat-paginator>
