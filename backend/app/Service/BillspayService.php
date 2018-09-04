@@ -27,6 +27,7 @@ class BillspayService extends Service
             'cost_centers_id' => $request->get('cost_centers_id'),
             'projects_phases_id' => $request->get('projects_phases_id'),
             'projects_id' => $request->get('projects_id'),
+            'providers_id' => $request->get('providers_id'),
             'numberInstallments' => $request->get('numberInstallments'),
             'invoice_number' => $request->get('invoice_number'),
             'invoice_date' => new \DateTime($request->get('invoice_date')),

@@ -12,6 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BillspayComponent {
   billspay: any = {};
   filter : String = "DESPESA";
+  providers: any;
+  projects: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadBillspay();
@@ -23,7 +25,6 @@ export class BillspayComponent {
         this.http.get('/billspay/' + params['id'])
           .then((data: any) => {
             this.billspay = data.dataset.billspay;
-            console.log('billspay',this.billspay);
             if(this.billspay.invoice_date != '') {
               this.billspay.invoice_date = new Date(this.billspay.invoice_date);
             }
@@ -56,7 +57,18 @@ export class BillspayComponent {
 
     this.http.get('/projects')
       .then((data: any) => {
+        console.log('Data', data);
         this.appState.set('projects', data.dataset.projects);
+        this.projects = this.appState.provider.projects;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    this.http.get('/providers')
+      .then((data: any) => {
+        this.appState.set('providers', data.dataset.providers);
+        this.providers = this.appState.provider.providers;
       })
       .catch((error) => {
         console.log(error);

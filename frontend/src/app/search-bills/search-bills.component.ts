@@ -22,6 +22,9 @@ export class SearchBillsComponent {
       if(!this.appState.provider.clients) {
         this.searchClients();
       }
+      if(!this.appState.provider.costCenters) {
+        this.serachCostCenters();
+      }
   }
 
   onNoClick(): void {
@@ -46,5 +49,15 @@ export class SearchBillsComponent {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  serachCostCenters(){
+    this.http.get('/cost_centers')
+      .then((data: any) => {
+        this.appState.set('cost_centers', data.dataset.costCenters);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 }

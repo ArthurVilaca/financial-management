@@ -124,7 +124,6 @@ export class ReportCashflowComponent {
           this.sortedData = this.appState.provider.billPayReceive;
           this.billsCostCenter = this.appState.provider.billsCostCenter;
           this.columnDefs = this.billsCostCenter[0];
-          console.log('billsCostCenter',this.billsCostCenter[2]);
           this.rowData = this.billsCostCenter[2];
 
           var billsPay = new Array();
