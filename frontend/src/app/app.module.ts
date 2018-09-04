@@ -77,6 +77,11 @@ import { SearchProjectsComponent } from './search-projects/search-projects.compo
 
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LoansComponent } from './loans/loans.component';
+import { LoanComponent } from './loan/loan.component';
+import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
+import { PaymentMethodComponent } from './payment-method/payment-method.component';
+import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +118,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ReportBillspayComponent,
     ReportBillsreceiveComponent,
     ReportCashflowComponent,
-    SearchProjectsComponent
+    SearchProjectsComponent,
+    LoansComponent,
+    LoanComponent,
+    PaymentMethodsComponent,
+    PaymentMethodComponent,
+    BankReconciliationComponent
   ],
   imports: [
     BrowserModule,

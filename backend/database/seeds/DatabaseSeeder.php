@@ -440,5 +440,36 @@ class DatabaseSeeder extends Seeder
             'type' => 'MUNICIPAL',
             'reference' => 'RECEITA'
         ]);
+
+        DB::table('payment_methods')->insert([
+            'name' => 'Cheque'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão corporativo VISA'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão corporativo American Express'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão corporativo ITAUCARD BUSINESS'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Transferência bancária'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão BNDES'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Caixa do escritório'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Dinheiro'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Débito em conta corrente'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Crédito em conta corrente'
+        ]);
     }
 }

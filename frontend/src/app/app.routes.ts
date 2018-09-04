@@ -25,6 +25,11 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ReportsComponent } from './reports/reports.component';
 import { ReportBillspayComponent } from './report-billspay/report-billspay.component';
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
+import { LoansComponent } from './loans/loans.component';
+import { LoanComponent } from './loan/loan.component';
+import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
+import { PaymentMethodComponent } from './payment-method/payment-method.component';
+import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -61,6 +66,13 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'relatorios', component: ReportsComponent },
 	{ path: 'relatorio/contasAPagar', component: ReportBillspayComponent },
 	{ path: 'relatorio/contasAReceber', component: ReportBillsreceiveComponent },
+	{ path: 'emprestimos', component: LoansComponent },
+	{ path: 'emprestimo/novo', component: LoanComponent },
+	{ path: 'emprestimo/:id', component: LoanComponent },
+	{ path: 'metodosPagamentos', component: PaymentMethodsComponent },
+	{ path: 'metodosPagamento/novo', component: PaymentMethodComponent },
+	{ path: 'metodosPagamento/:id', component: PaymentMethodComponent },
+	{ path: 'conciliacaoBancaria/:id', component: BankReconciliationComponent },
 ];
 
 export const rootRouterConfig: Routes = [

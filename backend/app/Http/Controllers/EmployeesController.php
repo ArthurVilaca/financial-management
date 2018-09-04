@@ -70,7 +70,7 @@ class EmployeesController extends Controller
         
         $user = JWTAuth::toUser($token);
         
-        if($user->status != "APROVADO")
+        if($user->status != "ATIVO")
         {
             $this->response->setType("N");    
             $this->response->setMessages("You don't have permission to do login!");

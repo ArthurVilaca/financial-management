@@ -8,6 +8,7 @@
             <tr>
               <th>ID</th>
               <th>Nome</th>
+              <th>Conciliação</th>
               <th>Acessar</th>
               <th>Excluir</th>
             </tr>
@@ -16,6 +17,9 @@
             <tr *ngFor="let bank of appState.provider.banks">
               <th scope="row">{{bank.id}}</th>
               <td>{{bank.name}}</td>
+              <td class="clickable" routerLink="/conciliacaoBancaria/{{bank.id}}">
+                <i class="fas fa-edit"></i>
+              </td>
               <td class="clickable" routerLink="/banco/{{bank.id}}">
                 <i class="fas fa-edit"></i>
               </td>

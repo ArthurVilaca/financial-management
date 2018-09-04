@@ -75,21 +75,23 @@
         </mat-list>
       </mat-tab>
       <mat-tab label="Impostos">
-        <div class="row" *ngFor="let tax of client.taxes">
-          <div class="col-md-8">
-            {{tax.name}} - {{tax.amount}} {{tax.collection}}
+        <mat-list role="list">
+          <div class="row" *ngFor="let tax of client.taxes">
+            <div class="col-md-8">
+              {{tax.name}} - {{tax.amount}} {{tax.collection}}
+            </div>
+            <div class="col-md-4">
+              <i class="fas fa-trash-alt"></i>
+            </div>
           </div>
-          <div class="col-md-4">
-            <i class="fas fa-trash-alt"></i>
+      
+          <br />
+          <div class="row" *ngIf="client.id">
+            <div class="col-md-6">
+              <button type="button" (click)="pushTax()" mat-raised-button color="primary" class="button-submit">Novo</button>
+            </div>
           </div>
-        </div>
-    
-        <hr />
-        <div class="row" *ngIf="client.id">
-          <div class="col-md-6">
-            <button type="button" (click)="pushTax()" mat-raised-button color="primary" class="button-submit">Novo</button>
-          </div>
-        </div>
+        </mat-list>
       </mat-tab>
       <mat-tab label="Comentarios">
       </mat-tab>
