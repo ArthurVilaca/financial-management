@@ -23,7 +23,7 @@ export class SearchBillsComponent {
         this.searchClients();
       }
   }
-  
+
   onNoClick(): void {
     this.dialogRef.close(this.filter);
   }

@@ -17,9 +17,11 @@ class CostCentersService extends Service
         $returnBank = $this->costCenters->create([
             'name' => $request->get('name'),
             'type' => $request->get('type'),
+            'typeCost' => $request->get('typeCost'),
         ]);
         return $returnBank;
     }
+
 
     public function load($page, $pageSize, $filters)
     {

@@ -41,7 +41,6 @@ class Billspays extends Model
     }
 
     public function convertDate($request){
-        var_dump($request);die;
         $request = new \DateTime($request);
         $request = $request->format('Y-m-d H:i:s');
 
@@ -192,18 +191,46 @@ class Billspays extends Model
         return $dataset;
     }
 
-    public function getReport($filter) {
+    public function getReport($filters) {
+
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['due_from']) ) {
+            $where[] = [
+                'due_date', '>', $filters['due_from']
+            ];
+        }
+        if( isset($filters['due_to']) ) {
+            $where[] = [
+                'due_date', '<', $filters['due_to']
+            ];
+        }
+        if( isset($filters['status']) ) { 
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('cost_centers')
+            ->where('type', '=', 'DESPESA')
             ->get();    
 
         foreach ($phases as $key => $value) {
 
             $value->bills = DB::table('billspays')
-                ->where('billspays.cost_centers_id', $value->id)
-                ->count();
+              ->where('billspays.cost_centers_id', $value->id)
+              ->count();
 
             $value->amount = DB::table('billspays')
-                ->where('billspays.cost_centers_id', $value->id)
+                ->where('billspays.cost_centers_id', $value->id)                
                 ->sum('billspays.amount');
         }
 

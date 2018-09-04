@@ -1,3 +1,47 @@
-<p>
-  report-cashflow works!
-</p>
+<div class="main-section">
+  <div class="container">
+    <div class="row">
+          <div class="col-sm-8">
+              <span class="code-header"><strong>Relatório de Fluxo de Caixa por centor de Custo (Mensal)</strong></span>
+              <hr>
+            </div>
+          <div class="col-sm-2">
+          </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-2">Filtro</div>
+      <div class="col-sm-4">
+        <mat-form-field>
+          <input matInput [matDatepicker]="dp" placeholder="Month and Year" [(ngModel)]="filterDate">
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+            startView="multi-year"
+            (yearSelected)="chosenYearHandler($event)"
+            (monthSelected)="chosenMonthHandler($event, dp)"
+            panelClass="example-month-picker">
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-2">
+        <button mat-stroked-button color="warn" (click)="search()">Buscar</button>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+        <div class="col-md-8">
+              <ag-grid-angular
+                style="width: 900px; height: 500px;"
+                class="ag-theme-balham"
+                [enableSorting]="true"
+                [enableFilter]="true"
+                [rowData]="rowData "
+                [columnDefs]="columnDefs">
+              </ag-grid-angular>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>
+

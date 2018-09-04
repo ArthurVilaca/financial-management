@@ -152,24 +152,73 @@ class Billsreceives extends Model
         return $phases;
     }
 
-    public function getReport($filter) {
+    public function getReport($filters) {
+
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['due_from']) ) {
+            $where[] = [
+                'due_date', '>', $filters['due_from']
+            ];
+        }
+        if( isset($filters['due_to']) ) {
+            $where[] = [
+                'due_date', '<', $filters['due_to']
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'status', '=', $filters['status']
+            ];
+        }
+
         $phases = DB::table('cost_centers')
+            ->where('type', '=','RECEITA')
             ->get();    
 
         foreach ($phases as $key => $value) {
 
             $value->bills = DB::table('billsreceives')
-                ->where('billsreceives.cost_centers_id', $value->id)
+                ->where('cost_centers_id','=', $value->id)
                 ->count();
 
             $value->amount = DB::table('billsreceives')
-                ->where('billsreceives.cost_centers_id', $value->id)
-                ->sum('billsreceives.amount');
+                ->where('cost_centers_id','=', $value->id)
+                ->sum('amount');
         }
 
         return $phases;
     }
 
+    public function getRecipes(){
+
+        $recipes = DB::table('cost_centers')->get();
+
+        foreach ($recipes as $key => $value) {
+
+            $now = new \DateTime();
+            $lessOneYear = $now->modify('-12 month');
+
+            $value->amountReceive = DB::table('billsreceives')
+                ->where('billsreceives.cost_centers_id', $value->id)
+                ->where('billsreceives.status','Efetuada')
+                ->whereBetween('billsreceives.updated_at', [$lessOneYear, $now])
+                ->count();
+
+           
+        }
+
+        return $recipes;
+    }
+    
     public function getProjectInvoice($id){
 
         //$projectInvoice = DB::table('projects')->select('id')->where('id', $id)->first(); 

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import localePt from '@angular/common/locales/pt';
@@ -74,7 +74,7 @@ import { ReportBillspayComponent } from './report-billspay/report-billspay.compo
 import { ReportBillsreceiveComponent } from './report-billsreceive/report-billsreceive.component';
 import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 import { SearchProjectsComponent } from './search-projects/search-projects.component';
-
+import { AgGridModule } from 'ag-grid-angular';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -142,6 +142,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatPaginatorModule,
     MatChipsModule,
     MatSortModule,
+    AgGridModule.withComponents([]),
     NgxChartsModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],

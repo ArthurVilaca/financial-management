@@ -36,6 +36,7 @@ Route::resource('billspay', 'BillspayController');
 Route::resource('billsreceive', 'BillsreceiveController');
 Route::get('/loadDeductions/{billsreceive_id}', 'BillsreceiveController@loadDeductions');
 Route::resource('alerts', 'AlertsController');
+/*Route::resource('reports', 'ReportsController');*/
 
 Route::post('tax/provider/{provider_id}', 'TaxesController@provider');
 Route::post('tax/client/{client_id}', 'TaxesController@client');
@@ -45,4 +46,5 @@ Route::get('/zipcode/{number}', 'FunctionsController@zipcode');
 
 Route::get('/reports/billspay', 'ReportsController@billspay');
 Route::get('/reports/billsreceive', 'ReportsController@billsreceive');
-Route::resource('reports', 'ReportsController');
+Route::get('/reports/expenses', 'ReportsController@getExpenses');
+Route::get('/reports/recipes', 'ReportsController@getRecipes');

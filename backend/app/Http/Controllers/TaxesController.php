@@ -28,7 +28,7 @@ class TaxesController extends Controller
      */
     public function index()
     {
-         $taxes = $this->taxes->get();
+        $taxes = $this->taxes->get();
 
         $this->response->setDataSet("taxes", $taxes);
         $this->response->setType("S");

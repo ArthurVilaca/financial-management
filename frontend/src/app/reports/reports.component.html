@@ -1,24 +1,40 @@
 <div class="main-section">
-  <div class="row">
-    <div class="col-sm-8">
-      <h2><span class="code-header"><strong>Relatórios</strong></span></h2>
-    </div>
-    <div class="col-sm-4"></div>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+              <h2><span class="code-header"><strong>Relatórios</strong></span></h2>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
 
-  <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-8 report">
-      <button mat-raised-button><a [routerLink]="['/relatorio/contasAPagar']">Contas a Pagar</a></button>
-    </div>
-  </div>
-  <br><br><br>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8 report">
+              <button mat-raised-button><a [routerLink]="['/relatorio/contasAPagar']">Contas a Pagar</a></button>
+            </div>
+          </div>
+          <br><br><br>
 
-  <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-8 report">
-        <button mat-raised-button><a [routerLink]="['/relatorio/contasAReceber']">Contas a Receber</a></button>
-    </div>
-  </div>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8 report">
+                <button mat-raised-button><a [routerLink]="['/relatorio/contasAReceber']">Contas a Receber</a></button>
+            </div>
+          </div>
+          <br><br><br>
 
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8 report">
+                <button mat-raised-button><a [routerLink]="['/relatorio/fluxoCaixa']">Fluxo de Caixa (Centro de Custo Mensal)</a></button>
+            </div>
+          </div>
+
+          <!--<div class="row">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8 report">
+                  <button mat-raised-button><a [routerLink]="['/relatorio/fluxoCaixaMes']">Fluxo de Mensal</a></button>
+              </div>
+            </div>-->
+    </div>
 </div>
