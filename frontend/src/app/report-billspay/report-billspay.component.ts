@@ -15,19 +15,34 @@ import { Sort } from '@angular/material';
 export class ReportBillspayComponent {
   billspays: any[] = [];
   sortedData: any[] = [];
+
+  columnDefs = [
+    {headerName: 'Id', field: 'id' },
+    {headerName: 'Nome', field: 'name' },
+    {headerName: 'R$', field: 'amount'},
+    {headerName: 'Nº de Contas', field: 'bills'},
+    {headerName: 'Tipo', field: 'typeCost'},
+  ];
+
+  rowData = [];
+
+
+
   filter: any = {
     prevista: true,
     efetuada: true
   }
 
-  constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
+  constructor(public dialog: MatDialog, private router: Router, private message: MessageDialogComponent,
+    private http: HttpService, private appState: ProviderService) {
     this.search();
   }
 
   search() {
-    this.http.get('/reports/billspay?' + this.http.serialize(this.filter))
+    this.http.get('/reports/expenses?' + this.http.serialize(this.filter))
       .then((data: any) => {
-        this.billspays = data.dataset.billspays;
+        this.billspays = data.dataset.billspaysExpenses;
+        this.rowData = this.billspays;
         this.sortedData = this.billspays;
       })
       .catch((error) => {
@@ -49,6 +64,7 @@ export class ReportBillspayComponent {
       }
     });
   }
+
 
   sortData(sort: Sort) {
     const data = this.billspays.slice();

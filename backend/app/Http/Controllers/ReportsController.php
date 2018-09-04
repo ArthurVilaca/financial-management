@@ -9,18 +9,22 @@ use JWTAuthException;
 use \App\Response\Response;
 use \App\Billspays;
 use \App\Billsreceives;
+use \App\CostCenters;
+use \App\Service\ReportCashFlowService;
 
 class ReportsController extends Controller
 {
     private $response;
     private $billspays;
-    private $billsreceives;
+    private $billsreceives;    
 
     public function __construct()
     {
         $this->response = new Response();
         $this->billspays = new Billspays();
         $this->billsreceives = new Billsreceives();
+        $this->costCenter = new CostCenters();
+        $this->reportCashFlow = new ReportCashFlowService();
     }
 
     public function billspay(Request $request) {
@@ -42,4 +46,24 @@ class ReportsController extends Controller
 
         return response()->json($this->response->toString());
     }
+
+    public function getExpenses(Request $request){
+        $expenses = $this->billspays->getReport($_GET);
+
+        $this->response->setDataSet("billspaysExpenses", $expenses);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+        return response()->json($this->response->toString());
+    }
+
+    public function getRecipes(Request $request){
+        $recipes = $this->billsreceives->getRecipes($_GET);
+
+        $this->response->setDataSet("billsreceivesrecipes", $recipes);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+        return response()->json($this->response->toString());
+    }
+
+
 }

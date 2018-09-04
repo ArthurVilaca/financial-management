@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { HomeComponent } from './home/home.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LoginComponent } from './login/login.component';
@@ -30,6 +29,7 @@ import { LoanComponent } from './loan/loan.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
+import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -73,6 +73,7 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'metodosPagamento/novo', component: PaymentMethodComponent },
 	{ path: 'metodosPagamento/:id', component: PaymentMethodComponent },
 	{ path: 'conciliacaoBancaria/:id', component: BankReconciliationComponent },
+	{ path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent }
 ];
 
 export const rootRouterConfig: Routes = [

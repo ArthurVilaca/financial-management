@@ -15,6 +15,18 @@ import { Sort } from '@angular/material';
 export class ReportBillsreceiveComponent  {
   billsreceives: any[] = [];
   sortedData: any[] = [];
+
+  columnDefs = [
+    {headerName: 'Id', field: 'id' },
+    {headerName: 'Nome', field: 'name' },
+    {headerName: 'R$', field: 'amount'},
+    {headerName: 'Nº de Contas', field: 'bills'},
+    {headerName: 'Tipo', field: 'typeCost'},
+  ];
+
+  rowData = [];
+
+
   filter: any = {
     prevista: true,
     efetuada: true
@@ -28,7 +40,8 @@ export class ReportBillsreceiveComponent  {
     this.http.get('/reports/billsreceive?' + this.http.serialize(this.filter))
       .then((data: any) => {
         this.billsreceives = data.dataset.billsreceives;
-        this.sortedData = this.billsreceives;
+        this.rowData = this.billsreceives;
+        //this.sortedData = this.billsreceives;
       })
       .catch((error) => {
         console.log(error);

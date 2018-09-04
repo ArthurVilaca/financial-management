@@ -1,7 +1,7 @@
 <div class="main-section">
   <div class="row">
     <div class="col-sm-4">
-      <span class="code-header"><strong>Relarorio</strong></span>
+      <span class="code-header"><strong>Relatório de Centro de Custos por Contas a Pagar</strong></span>
     </div>
     <div class="col-sm-2">
       <input type="checkbox" (change)="search()" [(ngModel)]="filter.prevista">PREVISTA
@@ -10,13 +10,24 @@
       <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA
     </div>
     <div class="col-sm-4">
-      <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
-    </div>
+      <!--<button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
+      -->
+      </div>
   </div>
 
   <div class="row">
     <div class="col-md-12">
 
+      <ag-grid-angular
+        style="width: 800px; height: 500px;"
+        class="ag-theme-balham"
+        [enableSorting]="true"
+        [enableFilter]="true"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        >
+       </ag-grid-angular>
+      <!--
       <div class="table-border-style table-responsive">
         <table class="table" style="width: 100%;" matSort (matSortChange)="sortData($event)">
           <thead>
@@ -34,7 +45,8 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </div>-->
+
 
     </div>
   </div>
