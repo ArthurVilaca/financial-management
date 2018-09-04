@@ -1,9 +1,12 @@
 <div class="main-section">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-3">
       <span class="code-header">
         <strong>Contas a Pagar</strong>
       </span>
+    </div>
+    <div class="col-sm-5">
+      <input (change)="search()" name="name" class="input" matInput placeholder="Pesquisar..." [(ngModel)]="filter.searchWords">
     </div>
     <div class="col-sm-4">
       <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
@@ -15,26 +18,24 @@
         <table class="table" style="width: 100%;">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>PROJETO</th>
+              <!-- <th>Cliente</th> -->
               <th>Nome</th>
               <th>Status</th>
+              <th>Banco</th>
               <th>Valor</th>
-              <th>Acessar</th>
-              <th>Excluir</th>
+              <th>Data Pag</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let billspay of appState.provider.billspays">
-              <th scope="row">{{billspay.projects_id}} - {{billspay.id}}</th>
-              <td>{{billspay.name}}</td>
+            <tr class="clickable" *ngFor="let billspay of appState.provider.billspays" routerLink="/contaAPagar/{{billspay.id}}">
+              <th scope="row">{{billspay.projects_id}}</th>
+              <!-- <td>{{billspay.client.name}}</td> -->
+              <td>{{billspay.comments}}</td>
               <td>{{billspay.status}}</td>
-              <td>{{billspay.amount}}</td>
-              <td class="clickable" routerLink="/contaAPagar/{{billspay.id}}">
-                <i class="fas fa-edit"></i>
-              </td>
-              <td>
-                <i class="fas fa-trash-alt"></i>
-              </td>
+              <td>{{getBank(billspay.banks_id)}}</td>
+              <td>{{billspay.amount | currency:'BRL'}}</td>
+              <td>{{billspay.due_date | date}}</td>
             </tr>
           </tbody>
         </table>

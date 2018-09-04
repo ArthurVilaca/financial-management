@@ -76,6 +76,8 @@ import { ReportCashflowComponent } from './report-cashflow/report-cashflow.compo
 import { SearchProjectsComponent } from './search-projects/search-projects.component';
 import { AgGridModule } from 'ag-grid-angular';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,6 +143,7 @@ import { AgGridModule } from 'ag-grid-angular';
     MatChipsModule,
     MatSortModule,
     AgGridModule.withComponents([]),
+    NgxChartsModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],

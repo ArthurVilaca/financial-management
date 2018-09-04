@@ -92,12 +92,12 @@
         </mat-list-item>
       </div>
 
-      <hr/>
+      <!-- <hr/>
       <mat-list-item role="listitem">
         <div class="half-width">
           <button type="button" mat-raised-button color="primary" (click)="addPhase()">Adicionar Fase</button>
         </div>
-      </mat-list-item>
+      </mat-list-item> -->
 
       <hr />
       <div class="full-width button-submit">
@@ -105,4 +105,25 @@
       </div>
     </mat-list>
   </form>
+
+  <hr />
+  <div class="row">
+    <div class="col-md-12"><strong>Resumo do projeto</strong></div>
+    <div class="col-md-12">
+      <ngx-charts-line-chart
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="data"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [autoScale]="autoScale"
+          (select)="onSelect($event)">
+        </ngx-charts-line-chart>
+    </div>
+  </div>
 </div>

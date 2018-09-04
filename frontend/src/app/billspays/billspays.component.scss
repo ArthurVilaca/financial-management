@@ -1,6 +1,6 @@
 .main-section {
     margin: 0 auto;
-    max-width: 1000px;
+    max-width: 95;
     padding: 20px 10px 20px;
     position: relative;
 }
@@ -27,4 +27,9 @@
 
 .mat-list-item {
     padding-top: 40px !important;
+}
+
+.input {
+    border: 1px solid #FF6400;
+    padding: 5px;
 }

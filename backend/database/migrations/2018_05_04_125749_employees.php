@@ -19,7 +19,7 @@ class Employees extends Migration
             $table->string('name');
             $table->string('password');
             $table->enum('sector', ['ADMINISTRATIVO', 'FINANCEIRO', 'CAMPO', 'COMERCIAL', 'ANALISE'])->nullable();
-            $table->enum('status', ['APROVADO', 'BLOQUEADO'])->default('BLOQUEADO');
+            $table->enum('status', ['ATIVO', 'DEMITIDO', 'BLOQUEADO'])->default('BLOQUEADO');
             $table->string('token')->nullable();
             $table->dateTime('expiration_date')->nullable();
             $table->string('ip')->nullable();

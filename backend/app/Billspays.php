@@ -24,6 +24,7 @@ class Billspays extends Model
         'invoice_date',
         'banks_id',
         'cost_centers_id',
+        'projects_id',
         'discounts',
         'additions',
         'numberInstallments',
@@ -47,34 +48,60 @@ class Billspays extends Model
     }
     public function loadBills($page, $pageSize, $filters) {
         $where = [];
+        $orWhere = [];
         if( isset($filters['date_from']) ) {
             $where[] = [
-                'created_at', '>', $filters['date_from']
+                'billspays.created_at', '>', $filters['date_from']
             ];
         }
         if( isset($filters['date_to']) ) {
             $where[] = [
-                'created_at', '<', $filters['date_to']
+                'billspays.created_at', '<', $filters['date_to']
             ];
         }
         if( isset($filters['due_from']) ) {
             $where[] = [
-                'due_date', '>', $filters['due_from']
+                'billspays.due_date', '>', $filters['due_from']
             ];
         }
         if( isset($filters['due_to']) ) {
             $where[] = [
-                'due_date', '<', $filters['due_to']
+                'billspays.due_date', '<', $filters['due_to']
             ];
         }
         if( isset($filters['status']) ) {
             $where[] = [
-                'status', '=', $filters['status']
+                'billspays.status', '=', $filters['status']
+            ];
+        }
+        if( isset($filters['project_id']) ) {
+            $where[] = [
+                'projects_id', '=', $filters['project_id']
+            ];
+        }
+        if( isset($filters['clients_id']) ) {
+            $where[] = [
+                'projects.clients_id', '=', $filters['clients_id']
+            ];
+        }
+        if( isset($filters['searchWords']) ) {
+            $orWhere = [
+                // [ 'clients.name', 'like', '%'.$filters['searchWords'].'%' ],
+                // [ 'billspays.status', 'like', '%'.$filters['searchWords'].'%' ],
+                [ 'billspays.comments', 'like', '%'.$filters['searchWords'].'%' ]
             ];
         }
 
+        $where[] = [
+            'billspays.type', '<>', 'DEDUCOES'
+        ];
+
         $phases = DB::table('billspays')
+            ->select('billspays.*', 'projects.clients_id')
+            ->join('projects', 'projects.id', '=', 'billspays.projects_id')
+            ->join('clients', 'clients.id', '=', 'projects.clients_id')
             ->where($where)
+            ->orWhere($orWhere)
             ->offset($page * $pageSize)
             ->limit($pageSize)
             ->get();
@@ -84,34 +111,59 @@ class Billspays extends Model
 
     public function count($filters) {
         $where = [];
+        $orWhere = [];
         if( isset($filters['date_from']) ) {
             $where[] = [
-                'created_at', '>', $filters['date_from']
+                'billspays.created_at', '>', $filters['date_from']
             ];
         }
         if( isset($filters['date_to']) ) {
             $where[] = [
-                'created_at', '<', $filters['date_to']
+                'billspays.created_at', '<', $filters['date_to']
             ];
         }
         if( isset($filters['due_from']) ) {
             $where[] = [
-                'due_date', '>', $filters['due_from']
+                'billspays.due_date', '>', $filters['due_from']
             ];
         }
         if( isset($filters['due_to']) ) {
             $where[] = [
-                'due_date', '<', $filters['due_to']
+                'billspays.due_date', '<', $filters['due_to']
             ];
         }
         if( isset($filters['status']) ) {
             $where[] = [
-                'status', '=', $filters['status']
+                'billspays.status', '=', $filters['status']
+            ];
+        }
+        if( isset($filters['project_id']) ) {
+            $where[] = [
+                'projects_id', '=', $filters['project_id']
+            ];
+        }
+        if( isset($filters['clients_id']) ) {
+            $where[] = [
+                'projects.clients_id', '=', $filters['clients_id']
+            ];
+        }
+        if( isset($filters['searchWords']) ) {
+            $orWhere = [
+                // [ 'clients.name', 'like', '%'.$filters['searchWords'].'%' ],
+                // [ 'billspays.status', 'like', '%'.$filters['searchWords'].'%' ],
+                [ 'billspays.comments', 'like', '%'.$filters['searchWords'].'%' ]
             ];
         }
 
+        $where[] = [
+            'billspays.type', '<>', 'DEDUCOES'
+        ];
+
         $phases = DB::table('billspays')
+            ->join('projects', 'projects.id', '=', 'billspays.projects_id')
+            ->join('clients', 'clients.id', '=', 'projects.clients_id')
             ->where($where)
+            ->orWhere($orWhere)
             ->count();
 
         return $phases;

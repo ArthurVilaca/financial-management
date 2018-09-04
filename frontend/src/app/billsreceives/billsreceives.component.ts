@@ -23,6 +23,19 @@ export class BillsreceivesComponent {
 
   constructor(private router: Router, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService, public dialog: MatDialog) {
     this.search();
+    if(!this.appState.provider.banks) {
+      this.searchBanks();
+    }
+  }
+
+  searchBanks() {
+    this.http.get('/banks')
+      .then((data: any) => {
+        this.appState.set('banks', data.dataset.banks);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   search($event?) {
@@ -54,6 +67,15 @@ export class BillsreceivesComponent {
       this.filter = result;
       this.search();
     });
+  }
+
+  getBank(id) {
+    for(let i in this.appState.provider.banks) {
+      if(this.appState.provider.banks[i].id == id) {
+        return this.appState.provider.banks[i].name;
+      }
+    }
+    return '';
   }
 
 }

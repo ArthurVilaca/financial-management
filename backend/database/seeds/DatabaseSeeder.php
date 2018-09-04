@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
         DB::table('employees')->insert([
             'name' => 'Arthur Vilaca', 'username' => 'arthur_vilaca',
             'email' => 'vilaca.arthur.f@gmail.com',
-            'password' => bcrypt('123'), 'status' => 'APROVADO'
+            'password' => bcrypt('123'), 'status' => 'ATIVO'
         ]);
         DB::table('employees')->insert([
             'name' => 'Luciana', 'username' => 'luciana',
             'email' => 'luciana@innovarepesquisa.com.br',
-            'password' => bcrypt('123'), 'status' => 'APROVADO'
+            'password' => bcrypt('123'), 'status' => 'ATIVO'
         ]);
 
         DB::table('clients')->insert([
@@ -48,262 +48,348 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('cost_centers')->insert([
-            'name' => "Alimentação"
+            'name' => "Alimentação",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Aluguel da sede da Innovare"
+            'name' => "Aluguel da sede da Innovare",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Aluguel de equipamentos"
+            'name' => "Aluguel de equipamentos",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Aluguel de PA's"
+            'name' => "Aluguel de PA's",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Aluguel de salas e estúdios"
+            'name' => "Aluguel de salas e estúdios",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Antecipação de lucros"
+            'name' => "Antecipação de lucros",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Aplicações financeiras diversas"
+            'name' => "Aplicações financeiras diversas",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Bolsa de Estágio"
+            'name' => "Bolsa de Estágio",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Cartório"
+            'name' => "Cartório",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "COFINS"
+            'name' => "COFINS",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Compra de banco de dados"
+            'name' => "Compra de banco de dados",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Condomínio"
+            'name' => "Condomínio",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Contribuição sindical"
+            'name' => "Contribuição sindical",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Correios e Courier"
+            'name' => "Correios e Courier",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "CSSL"
+            'name' => "CSSL",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Despesa financeira (juros e multas)"
+            'name' => "Despesa financeira (juros e multas)",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Despesas diversas"
+            'name' => "Despesas diversas",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Despesas diversas de projetos"
+            'name' => "Despesas diversas de projetos",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Distribuição de lucros"
+            'name' => "Distribuição de lucros",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Empréstimo"
+            'name' => "Empréstimo",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Energia Elétrica"
+            'name' => "Energia Elétrica",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "FGTS"
+            'name' => "FGTS",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Gráfica"
+            'name' => "Gráfica",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Honorários"
+            'name' => "Honorários",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Hotel"
+            'name' => "Hotel",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "INSS + outros"
+            'name' => "INSS + outros",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "IPTU"
+            'name' => "IPTU",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "IRPJ"
+            'name' => "IRPJ",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "IRRF"
+            'name' => "IRRF",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "ISSQN"
+            'name' => "ISSQN",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Manutenção salas e equipamentos"
+            'name' => "Manutenção salas e equipamentos",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Materiais Escritório"
+            'name' => "Materiais Escritório",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Materiais manutenção"
+            'name' => "Materiais manutenção",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Medicina do Trabalho"
+            'name' => "Medicina do Trabalho",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Móvel, imóvel ou equipamento"
+            'name' => "Móvel, imóvel ou equipamento",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Outras despesas de viagem"
+            'name' => "Outras despesas de viagem",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Pagamento de impostos retidos pela INNOVARE"
+            'name' => "Pagamento de impostos retidos pela INNOVARE",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Pagamento Empréstimo"
+            'name' => "Pagamento Empréstimo",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Passagem aérea"
+            'name' => "Passagem aérea",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "PIS"
+            'name' => "PIS",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Plano de Saude - UNIMED"
+            'name' => "Plano de Saude - UNIMED",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Pró-labore"
+            'name' => "Pró-labore",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Receita de alienações de bens"
+            'name' => "Receita de alienações de bens",
+            'type' => 'RECEITA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Receita de projeto"
+            'name' => "Receita de projeto",
+            'type' => 'RECEITA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Receita diversas"
+            'name' => "Receita diversas",
+            'type' => 'RECEITA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Receita financeira (rendimento de aplicações)"
+            'name' => "Receita financeira (rendimento de aplicações)",
+            'type' => 'RECEITA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Recrutamento e Seleção de Empregados"
+            'name' => "Recrutamento e Seleção de Empregados",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Reembolso de despesa de telefone"
+            'name' => "Reembolso de despesa de telefone",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Reforma de salas"
+            'name' => "Reforma de salas",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Rescisão de contrato de trabalho"
+            'name' => "Rescisão de contrato de trabalho",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Retenção de COFINS na fonte pelo cliente"
+            'name' => "Retenção de COFINS na fonte pelo cliente",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Retenção de CSSL na fonte pelo cliente"
+            'name' => "Retenção de CSSL na fonte pelo cliente",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Retenção de IRPJ na fonte pelo cliente"
+            'name' => "Retenção de IRPJ na fonte pelo cliente",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Retenção de ISS na fonte pelo cliente"
+            'name' => "Retenção de ISS na fonte pelo cliente",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Retenção de PIS na fonte pelo cliente"
+            'name' => "Retenção de PIS na fonte pelo cliente",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Salário"
+            'name' => "Salário",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Seguro de vida"
+            'name' => "Seguro de vida",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Agendamento de Entrevistas"
+            'name' => "Serviço de Agendamento de Entrevistas",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Amostra"
+            'name' => "Serviço de Amostra",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Campo"
+            'name' => "Serviço de Campo",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Consistência de Dados"
+            'name' => "Serviço de Consistência de Dados",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Contabilidade"
+            'name' => "Serviço de Contabilidade",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Digitação"
+            'name' => "Serviço de Digitação",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Entrevistas em Profundidade"
+            'name' => "Serviço de Entrevistas em Profundidade",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Finalização"
+            'name' => "Serviço de Finalização",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Informática (manutenção)"
+            'name' => "Serviço de Informática (manutenção)",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Máscara"
+            'name' => "Serviço de Máscara",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Moderação de GDs"
+            'name' => "Serviço de Moderação de GDs",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Processamento"
+            'name' => "Serviço de Processamento",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Programação"
+            'name' => "Serviço de Programação",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Recodificação"
+            'name' => "Serviço de Recodificação",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Recrutamento GDs"
+            'name' => "Serviço de Recrutamento GDs",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Relatório qualitativo"
+            'name' => "Serviço de Relatório qualitativo",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Revisão (Questionários)"
+            'name' => "Serviço de Revisão (Questionários)",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Revisão de texto"
+            'name' => "Serviço de Revisão de texto",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Serviço de Transcrição de fitas"
+            'name' => "Serviço de Transcrição de fitas",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Software"
+            'name' => "Software",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Tarifa bancária eventual"
+            'name' => "Tarifa bancária eventual",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Tarifa bancária recorrente"
+            'name' => "Tarifa bancária recorrente",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Taxa de embarque"
+            'name' => "Taxa de embarque",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Taxas e anuidades"
+            'name' => "Taxas e anuidades",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Taxi/ônibus/combustível/estacionamento"
+            'name' => "Taxi/ônibus/combustível/estacionamento",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Telefone / Internet"
+            'name' => "Telefone / Internet",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Título de Capitalização"
+            'name' => "Título de Capitalização",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Vale Refeição"
+            'name' => "Vale Refeição",
+            'type' => 'DESPESA'
         ]);
         DB::table('cost_centers')->insert([
-            'name' => "Vale Transporte"
+            'name' => "Vale Transporte",
+            'type' => 'DESPESA'
         ]);
 
         DB::table('taxes')->insert([

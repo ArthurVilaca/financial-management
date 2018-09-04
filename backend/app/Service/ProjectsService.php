@@ -45,6 +45,7 @@ class ProjectsService extends Service
             'banks_id' => $request->get('banks_id'),
         ]);
 
+        /*
         $returnProject['projects_phases'] = [];
         $projects_phases = $request->get('projects_phases');
         $i = 0;
@@ -155,6 +156,7 @@ class ProjectsService extends Service
             ]);
             $date->modify('+1 month');
         }
+        */
 
         return $returnProject;
     }

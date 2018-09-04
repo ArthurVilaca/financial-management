@@ -9,18 +9,21 @@ use JWTAuthException;
 use \App\Response\Response;
 use \App\Service\BillsreceiveService;
 use \App\Billsreceives;
+use \App\Clients;
 
 class BillsreceiveController extends Controller
 {
     private $response;
     private $billsreceives;
     private $billsreceiveService;
+    private $clients;
 
     public function __construct()
     {
         $this->response = new Response();
         $this->billsreceiveService = new BillsreceiveService();
         $this->billsreceives = new Billsreceives();
+        $this->clients = new Clients();
     }
     /**
      * Display a listing of the resource.
@@ -38,25 +41,13 @@ class BillsreceiveController extends Controller
             $pageSize = 10;
         }
 
-        $filters = [];
-        if( Input::get('date_from') !== null ) {
-            $filters['date_from'] = Input::get('date_from');
+        $billsreceive = $this->billsreceiveService->load($page, $pageSize, $_GET);
+        $total = $this->billsreceiveService->count($_GET);
+        foreach ($billsreceive as $key => $value) {
+            if(isset($value->clients_id)) {
+                $value->client = $this->clients->find($value->clients_id);
+            }
         }
-        if( Input::get('date_to') !== null ) {
-            $filters['date_to'] = Input::get('date_to');
-        }
-        if( Input::get('due_from') !== null ) {
-            $filters['due_from'] = Input::get('due_from');
-        }
-        if( Input::get('due_to') !== null ) {
-            $filters['due_to'] = Input::get('due_to');
-        }
-        if( Input::get('status') !== null ) {
-            $filters['status'] = Input::get('status');
-        }
-
-        $billsreceive = $this->billsreceiveService->load($page, $pageSize, $filters);
-        $total = $this->billsreceiveService->count($filters);
 
         $this->response->setDataSet("billsreceive", $billsreceive);
         $this->response->setDataSet("total", $total);
@@ -177,4 +168,14 @@ class BillsreceiveController extends Controller
         $user->delete();
     }
 
+    public function loadDeductions($billsreceive_id)
+    {
+        $deductions = $this->billsreceiveService->loadDeductions($billsreceive_id);
+
+        $this->response->setDataSet("deductions", $deductions);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
+    }
 }

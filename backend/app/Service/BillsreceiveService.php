@@ -91,5 +91,9 @@ class BillsreceiveService extends Service
         return $recipes;
     }
 
+    public function loadDeductions($billsreceive_id) {
+        $deductions = $this->billsreceives->loadDeductions($billsreceive_id);
+        return $deductions;
+    }
 }
 ?>

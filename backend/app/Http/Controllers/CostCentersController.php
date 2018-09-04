@@ -42,9 +42,11 @@ class CostCentersController extends Controller
         $filters = [];
         if( Input::get('filter') !== null ) {
             $filters['filter'] = Input::get('filter');            
+        } else {
+            $filters = null;
         }
 
-        $costCenters = $this->costCentersService->load($page, $pageSize,$filters);
+        $costCenters = $this->costCentersService->load($page, $pageSize, $filters);
         $total = $this->costCentersService->count();
 
         $this->response->setDataSet("costCenters", $costCenters);
