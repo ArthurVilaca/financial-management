@@ -53,6 +53,7 @@ export class BillspaysComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.filter = result;
+      console.log('filter',this.filter);
       this.search();
     });
   }
