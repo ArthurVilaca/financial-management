@@ -37,6 +37,7 @@ class BillspayService extends Service
 
     public function load($page, $pageSize, $filters)
     {
+        var_dump($filters);die;
         $returnBillspay = $this->billspays->loadBills($page, $pageSize, $filters);
 
         return $returnBillspay;

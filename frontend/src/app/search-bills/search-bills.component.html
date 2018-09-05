@@ -66,7 +66,7 @@
         <label class="col-md-4">Projeto</label>
         <div class="col-md-6">
             <mat-select name="projeto" placeholder="Projeto" [(ngModel)]="filter.project_id">
-                <mat-option *ngFor="let project of appState.provider.projects" [value]="project.id">{{project.name}}</mat-option>
+                <mat-option *ngFor="let project of projects" [value]="project.id">{{project.name}}</mat-option>
             </mat-select>
         </div>
     </div>
@@ -74,7 +74,7 @@
         <label class="col-md-4">Cliente</label>
         <div class="col-md-6">
             <mat-select name="client" placeholder="Cliente" [(ngModel)]="filter.clients_id">
-                <mat-option *ngFor="let client of appState.provider.clients" [value]="client.id">{{client.name}}</mat-option>
+                <mat-option *ngFor="let client of clients" [value]="client.id">{{client.name}}</mat-option>
             </mat-select>
         </div>
     </div>
@@ -82,7 +82,7 @@
       <label class="col-md-4">Centro de Custo</label>
       <div class="col-md-6">
           <mat-select name="client" placeholder="Centro de Custos" [(ngModel)]="filter.costCenters_id">
-              <mat-option *ngFor="let cost of data.dataset.costCenters" [value]="cost.id">{{cost.name}}</mat-option>
+              <mat-option *ngFor="let cost of costCenters" [value]="cost.id">{{cost.name}}</mat-option>
           </mat-select>
       </div>
   </div>

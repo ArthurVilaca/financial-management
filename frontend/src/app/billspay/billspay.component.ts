@@ -57,7 +57,6 @@ export class BillspayComponent {
 
     this.http.get('/projects')
       .then((data: any) => {
-        console.log('Data', data);
         this.appState.set('projects', data.dataset.projects);
         this.projects = this.appState.provider.projects;
       })
