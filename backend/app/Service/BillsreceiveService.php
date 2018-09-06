@@ -53,7 +53,7 @@ class BillsreceiveService extends Service
                         $provider_name = $value->providerName;
                         $numberAmount = 0;
                         $numberAmount = $phaseAmount * ($value->TaxAmount / 100);     
-                        for ($i=0; $i < $installmentNumber ; $i++) {  
+                        for ($i=1; $i <= $installmentNumber ; $i++) {  
                             $this->billspays->create([
                                 'name' => 'Conta a Pagar referente ao imposto'. $value->TaxName 
                                 .' referente ao projeto '.$projectName. 'e ao fornecedor '.$provider_name,

@@ -76,12 +76,17 @@ class Billspays extends Model
         }
         if( isset($filters['project_id']) ) {
             $where[] = [
-                'projects_id', '=', $filters['project_id']
+                'projects.id', '=', $filters['project_id']
             ];
         }
         if( isset($filters['clients_id']) ) {
             $where[] = [
                 'projects.clients_id', '=', $filters['clients_id']
+            ];
+        }
+        if(isset($filters['costCenters_id'])){
+            $where[] = [
+                'billspays.cost_centers_id', '=', $filters['costCenters_id']
             ];
         }
         if( isset($filters['searchWords']) ) {

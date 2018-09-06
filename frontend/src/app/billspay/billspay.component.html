@@ -29,9 +29,15 @@
       </mat-list-item>
 
       <mat-list-item role="listitem">
-        <mat-form-field class="full-width">
+        <mat-form-field class="half-width">
           <input name="comments" matInput placeholder="Observações" [(ngModel)]="billspay.comments" [disabled]=" billspay.status == 'Conciliado' ">
         </mat-form-field>
+
+        <mat-form-field class="half-width">
+            <input name="due_date" matInput [matDatepicker]="pickerDueDate" placeholder="Data de Vencimento" [(ngModel)]="billspay.due_date" [disabled]=" billspay.status == 'Conciliado' ">
+            <mat-datepicker-toggle matSuffix [for]="pickerDueDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerDueDate></mat-datepicker>
+          </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
@@ -76,7 +82,7 @@
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="payment_date" matInput (focus)="pickerPaymentDate.open()" [matDatepicker]="pickerPaymentDate" placeholder="Data de Recebimento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Conciliado' ">
+          <input name="payment_date" matInput (focus)="pickerPaymentDate.open()" [matDatepicker]="pickerPaymentDate" placeholder="Data de Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Conciliado' ">
           <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerPaymentDate></mat-datepicker>
         </mat-form-field>
