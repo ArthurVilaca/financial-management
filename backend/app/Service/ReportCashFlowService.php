@@ -6,9 +6,9 @@ use DB;
 class ReportCashFlowService extends Service
 {
 
-    public function getCashFlow($page, $pageSize,$filter){               
-
-        $filter = json_decode($filter,true);
+    public function getCashFlow($filter){               
+        //$filter = json_decode($filter,true);
+        //var_dump($filter["month"]);die;
 
         $expenses = DB::table('cost_centers')
             ->where('type', '=', 'DESPESA')

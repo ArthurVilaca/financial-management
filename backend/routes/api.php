@@ -48,3 +48,4 @@ Route::get('/reports/billspay', 'ReportsController@billspay');
 Route::get('/reports/billsreceive', 'ReportsController@billsreceive');
 Route::get('/reports/expenses', 'ReportsController@getExpenses');
 Route::get('/reports/recipes', 'ReportsController@getRecipes');
+Route::get('/reports/CashFlow', 'ReportsController@getCashFlow');

@@ -27,6 +27,16 @@ class ReportsController extends Controller
         $this->reportCashFlow = new ReportCashFlowService();
     }
 
+    public function getCashFlow(Request $request){
+        $cashFlow = $this->reportCashFlow->getCashFlow($_GET);
+
+        $this->response->setDataSet("billsCostCenter", $cashFlow);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
+    }
+
     public function billspay(Request $request) {
         $billspays = $this->billspays->getReport($_GET);
 

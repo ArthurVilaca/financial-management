@@ -12,7 +12,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MatDatepicker} from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { AgGridModule, AgGridNg2 } from 'ag-grid-angular';
-import 'ag-grid-enterprise';
 
 
 
@@ -118,7 +117,7 @@ export class ReportCashflowComponent {
 
       let filterJson = JSON.stringify(filter);
 
-      this.http.get('/reports?page=' + page + '&pageSize=' + this.pageSize+ '&filter=' + filterJson)
+      this.http.get('/reports/CashFlow?month=' + filter.month + '&year=' + filter.year+ '&numberDays=' + filter.numberDays)
         .then((data: any) => {
           this.appState.set('billsCostCenter', data.dataset.billsCostCenter);
           this.sortedData = this.appState.provider.billPayReceive;
