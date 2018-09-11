@@ -1,0 +1,30 @@
+<div class="main-section">
+  <div class="row">
+    <div class="col-sm-3">
+      <span class="code-header"><strong>Metodos Pagamento</strong></span>
+    </div>
+    <div class="col-sm-9"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-border-style table-responsive">
+        <table class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let paymentMethod of appState.provider.paymentMethods" class="clickable" routerLink="/metodosPagamento/{{paymentMethod.id}}">
+              <th scope="row">{{paymentMethod.id}}</th>
+              <td>{{paymentMethod.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="button-float" mat-fab routerLink="/metodosPagamento/novo"><mat-icon>add</mat-icon></a>

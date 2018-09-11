@@ -1,0 +1,57 @@
+<div class="main-section">
+  <form class="form" name="loanForm" (ngSubmit)="save()">
+
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <div class="full-width">
+          <span class="code-header"><strong>Emprestimo</strong></span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="amount" matInput placeholder="Valor" [(ngModel)]="loan.amount">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="interest" matInput placeholder="Juros" [(ngModel)]="loan.interest">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="admin_taxes" matInput placeholder="Taxas admin" [(ngModel)]="loan.admin_taxes">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="due_date" matInput (focus)="pickerDueDate.open()" [matDatepicker]="pickerDueDate" placeholder="Data Vencimento" [(ngModel)]="loan.due_date">
+          <mat-datepicker-toggle matSuffix [for]="pickerDueDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDueDate></mat-datepicker>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <input name="plots" matInput placeholder="Parcelas" [(ngModel)]="loan.plots">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input name="value_plots" matInput placeholder="Valor Parcelas" [(ngModel)]="loan.value_plots">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-form-field class="half-width">
+          <mat-select name="banks_id" placeholder="Banco" [(ngModel)]="loan.banks_id">
+            <mat-option *ngFor="let bank of appState.provider.banks" [value]="bank.id">{{bank.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <div class="full-width button-submit">
+        <button type="submit" mat-raised-button color="primary" class="button-submit">Salvar</button>
+      </div>
+
+    </mat-list>
+  </form>
+</div>

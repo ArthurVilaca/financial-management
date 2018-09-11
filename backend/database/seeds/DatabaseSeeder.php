@@ -441,27 +441,35 @@ class DatabaseSeeder extends Seeder
             'reference' => 'RECEITA'
         ]);
 
-        /*Contas a pagar */
-        for ($i=0 ; $i < 60 ; $i++ ) { 
-
-            DB::table('billspays')->insert([
-                'name' => $request->get('name'),
-                'comments' => $request->get('comments'),
-                'status' => $request->get('status'),
-                'type' => $request->get('type'),
-                'amount' => $request->get('amount'), 
-                'due_date' => $request->get('due_date'),
-                'payment_date' => new \DateTime($request->get('payment_date')),
-                'banks_id' => $request->get('banks_id'),
-                'cost_centers_id' => $request->get('cost_centers_id'),
-                'projects_phases_id' => $request->get('projects_phases_id'),
-                'projects_id' => $request->get('projects_id'),
-                'numberInstallments' => $request->get('numberInstallments'),
-                'invoice_number' => $request->get('invoice_number'),
-                'invoice_date' => new \DateTime($request->get('invoice_date')),
-            ]);
-            
-        }
-        
+        DB::table('payment_methods')->insert([
+            'name' => 'Cheque'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão corporativo VISA'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão corporativo American Express'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão corporativo ITAUCARD BUSINESS'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Transferência bancária'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Cartão BNDES'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Caixa do escritório'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Dinheiro'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Débito em conta corrente'
+        ]);
+        DB::table('payment_methods')->insert([
+            'name' => 'Crédito em conta corrente'
+        ]);
     }
 }
