@@ -46,11 +46,15 @@ Route::get('/zipcode/{number}', 'FunctionsController@zipcode');
 
 Route::get('/reports/billspay', 'ReportsController@billspay');
 Route::get('/reports/billsreceive', 'ReportsController@billsreceive');
-Route::resource('reports', 'ReportsController');
+// Route::resource('reports', 'ReportsController');
 
 Route::resource('loans', 'LoansController');
 Route::resource('paymentMethods', 'PaymentMethodsController');
 
+Route::get('/bills', 'BillsController@conciliation');
+
 Route::get('/reports/expenses', 'ReportsController@getExpenses');
 Route::get('/reports/recipes', 'ReportsController@getRecipes');
 Route::get('/reports/CashFlow', 'ReportsController@getCashFlow');
+Route::get('/reports/CashFlow/month', 'ReportsController@getCashFlowMonth');
+Route::get('/reports/conciliation', 'BillsController@conciliation');

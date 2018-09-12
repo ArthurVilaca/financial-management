@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
@@ -29,30 +29,26 @@ const moment = _rollupMoment || _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'YYYY',
   },
   display: {
-    dateInput: 'MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
+    dateInput: 'YYYY',
+    monthYearLabel: 'YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
+    monthYearA11yLabel: 'YYYY',
   },
 };
 
 @Component({
-  selector: 'app-report-cashflow',
-  templateUrl: './report-cashflow.component.html',
-  styleUrls: ['./report-cashflow.component.scss'],
+  selector: 'app-report-cashflow-month',
+  templateUrl: './report-cashflow-month.component.html',
+  styleUrls: ['./report-cashflow-month.component.scss'],
   providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class ReportCashflowComponent {
+export class ReportCashflowMonthComponent {
   @ViewChild('agGrid') agGrid: AgGridNg2;
 
   filterDate = moment();
@@ -95,40 +91,33 @@ export class ReportCashflowComponent {
 
   search($event?) {
 
-      if($event){
-        this.pageEvent = $event;
-        this.pageSize = $event.pageSize;
-      }
-      let page = 0;
-      if(this.pageEvent) {
-        page = this.pageEvent.pageIndex;
-      }
+    if($event){
+      this.pageEvent = $event;
+      this.pageSize = $event.pageSize;
+    }
+    let page = 0;
+    if(this.pageEvent) {
+      page = this.pageEvent.pageIndex;
+    }
 
-      let date = this.filterDate.toDate();
+    let date = this.filterDate.toDate();
+    let filter = {
+      year: date.getFullYear(),
+      numberMonths: 12
+    };
 
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      let numberDays = this.getDaysInMonth(month,year);
-      let filter = ({
-        month: month,
-        year: year,
-        numberDays: numberDays
+    this.http.get('/reports/CashFlow/month?year=' + filter.year+ '&numberMonths=' + filter.numberMonths)
+      .then((data: any) => {
+        this.appState.set('billsCostCenter', data.dataset.billsCostCenter);
+        this.sortedData = this.appState.provider.billPayReceive;
+        this.billsCostCenter = this.appState.provider.billsCostCenter;
+        this.columnDefs = this.billsCostCenter[0];
+        this.rowData = this.billsCostCenter[2];
+        this.length = data.dataset.total;
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      let filterJson = JSON.stringify(filter);
-
-      this.http.get('/reports/CashFlow?month=' + filter.month + '&year=' + filter.year+ '&numberDays=' + filter.numberDays)
-        .then((data: any) => {
-          this.appState.set('billsCostCenter', data.dataset.billsCostCenter);
-          this.sortedData = this.appState.provider.billPayReceive;
-          this.billsCostCenter = this.appState.provider.billsCostCenter;
-          this.columnDefs = this.billsCostCenter[0];
-          this.rowData = this.billsCostCenter[2];
-          this.length = data.dataset.total;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
   }
 
   sortData(sort: Sort) {

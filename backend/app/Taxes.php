@@ -19,6 +19,7 @@ class Taxes extends Model
         'reference',
         'description',
         'collection',
+        'due_date',
     ];
 
     public function loadProvider($id) {

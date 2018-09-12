@@ -43,6 +43,7 @@ class BillsreceiveController extends Controller
 
         $billsreceive = $this->billsreceiveService->load($page, $pageSize, $_GET);
         $total = $this->billsreceiveService->count($_GET);
+        $amount = $this->billsreceiveService->amount($_GET);
         foreach ($billsreceive as $key => $value) {
             if(isset($value->clients_id)) {
                 $value->client = $this->clients->find($value->clients_id);
@@ -51,6 +52,7 @@ class BillsreceiveController extends Controller
 
         $this->response->setDataSet("billsreceive", $billsreceive);
         $this->response->setDataSet("total", $total);
+        $this->response->setDataSet("amount", $amount);
         $this->response->setType("S");
         $this->response->setMessages("Sucess!");
 

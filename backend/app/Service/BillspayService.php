@@ -59,5 +59,11 @@ class BillspayService extends Service
         return $countBillspay;
     }
 
+    public function amount($filters)
+    {
+        $amountBillspay = $this->billspays->amount($filters);
+
+        return $amountBillspay;
+    }
 }
 ?>

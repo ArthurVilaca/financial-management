@@ -82,6 +82,9 @@ import { LoanComponent } from './loan/loan.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
+import { ConciliationComponent } from './conciliation/conciliation.component';
+import { ConciliationBillComponent } from './conciliation-bill/conciliation-bill.component';
+import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +126,10 @@ import { BankReconciliationComponent } from './bank-reconciliation/bank-reconcil
     LoanComponent,
     PaymentMethodsComponent,
     PaymentMethodComponent,
-    BankReconciliationComponent
+    BankReconciliationComponent,
+    ConciliationComponent,
+    ConciliationBillComponent,
+    ReportCashflowMonthComponent
   ],
   imports: [
     BrowserModule,

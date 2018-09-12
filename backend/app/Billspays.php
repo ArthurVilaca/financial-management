@@ -28,7 +28,8 @@ class Billspays extends Model
         'discounts',
         'additions',
         'numberInstallments',
-        'cost_centers_id'
+        'cost_centers_id',
+        'conciliation',
     ];
 
     public function findByProject($id) {
@@ -170,6 +171,66 @@ class Billspays extends Model
             ->where($where)
             ->orWhere($orWhere)
             ->count();
+
+        return $phases;
+    }
+
+    public function amount($filters) {
+        $where = [];
+        $orWhere = [];
+        if( isset($filters['date_from']) ) {
+            $where[] = [
+                'billspays.created_at', '>', $filters['date_from']
+            ];
+        }
+        if( isset($filters['date_to']) ) {
+            $where[] = [
+                'billspays.created_at', '<', $filters['date_to']
+            ];
+        }
+        if( isset($filters['due_from']) ) {
+            $where[] = [
+                'billspays.due_date', '>', $filters['due_from']
+            ];
+        }
+        if( isset($filters['due_to']) ) {
+            $where[] = [
+                'billspays.due_date', '<', $filters['due_to']
+            ];
+        }
+        if( isset($filters['status']) ) {
+            $where[] = [
+                'billspays.status', '=', $filters['status']
+            ];
+        }
+        if( isset($filters['project_id']) ) {
+            $where[] = [
+                'projects_id', '=', $filters['project_id']
+            ];
+        }
+        if( isset($filters['clients_id']) ) {
+            $where[] = [
+                'projects.clients_id', '=', $filters['clients_id']
+            ];
+        }
+        if( isset($filters['searchWords']) ) {
+            $orWhere = [
+                // [ 'clients.name', 'like', '%'.$filters['searchWords'].'%' ],
+                // [ 'billspays.status', 'like', '%'.$filters['searchWords'].'%' ],
+                [ 'billspays.comments', 'like', '%'.$filters['searchWords'].'%' ]
+            ];
+        }
+
+        $where[] = [
+            'billspays.type', '<>', 'DEDUCOES'
+        ];
+
+        $phases = DB::table('billspays')
+            ->join('projects', 'projects.id', '=', 'billspays.projects_id')
+            ->join('clients', 'clients.id', '=', 'projects.clients_id')
+            ->where($where)
+            ->orWhere($orWhere)
+            ->sum('billspays.amount');
 
         return $phases;
     }

@@ -60,7 +60,6 @@ export class SearchBillsComponent {
     this.http.get('/cost_centers')
       .then((data: any) => {
         this.appState.set('cost_centers', data.dataset.costCenters);
-        console.log('DDD',this.appState.provider);
         this.costCenters = this.appState.provider.cost_centers;
       })
       .catch((error) => {

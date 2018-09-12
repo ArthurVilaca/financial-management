@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
-import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
-import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material';
 import { SearchBillsComponent } from '../search-bills/search-bills.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-billsreceives',
-  templateUrl: './billsreceives.component.html',
-  styleUrls: ['./billsreceives.component.scss']
+  selector: 'app-conciliation',
+  templateUrl: './conciliation.component.html',
+  styleUrls: ['./conciliation.component.scss']
 })
-export class BillsreceivesComponent {
+export class ConciliationComponent {
   length = 100;
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
@@ -22,21 +20,10 @@ export class BillsreceivesComponent {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  constructor(private router: Router, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService, public dialog: MatDialog) {
-    this.search();
-    if(!this.appState.provider.banks) {
-      this.searchBanks();
-    }
-  }
+  constructor(public dialog: MatDialog, private http: HttpService, private appState: ProviderService) { }
 
-  searchBanks() {
-    this.http.get('/banks')
-      .then((data: any) => {
-        this.appState.set('banks', data.dataset.banks);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  ngOnInit() {
+    this.search();
   }
 
   search($event?) {
@@ -48,9 +35,9 @@ export class BillsreceivesComponent {
     if(this.pageEvent) {
       page = this.pageEvent.pageIndex;
     }
-    this.http.get('/billsreceive?page=' + page + '&pageSize=' + this.pageSize + '&' + this.http.serialize(this.filter))
+    this.http.get('/bills?page=' + page + '&pageSize=' + this.pageSize + '&' + this.http.serialize(this.filter))
       .then((data: any) => {
-        this.appState.set('billsreceives', data.dataset.billsreceive);
+        this.appState.set('bills', data.dataset.bills);
         this.length = data.dataset.total;
         this.total = data.dataset.amount;
       })
@@ -66,10 +53,8 @@ export class BillsreceivesComponent {
       data: { filter: this.filter }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.filter = result;
-        this.search();
-      }
+      this.filter = result;
+      this.search();
     });
   }
 
@@ -82,4 +67,7 @@ export class BillsreceivesComponent {
     return '';
   }
 
+  conciliate() {
+    
+  }
 }

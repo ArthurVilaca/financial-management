@@ -27,6 +27,7 @@ class TaxesService extends Service
             'description' => $request->get('description'),
             'collection' => $request->get('collection'),
             'type' => $request->get('type'),
+            'due_date' => new \DateTime($request->get('type')),
         ]);
 
         return $returnTax;

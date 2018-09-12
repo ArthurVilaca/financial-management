@@ -86,6 +86,8 @@ class Projects extends Migration
             $table->integer('projects_id')->unsigned()->nullable();
             $table->foreign('projects_id')->references('id')->on('projects');
 
+            $table->enum('conciliation', ['PENDENTE', 'REALIZADA'])->default('PENDENTE');
+
             $table->timestamps();
         });
 
@@ -123,6 +125,7 @@ class Projects extends Migration
             $table->foreign('billsreceives_id')->references('id')->on('billsreceives')->onDelete('cascade');
 
             $table->integer('numberInstallments')->nullable();
+            $table->enum('conciliation', ['PENDENTE', 'REALIZADA'])->default('PENDENTE');
 
             $table->timestamps();
         });

@@ -15,6 +15,7 @@ export class BillspaysComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
   filter: any = {};
+  total = 0
 
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -39,6 +40,7 @@ export class BillspaysComponent implements OnInit {
       .then((data: any) => {
         this.appState.set('billspays', data.dataset.billspays);
         this.length = data.dataset.total;
+        this.total = data.dataset.amount;
       })
       .catch((error) => {
         console.log(error);
@@ -52,8 +54,10 @@ export class BillspaysComponent implements OnInit {
       data: { filter: this.filter }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.filter = result;
-      this.search();
+      if(result) {
+        this.filter = result;
+        this.search();
+      }
     });
   }
 

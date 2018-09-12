@@ -31,6 +31,9 @@ class AuxTables extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
 
+            $table->double('balance')->nullable();
+            $table->double('last_balance')->nullable();
+
             $table->timestamps();
         });
 

@@ -5,11 +5,19 @@
         <strong>Contas a Pagar</strong>
       </span>
     </div>
+    <div class="col-sm-9">
+      Total Filtrado: {{ total | currency:'BRL' }}
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-5">
       <input (change)="search()" name="name" class="input" matInput placeholder="Pesquisar..." [(ngModel)]="filter.searchWords">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
+    </div>
+    <div class="col-sm-2">
+      <button mat-raised-button color="primary"[routerLink]="['/conciliacao']">Conciliação</button>
     </div>
   </div>
   <div class="row">

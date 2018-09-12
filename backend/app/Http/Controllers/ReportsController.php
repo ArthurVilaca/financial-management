@@ -75,5 +75,13 @@ class ReportsController extends Controller
         return response()->json($this->response->toString());
     }
 
+    public function getCashFlowMonth(Request $request){
+        $cashFlow = $this->reportCashFlow->getCashFlowMonth($_GET);
 
+        $this->response->setDataSet("billsCostCenter", $cashFlow);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
+    }
 }

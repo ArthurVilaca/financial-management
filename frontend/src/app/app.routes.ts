@@ -30,6 +30,8 @@ import { PaymentMethodsComponent } from './payment-methods/payment-methods.compo
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { BankReconciliationComponent } from './bank-reconciliation/bank-reconciliation.component';
 import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
+import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
+import { ConciliationComponent } from './conciliation/conciliation.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -73,7 +75,9 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'metodosPagamento/novo', component: PaymentMethodComponent },
 	{ path: 'metodosPagamento/:id', component: PaymentMethodComponent },
 	{ path: 'conciliacaoBancaria/:id', component: BankReconciliationComponent },
-	{ path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent }
+	{ path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent },
+	{ path: 'relatorio/fluxoCaixa/mes', component: ReportCashflowMonthComponent },
+	{ path: 'conciliacao', component: ConciliationComponent },
 ];
 
 export const rootRouterConfig: Routes = [

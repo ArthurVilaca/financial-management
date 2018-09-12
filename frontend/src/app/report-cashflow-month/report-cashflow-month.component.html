@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
           <div class="col-sm-8">
-              <span class="code-header"><strong>Relatório de Fluxo de Caixa por centro de Custo (Diario)</strong></span>
+              <span class="code-header"><strong>Relatório de Fluxo de Caixa por centro de Custo (Mensal)</strong></span>
               <hr>
             </div>
           <div class="col-sm-2">
@@ -13,12 +13,11 @@
       <div class="col-sm-2">Filtro</div>
       <div class="col-sm-4">
         <mat-form-field>
-          <input matInput [matDatepicker]="dp" placeholder="Mês e ano" [(ngModel)]="filterDate">
+          <input matInput [matDatepicker]="dp" placeholder="Ano" [(ngModel)]="filterDate">
           <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp
             startView="multi-year"
             (yearSelected)="chosenYearHandler($event)"
-            (monthSelected)="chosenMonthHandler($event, dp)"
             panelClass="example-month-picker">
           </mat-datepicker>
         </mat-form-field>
@@ -43,3 +42,4 @@
   </div>
 </div>
 
+  

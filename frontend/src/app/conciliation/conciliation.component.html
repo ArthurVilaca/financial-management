@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-3">
       <span class="code-header">
-        <strong>Contas a Receber</strong>
+        <strong>Conciliação</strong>
       </span>
     </div>
     <div class="col-sm-9">
@@ -17,7 +17,10 @@
       <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
     </div>
     <div class="col-sm-2">
-      <button mat-raised-button color="primary"[routerLink]="['/conciliacao']">Conciliação</button>
+      <button mat-raised-button color="primary" (click)="conciliate()">Conciliar</button>
+    </div>
+    <div class="col-sm-2">
+      Arquivo <input name="email" type="file">
     </div>
   </div>
   <div class="row">
@@ -26,24 +29,20 @@
         <table class="table" style="width: 100%;">
           <thead>
             <tr>
-              <th>Projeto</th>
-              <th>Cliente</th>
+              <th>PROJETO</th>
               <th>Nome</th>
-              <th>Status</th>
               <th>Banco</th>
               <th>Valor</th>
-              <th>Data Ven</th>
+              <th>Data Pag</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="clickable" *ngFor="let billsreceive of appState.provider.billsreceives" routerLink="/contaAReceber/{{billsreceive.id}}">
-              <th scope="row">{{billsreceive.projects_id}}</th>
-              <td>{{billsreceive.client.name}}</td>
-              <td>{{billsreceive.comments}}</td>
-              <td>{{billsreceive.status}}</td>
-              <td>{{getBank(billsreceive.banks_id)}}</td>
-              <td>{{billsreceive.amount | currency:'BRL'}}</td>
-              <td>{{billsreceive.due_date | date}}</td>
+            <tr class="clickable" *ngFor="let bill of appState.provider.bills">
+              <th>{{billspay.projects_id}}</th>
+              <td>{{billspay.name}}</td>
+              <td>{{getBank(billspay.banks_id)}}</td>
+              <td>{{billspay.amount | currency:'BRL'}}</td>
+              <td>{{billspay.due_date | date}}</td>
             </tr>
           </tbody>
         </table>
@@ -55,7 +54,5 @@
 <mat-paginator class="center" [length]="length"
   [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
-  (page)="pageEvent = $event">
+  (page)="pageEvent = search($event)">
 </mat-paginator>
-
-<a class="button-float" mat-fab routerLink="/contaAReceber/novo"><mat-icon>add</mat-icon></a>
