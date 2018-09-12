@@ -53,3 +53,4 @@ Route::resource('paymentMethods', 'PaymentMethodsController');
 
 Route::get('/reports/expenses', 'ReportsController@getExpenses');
 Route::get('/reports/recipes', 'ReportsController@getRecipes');
+Route::get('/reports/CashFlow', 'ReportsController@getCashFlow');

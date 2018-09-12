@@ -179,6 +179,21 @@ class Billsreceives extends Model
                 'status', '=', $filters['status']
             ];
         }
+        if( isset($filters['project_id']) ) {
+            $where[] = [
+                'projects.id', '=', $filters['project_id']
+            ];
+        }
+        if( isset($filters['clients_id']) ) {
+            $where[] = [
+                'projects.clients_id', '=', $filters['clients_id']
+            ];
+        }
+        if(isset($filters['costCenters_id'])){
+            $where[] = [
+                'cost_centers_id', '=', $filters['costCenters_id']
+            ];
+        }
 
         $phases = DB::table('cost_centers')
             ->where('type', '=','RECEITA')

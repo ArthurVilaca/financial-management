@@ -29,9 +29,15 @@
       </mat-list-item>
 
       <mat-list-item role="listitem">
-        <mat-form-field class="full-width">
+        <mat-form-field class="half-width">
           <input name="comments" matInput placeholder="Observações" [(ngModel)]="billspay.comments" [disabled]=" billspay.status == 'Conciliado' ">
         </mat-form-field>
+
+        <mat-form-field class="half-width">
+            <input name="due_date" matInput [matDatepicker]="pickerDueDate" placeholder="Data de Vencimento" [(ngModel)]="billspay.due_date" [disabled]=" billspay.status == 'Conciliado' ">
+            <mat-datepicker-toggle matSuffix [for]="pickerDueDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerDueDate></mat-datepicker>
+          </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
@@ -63,14 +69,20 @@
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
           <mat-select name="projects_id" placeholder="Projeto" [(ngModel)]="billspay.projects_id" [disabled]=" billspay.status == 'Conciliado' ">
-            <mat-option *ngFor="let project of appState.provider.projects" [value]="project.id">{{project.name}}</mat-option>
+            <mat-option *ngFor="let project of projects" [value]="project.id">{{project.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-select name="provider_id" placeholder="Fornecedor" [(ngModel)]="billspay.providers_id" [disabled]=" billspay.status == 'Conciliado' ">
+            <mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </mat-list-item>
 
       <mat-list-item role="listitem">
         <mat-form-field class="half-width">
-          <input name="payment_date" matInput (focus)="pickerPaymentDate.open()" [matDatepicker]="pickerPaymentDate" placeholder="Data Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Conciliado' ">
+          <input name="payment_date" matInput (focus)="pickerPaymentDate.open()" [matDatepicker]="pickerPaymentDate" placeholder="Data de Pagamento" [(ngModel)]="billspay.payment_date" [disabled]=" billspay.status == 'Conciliado' ">
           <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerPaymentDate></mat-datepicker>
         </mat-form-field>

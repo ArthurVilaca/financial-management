@@ -10,6 +10,9 @@ import { ProviderService } from '../provider.service'
 })
 export class SearchBillsComponent {
   filter: any = {};
+  projects : any;
+  clients: any;
+  costCenters: any;
 
   constructor(
     public dialogRef: MatDialogRef<SearchBillsComponent>, private http: HttpService,
@@ -22,6 +25,9 @@ export class SearchBillsComponent {
       if(!this.appState.provider.clients) {
         this.searchClients();
       }
+      if(!this.appState.provider.costCenters) {
+        this.serachCostCenters();
+      }
   }
 
   onNoClick(): void {
@@ -32,6 +38,7 @@ export class SearchBillsComponent {
     this.http.get('/projects')
       .then((data: any) => {
         this.appState.set('projects', data.dataset.projects);
+        this.projects = this.appState.provider.projects;
       })
       .catch((error) => {
         console.log(error);
@@ -42,9 +49,22 @@ export class SearchBillsComponent {
     this.http.get('/clients')
       .then((data: any) => {
         this.appState.set('clients', data.dataset.clients);
+        this.clients = this.appState.provider.clients;
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  serachCostCenters(){
+    this.http.get('/cost_centers')
+      .then((data: any) => {
+        this.appState.set('cost_centers', data.dataset.costCenters);
+        console.log('DDD',this.appState.provider);
+        this.costCenters = this.appState.provider.cost_centers;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 }

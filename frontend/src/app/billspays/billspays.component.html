@@ -31,7 +31,7 @@
             <tr class="clickable" *ngFor="let billspay of appState.provider.billspays" routerLink="/contaAPagar/{{billspay.id}}">
               <th scope="row">{{billspay.projects_id}}</th>
               <!-- <td>{{billspay.client.name}}</td> -->
-              <td>{{billspay.comments}}</td>
+              <td>{{billspay.name}}</td>
               <td>{{billspay.status}}</td>
               <td>{{getBank(billspay.banks_id)}}</td>
               <td>{{billspay.amount | currency:'BRL'}}</td>

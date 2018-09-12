@@ -105,19 +105,22 @@ class Projects extends Migration
             $table->dateTime('invoice_date')->nullable();
 
             $table->integer('banks_id')->unsigned()->nullable();
-            $table->foreign('banks_id')->references('id')->on('banks');
+            $table->foreign('banks_id')->references('id')->on('banks')->onDelete('cascade');
 
             $table->integer('cost_centers_id')->unsigned()->nullable();
-            $table->foreign('cost_centers_id')->references('id')->on('cost_centers');
+            $table->foreign('cost_centers_id')->references('id')->on('cost_centers')->onDelete('cascade');
 
             $table->integer('projects_phases_id')->unsigned()->nullable();
-            $table->foreign('projects_phases_id')->references('id')->on('projects_phases');
+            $table->foreign('projects_phases_id')->references('id')->on('projects_phases')->onDelete('cascade');
 
             $table->integer('projects_id')->unsigned()->nullable();
-            $table->foreign('projects_id')->references('id')->on('projects');
+            $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');
+
+            $table->integer('providers_id')->unsigned()->nullable();
+            $table->foreign('providers_id')->references('id')->on('providers')->onDelete('cascade');
 
             $table->integer('billsreceives_id')->unsigned()->nullable();
-            $table->foreign('billsreceives_id')->references('id')->on('billsreceives');
+            $table->foreign('billsreceives_id')->references('id')->on('billsreceives')->onDelete('cascade');
 
             $table->integer('numberInstallments')->nullable();
 
@@ -132,8 +135,9 @@ class Projects extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');     
+        Schema::dropIfExists('projects');
         Schema::dropIfExists('projects_phases');
+        Schema::dropIfExists('providers');
         Schema::dropIfExists('billspay');
         Schema::dropIfExists('billsreceive');
     }
