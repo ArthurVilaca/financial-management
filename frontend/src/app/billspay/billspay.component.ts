@@ -24,7 +24,10 @@ export class BillspayComponent {
       if(params['id']) {
         this.http.get('/billspay/' + params['id'])
           .then((data: any) => {
-            this.billspay = data.dataset.billspay;
+            this.appState.set('billspay',data.dataset.billspay);
+            this.billspay =  this.appState.provider.billspay;
+            this.billspay.user = this.appState.provider.user;
+
             if(this.billspay.invoice_date != '') {
               this.billspay.invoice_date = new Date(this.billspay.invoice_date);
             }

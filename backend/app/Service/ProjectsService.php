@@ -45,6 +45,8 @@ class ProjectsService extends Service
             'banks_id' => $request->get('banks_id'),
         ]);
 
+        $user = $request->get('user');
+
         
         $returnProject['projects_phases'] = [];
         $projects_phases = $request->get('projects_phases');
@@ -84,6 +86,7 @@ class ProjectsService extends Service
                         'projects_id' => $returnPhase->projects_id,
                         'providers_id' => $returnPhase->providers_id,
                         'due_date' => $due_date,
+                        'employee_id' => $user,
                     ]);
 
                     $due_date->modify('+1 month');
@@ -176,6 +179,7 @@ class ProjectsService extends Service
                 'due_date' => $date,
                 'banks_id' => $request->get('banks_id'),
                 'clients_id' => $request->get('clients_id'),
+                'employee_id' => $user,
             ]);
             $date->modify('+1 month');
         }

@@ -80,6 +80,9 @@ class Projects extends Migration
             $table->string('invoice_number')->nullable();  // numero nfe
             $table->dateTime('invoice_date')->nullable();
 
+            $table->integer('employee_id')->unsigned()->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees');
+
             $table->integer('banks_id')->unsigned()->nullable();
             $table->foreign('banks_id')->references('id')->on('banks');
 
@@ -109,6 +112,9 @@ class Projects extends Migration
             $table->string('invoice_number')->nullable();  // numero nfe
             $table->dateTime('invoice_date')->nullable();
 
+            $table->integer('employee_id')->unsigned()->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees');
+            
             $table->integer('banks_id')->unsigned()->nullable();
             $table->foreign('banks_id')->references('id')->on('banks')->onDelete('cascade');
 

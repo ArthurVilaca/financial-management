@@ -16,6 +16,8 @@ export class BillsreceiveComponent {
 
   constructor(private router: Router, private route: ActivatedRoute, private message: MessageDialogComponent, private http: HttpService, private appState: ProviderService) {
     this.loadBillsreceive();
+    console.log('USERS', this.appState.provider);
+
   }
 
   loadBillsreceive() {
@@ -23,8 +25,9 @@ export class BillsreceiveComponent {
       if(params['id']) {
         this.http.get('/billsreceive/' + params['id'])
           .then((data: any) => {
-            this.billsreceive = data.dataset.billsreceive;
-            console.log('Billsreceive',this.billsreceive);
+            this.appState.set('billsreceive',data.dataset.billsreceive);
+            this.billsreceive = this.appState.provider.billsreceive;
+
             if(this.billsreceive.invoice_date != '') {
               this.billsreceive.invoice_date = new Date(this.billsreceive.invoice_date);
             }
@@ -97,6 +100,7 @@ export class BillsreceiveComponent {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
+      this.billsreceive.user = this.appState.provider.user;
       this.http.post('/billsreceive', this.billsreceive)
         .then((data: any) => {
           this.router.navigate(['contasAReceber']).then(_ => {});

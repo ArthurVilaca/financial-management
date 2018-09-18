@@ -162,6 +162,7 @@ export class ProjectComponent {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
+      this.projects.user = this.appState.provider.user;
       this.http.post('/projects', this.projects)
         .then((data: any) => {
           this.router.navigate(['projetos']).then(_ => {});
