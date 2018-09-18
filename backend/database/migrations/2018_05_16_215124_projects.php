@@ -28,6 +28,9 @@ class Projects extends Migration
             $table->integer('clients_id')->unsigned();
             $table->foreign('clients_id')->references('id')->on('clients')->onDelete('cascade');
 
+            $table->integer('providers_id')->unsigned();
+            $table->foreign('providers_id')->references('id')->on('providers')->onDelete('cascade');
+
             $table->timestamps();
         });
 
