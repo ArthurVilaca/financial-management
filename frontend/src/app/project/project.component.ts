@@ -15,6 +15,8 @@ export class ProjectComponent {
   };
 
   billspay: any ={}
+  providers: any = []
+  banks: any = []
 
   data: any[] = [
     {
@@ -93,6 +95,8 @@ export class ProjectComponent {
     this.loadFillData();
   }
 
+
+
   loadFillData() {
     this.http.get('/clients')
       .then((data: any) => {
@@ -104,8 +108,8 @@ export class ProjectComponent {
 
     this.http.get('/providers')
       .then((data: any) => {
-        console.log('Providers',data);
         this.appState.set('providers', data.dataset.providers);
+        this.providers = this.appState.provider.providers;
       })
       .catch((error) => {
         console.log(error);
@@ -114,6 +118,8 @@ export class ProjectComponent {
     this.http.get('/banks')
       .then((data: any) => {
         this.appState.set('banks', data.dataset.banks);
+        this.banks = this.appState.provider.banks;
+        console.log('banks',this.banks);
       })
       .catch((error) => {
         console.log(error);

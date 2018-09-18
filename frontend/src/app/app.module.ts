@@ -37,6 +37,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
+
 
 
 
@@ -160,6 +164,8 @@ import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cas
     MatSortModule,
     AgGridModule.withComponents([]),
     NgxChartsModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
