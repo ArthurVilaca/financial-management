@@ -33,10 +33,11 @@
               <th>Banco</th>
               <th>Valor</th>
               <th>Data Pag</th>
+              <th>Usuário</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="clickable" *ngFor="let billspay of appState.provider.billspays" routerLink="/contaAPagar/{{billspay.id}}">
+            <tr class="clickable" *ngFor="let billspay of billsPay" routerLink="/contaAPagar/{{billspay.id}}">
               <th scope="row">{{billspay.projects_id}}</th>
               <!-- <td>{{billspay.client.name}}</td> -->
               <td>{{billspay.name}}</td>
@@ -44,6 +45,7 @@
               <td>{{getBank(billspay.banks_id)}}</td>
               <td>{{billspay.amount | currency:'BRL'}}</td>
               <td>{{billspay.due_date | date}}</td>
+              <td>{{billspay.employee}}</td>
             </tr>
           </tbody>
         </table>

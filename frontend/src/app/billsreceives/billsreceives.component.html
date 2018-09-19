@@ -33,10 +33,11 @@
               <th>Banco</th>
               <th>Valor</th>
               <th>Data Ven</th>
+              <th>Usuário</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="clickable" *ngFor="let billsreceive of appState.provider.billsreceives" routerLink="/contaAReceber/{{billsreceive.id}}">
+            <tr class="clickable" *ngFor="let billsreceive of billsreceive" routerLink="/contaAReceber/{{billsreceive.id}}">
               <th scope="row">{{billsreceive.projects_id}}</th>
               <td>{{billsreceive.client.name}}</td>
               <td>{{billsreceive.comments}}</td>
@@ -44,6 +45,7 @@
               <td>{{getBank(billsreceive.banks_id)}}</td>
               <td>{{billsreceive.amount | currency:'BRL'}}</td>
               <td>{{billsreceive.due_date | date}}</td>
+              <td>{{billsreceive.employee}}</td>
             </tr>
           </tbody>
         </table>

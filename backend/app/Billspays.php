@@ -30,6 +30,7 @@ class Billspays extends Model
         'numberInstallments',
         'cost_centers_id',
         'conciliation',
+        'employee',
     ];
 
     public function findByProject($id) {

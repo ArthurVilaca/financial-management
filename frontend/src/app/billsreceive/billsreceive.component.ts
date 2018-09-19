@@ -100,7 +100,7 @@ export class BillsreceiveComponent {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
-      this.billsreceive.user = this.appState.provider.user;
+      this.billsreceive.user = this.appState.provider.user.name;
       this.http.post('/billsreceive', this.billsreceive)
         .then((data: any) => {
           this.router.navigate(['contasAReceber']).then(_ => {});

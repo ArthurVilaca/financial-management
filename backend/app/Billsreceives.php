@@ -27,6 +27,7 @@ class Billsreceives extends Model
         'discounts',
         'additions',
         'conciliation',
+        'employee',
     ];
 
     public function findByProject($id) {

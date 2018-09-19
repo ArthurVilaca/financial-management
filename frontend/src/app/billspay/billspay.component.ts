@@ -87,7 +87,7 @@ export class BillspayComponent {
           this.message.openDialog('Atenção', 'Erro ao tentar salvar, favor entrar em contato com o administrador!');
         });
     } else {
-
+      this.billspay.user = this.appState.provider.user.name;
       this.http.post('/billspay', this.billspay)
         .then((data: any) => {
           this.router.navigate(['contasAPagar']).then(_ => {});

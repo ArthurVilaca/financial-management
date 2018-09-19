@@ -28,7 +28,7 @@ class Projects extends Migration
             $table->integer('clients_id')->unsigned();
             $table->foreign('clients_id')->references('id')->on('clients')->onDelete('cascade');
 
-            $table->integer('providers_id')->unsigned();
+            $table->integer('providers_id')->unsigned()->nullable();
             $table->foreign('providers_id')->references('id')->on('providers')->onDelete('cascade');
 
             $table->timestamps();
@@ -76,12 +76,12 @@ class Projects extends Migration
             $table->dateTime('payment_date')->nullable();
             $table->double('discounts')->nullable();
             $table->double('additions')->nullable();
-
+            $table->string('employee')->nullable();
             $table->string('invoice_number')->nullable();  // numero nfe
             $table->dateTime('invoice_date')->nullable();
 
-            $table->integer('employee_id')->unsigned()->nullable();
-            $table->foreign('employee_id')->references('id')->on('employees');
+            /*$table->integer('employee_id')->unsigned()->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees');*/
 
             $table->integer('banks_id')->unsigned()->nullable();
             $table->foreign('banks_id')->references('id')->on('banks');
@@ -107,13 +107,14 @@ class Projects extends Migration
             $table->dateTime('due_date')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->double('discounts')->nullable();
-            $table->double('additions')->nullable();            
+            $table->double('additions')->nullable();        
+            $table->string('employee')->nullable();    
 
             $table->string('invoice_number')->nullable();  // numero nfe
             $table->dateTime('invoice_date')->nullable();
 
-            $table->integer('employee_id')->unsigned()->nullable();
-            $table->foreign('employee_id')->references('id')->on('employees');
+            /*$table->integer('employee_id')->unsigned()->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees');*/
             
             $table->integer('banks_id')->unsigned()->nullable();
             $table->foreign('banks_id')->references('id')->on('banks')->onDelete('cascade');

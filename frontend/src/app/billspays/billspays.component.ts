@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material';
 export class BillspaysComponent implements OnInit {
   length = 100;
   pageSize = 10;
+  billsPay: any = [];
   pageSizeOptions = [5, 10, 25, 100];
   filter: any = {};
   total = 0
@@ -38,7 +39,10 @@ export class BillspaysComponent implements OnInit {
     }
     this.http.get('/billspay?page=' + page + '&pageSize=' + this.pageSize + '&' + this.http.serialize(this.filter))
       .then((data: any) => {
+        console.log('Data', data);
         this.appState.set('billspays', data.dataset.billspays);
+        this.billsPay = this.appState.provider.billspays;
+        console.log('billsPay',this.billsPay);
         this.length = data.dataset.total;
         this.total = data.dataset.amount;
       })
