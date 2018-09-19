@@ -20,8 +20,13 @@ class BillspayService extends Service
         for ($i=0; $i < $installments; $i++) { 
             
             $valueInstallment = floatval($request->get('amount')) / $installments;
+            $names = $request->get('name');
+            if( $i > 0 ){
+                $names = $i.'ª'.' parcela'.$request->get('name');
+            }
+
             $returnBillspay = $this->billspays->create([
-                'name' => $i.'ª'.' parcela'. $request->get('name'),
+                'name' => $names ,
                 'comments' => $request->get('comments'),
                 'status' => $request->get('status'),
                 'type' => $request->get('type'),
@@ -36,6 +41,7 @@ class BillspayService extends Service
                 'numberInstallments' => $request->get('numberInstallments'),
                 'invoice_number' => $request->get('invoice_number'),
                 'invoice_date' => new \DateTime($request->get('invoice_date')),
+                'employee_id' => $request->get('user'),
             ]);             
 
             $date_update->modify('+1 month');

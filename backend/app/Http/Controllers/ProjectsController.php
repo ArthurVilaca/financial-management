@@ -67,7 +67,6 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         $returnProject = $this->projectsService->create($request);
-            
         $this->response->setType("S");
         $this->response->setDataSet("projects", $returnProject);
         $this->response->setMessages("Created projects successfully!");

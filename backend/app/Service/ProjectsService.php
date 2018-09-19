@@ -34,7 +34,7 @@ class ProjectsService extends Service
     }
 
     public function create(Request $request)
-    {    
+    {  
         $returnProject = $this->projects->create([
             'name' => $request->get('name'),
             'notes' => $request->get('notes'),
@@ -44,10 +44,11 @@ class ProjectsService extends Service
             'clients_id' => $request->get('clients_id'),
             'banks_id' => $request->get('banks_id'),
         ]);
-
-        /*
+        
+        
         $returnProject['projects_phases'] = [];
         $projects_phases = $request->get('projects_phases');
+        
         $i = 0;
         if(isset($projects_phases) || $projects_phases != '' ){
             foreach ($projects_phases as $key => $value) {
@@ -56,7 +57,7 @@ class ProjectsService extends Service
      
                  $date = new \DateTime($value['expiration_date']);
                  $returnPhase = $this->projectsPhases->create([
-                     'status' => $value['status'],
+                     'status' => 'Prevista',
                      'comments' => $value['comments'],
                      'amount' => $value['amount'],
                      'number' => $value['number'],
@@ -67,7 +68,29 @@ class ProjectsService extends Service
      
                  //Contas a pagar referente a fornecedor
                  $id_provider = $value['providers_id'];
-                 $provider_name = $this->providers->getNameProvider($id_provider);                        
+                
+                 
+                $due_date = $date;
+                $partialValue = floatval($value['amount']) / intval($value['number']);
+
+                for ($i=0; $i < $value['number'] ; $i++) { 
+                    
+                    $this->billspays->create([
+                        'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$due_date->format('Y-m-d'),
+                        'status' => 'Prevista',
+                        'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$due_date->format('Y-m-d'),
+                        'amount' => $partialValue,
+                        'projects_phases_id' => $returnPhase->id,
+                        'projects_id' => $returnPhase->projects_id,
+                        'providers_id' => $returnPhase->providers_id,
+                        'due_date' => $due_date,
+                        'employee' =>$request->get('user'),
+                    ]);
+
+                    $due_date->modify('+1 month');
+                }
+
+                /* $provider_name = $this->providers->getNameProvider($id_provider);                        
      
                  $taxes = $this->providerTaxes->loadByProvider($value['providers_id']);
                  for($i = 0 ; $i < $value['number']; $i ++){
@@ -103,7 +126,7 @@ class ProjectsService extends Service
                          ]);
                          $date->modify('+1 month');
                      }                         
-                 }
+                 }*/
      
                  //////////// commented to wait for validation
                  // for ($i=0; $i < $value['number']; $i++) { 
@@ -137,26 +160,26 @@ class ProjectsService extends Service
              }
 
         }
-
+        
         //Contas a receber o projeto cadastrado
-        $costCenter = $this->costCenters->newProject();
+        //$costCenter = $this->costCenters->newProject();        
         $date = new \DateTime();
+    
         for ($i=0; $i < $request->get('number'); $i++) { 
             $portion = floatval( $request->get('amount') ) / intval($request->get('number'));
-            
-            $this->billsreceives->create([
-                'name' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
+             $this->billsreceives->create([
+                'name' => 'Conta a receber referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
                 'status' => 'Prevista',
                 'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
                 'amount' => $portion,
-                'projects_id' => $returnProject->id,
+                'projects_id' => $returnProject->id,                
                 'due_date' => $date,
                 'banks_id' => $request->get('banks_id'),
-                'cost_centers_id' => $costCenter->id
+                'clients_id' => $request->get('clients_id'),
+                'employee' => $request->get('user'),
             ]);
             $date->modify('+1 month');
         }
-        */
 
         return $returnProject;
     }
