@@ -17,7 +17,8 @@ export class LoanComponent {
       if(params['id']) {
         this.http.get('/loans/' + params['id'])
           .then((data: any) => {
-            this.loan = data.dataset.loans;
+            this.loan = data.dataset.loan;
+            this.loan.due_date = new Date(this.loan.due_date);
           })
           .catch((error) => {
             console.log(error);

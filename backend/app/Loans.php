@@ -18,6 +18,7 @@ class Loans extends Model
         'admin_taxes',
         'value_plots',
         'due_date',
+        'plots',
         'issue_date',
         'banks_id',
     ];
