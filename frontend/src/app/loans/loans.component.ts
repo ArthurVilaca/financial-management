@@ -19,6 +19,7 @@ export class LoansComponent {
     this.http.get('/loans')
       .then((data: any) => {
         this.appState.set('loans', data.dataset.loans);
+        console.log('loans',data.dataset.loans);
       })
       .catch((error) => {
         console.log(error);

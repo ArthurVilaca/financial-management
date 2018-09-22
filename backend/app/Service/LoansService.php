@@ -19,6 +19,7 @@ class LoansService extends Service
             'interest' => $request->get('interest'),
             'admin_taxes' => $request->get('admin_taxes'),
             'value_plots' => $request->get('value_plots'),
+            'plots' => $request->get('plots'),
             'due_date' => new \DateTime($request->get('due_date')),
             'issue_date' => new \DateTime(),
             'banks_id' => $request->get('banks_id'),

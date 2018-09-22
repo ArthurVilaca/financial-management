@@ -34,6 +34,7 @@ class LoansController extends Controller
     {
         $loans = $this->loans->get();
         foreach ($loans as $key => $value) {
+            $value->due_date = new \Datetime($value->due_date); 
             $value->bank = $this->banks->find($value->banks_id);
         }
 
