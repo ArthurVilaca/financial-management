@@ -51,14 +51,14 @@ export const MY_FORMATS = {
 export class ReportCashflowMonthComponent {
   @ViewChild('agGrid') agGrid: AgGridNg2;
 
-  filterDate = moment();
+  //filterDate = moment();
 
   columnDefs = [];
-
+  filterDate: any;
   rowData: any;
 
 
-  chosenYearHandler(normalizedYear: Moment) {
+  /*chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.filterDate;
     ctrlValue.year(normalizedYear.year());
     this.filterDate = ctrlValue;
@@ -69,7 +69,7 @@ export class ReportCashflowMonthComponent {
     ctrlValue.month(normlizedMonth.month());
     this.filterDate = ctrlValue;
     datepicker.close();
-  }
+  }*/
 
   length = 100;
   pageSize = 10;
@@ -100,13 +100,14 @@ export class ReportCashflowMonthComponent {
       page = this.pageEvent.pageIndex;
     }
 
-    let date = this.filterDate.toDate();
+    /*let date = this.filterDate.toDate();
     let filter = {
       year: date.getFullYear(),
       numberMonths: 12
-    };
+    };*/
+    console.log('filterDate', this.filterDate);
 
-    this.http.get('/reports/CashFlow/month?year=' + filter.year+ '&numberMonths=' + filter.numberMonths)
+   /*this.http.get('/reports/CashFlow/month?year=' + filter.year+ '&numberMonths=' + filter.numberMonths)
       .then((data: any) => {
         this.appState.set('billsCostCenter', data.dataset.billsCostCenter);
         this.sortedData = this.appState.provider.billPayReceive;
@@ -117,7 +118,9 @@ export class ReportCashflowMonthComponent {
       })
       .catch((error) => {
         console.log(error);
-      });
+      });*/
+
+
   }
 
   sortData(sort: Sort) {

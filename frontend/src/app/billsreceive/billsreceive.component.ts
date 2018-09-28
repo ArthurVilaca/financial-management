@@ -101,6 +101,7 @@ export class BillsreceiveComponent {
         });
     } else {
       this.billsreceive.user = this.appState.provider.user.name;
+      console.log('billsreceive',this.billsreceive);
       this.http.post('/billsreceive', this.billsreceive)
         .then((data: any) => {
           this.router.navigate(['contasAReceber']).then(_ => {});

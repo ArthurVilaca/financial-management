@@ -19,6 +19,9 @@
     <div class="col-sm-2">
       <button mat-raised-button color="primary"[routerLink]="['/conciliacao']">Conciliação</button>
     </div>
+    <div class="col-sm-3">
+      <button mat-stroked-button color="warn" (click)="exportCSV()">Exportar Contas a Receber(CSV)</button>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
@@ -44,7 +47,7 @@
               <td>{{billsreceive.status}}</td>
               <td>{{getBank(billsreceive.banks_id)}}</td>
               <td>{{billsreceive.amount | currency:'BRL'}}</td>
-              <td>{{billsreceive.due_date | date}}</td>
+              <td>{{billsreceive.payment_date | date}}</td>
               <td>{{billsreceive.employee}}</td>
             </tr>
           </tbody>

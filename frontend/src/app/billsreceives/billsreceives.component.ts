@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service'
+import { Angular5Csv } from 'angular5-csv/Angular5-csv'
 import { ProviderService } from '../provider.service'
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component'
 import { Router } from '@angular/router';
@@ -16,6 +17,7 @@ export class BillsreceivesComponent {
   length = 100;
   pageSize = 10;
   billsreceive: any = [];
+  exportExcel: any = []
   userName: string;
   pageSizeOptions = [5, 10, 25, 100];
   filter: any = {};
@@ -54,7 +56,18 @@ export class BillsreceivesComponent {
       .then((data: any) => {
         this.appState.set('billsreceives', data.dataset.billsreceive);
         this.billsreceive = data.dataset.billsreceive;
-        console.log('billsreceive',this.billsreceive);
+        this.billsreceive.forEach(element => {
+          this.exportExcel.push({
+            name: element.name,
+            status: element.status,
+            conciliation: element.conciliation,
+            amount: element.amount,
+            bank: this.getBank(element.banks_id),
+            due_date: element.payment_date,
+            type: element.type,
+            emloyee: element.employee
+          });
+        });
         this.length = data.dataset.total;
         this.total = data.dataset.amount;
       })
@@ -77,6 +90,20 @@ export class BillsreceivesComponent {
     });
   }
 
+  exportCSV(){
+    var options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: false,
+      showTitle: false,
+      useBom: false,
+      noDownload: false,
+      headers: ["Nome", "Status","Conciliação", "Valor", "Banco","Data de Vencimento", "Tipo", "Usuário"]
+    };
+    new Angular5Csv(this.exportExcel, 'ContasAReceber', options);
+  }
+
   getBank(id) {
     for(let i in this.appState.provider.banks) {
       if(this.appState.provider.banks[i].id == id) {
@@ -85,5 +112,4 @@ export class BillsreceivesComponent {
     }
     return '';
   }
-
 }
