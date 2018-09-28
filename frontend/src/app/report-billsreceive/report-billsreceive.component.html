@@ -1,19 +1,16 @@
 <div class="main-section">
   <div class="row">
     <div class="col-sm-4">
-      <span class="code-header"><strong>Relarorio</strong></span>
+      <span class="code-header"><strong>Relatório Centro de Custos por Contas a Receber </strong></span>
     </div>
     <div class="col-sm-2">
-      <!--
-      <input type="checkbox" (change)="search()" [(ngModel)]="filter.prevista">PREVISTA-->
+      <input type="checkbox" (change)="search()" [(ngModel)]="filter.prevista">PREVISTA
     </div>
     <div class="col-sm-2">
-     <!-- <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA-->
+      <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA
     </div>
     <div class="col-sm-4">
-      <!--
-      <button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
-        -->
+      <button mat-stroked-button color="warn" (click)="exportCSV()">Exportar Relatório Contas a Receber(CSV)</button>
     </div>
   </div>
 

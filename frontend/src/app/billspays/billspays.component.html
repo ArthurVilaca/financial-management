@@ -19,6 +19,9 @@
     <div class="col-sm-2">
       <button mat-raised-button color="primary"[routerLink]="['/conciliacao']">Conciliação</button>
     </div>
+    <div class="col-sm-3">
+      <button mat-stroked-button color="warn" (click)="exportCSV()">Contas a Pagar(CSV)</button>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12">

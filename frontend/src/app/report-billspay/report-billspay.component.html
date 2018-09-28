@@ -10,9 +10,8 @@
       <input type="checkbox" (change)="search()" [(ngModel)]="filter.efetuada">EFETUADA
     </div>
     <div class="col-sm-4">
-      <!--<button mat-raised-button color="primary" (click)="openFilter()">Filtro <mat-icon>filter_list</mat-icon> </button>
-      -->
-      </div>
+        <button mat-stroked-button color="warn" (click)="exportCSV()">Exportar Relatório Centro de Custo/Contas a Pagar(CSV)</button>
+    </div>
   </div>
 
   <div class="row">

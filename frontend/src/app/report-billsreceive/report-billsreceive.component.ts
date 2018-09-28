@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service'
 import { ProviderService } from '../provider.service'
@@ -6,6 +7,7 @@ import { SearchBillsComponent } from '../search-bills/search-bills.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Sort } from '@angular/material';
+import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 
 @Component({
   selector: 'app-report-billsreceive',
@@ -25,7 +27,7 @@ export class ReportBillsreceiveComponent  {
   ];
 
   rowData = [];
-
+  exportExcel: any = []
 
   filter: any = {
     prevista: true,
@@ -41,6 +43,16 @@ export class ReportBillsreceiveComponent  {
       .then((data: any) => {
         this.billsreceives = data.dataset.billsreceives;
         this.rowData = this.billsreceives;
+        this.rowData.forEach(element => {
+          this.exportExcel.push({
+            name: element.name,
+            amount: element.amount,
+            bills: element.bills,
+            type: element.type,
+            typeCost: element.typeCost
+          });
+        });
+        console.log('rowData',this.rowData);
         //this.sortedData = this.billsreceives;
       })
       .catch((error) => {
@@ -61,6 +73,23 @@ export class ReportBillsreceiveComponent  {
         this.search();
       }
     });
+  }
+
+  exportCSV(){
+    console.log('exportExcel',this.exportExcel)
+    var options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: false,
+      showTitle: false,
+      useBom: false,
+      noDownload: false,
+      headers: ["Nome", "Valor", "Nº de Contas", "Tipo", "Tipo de Custo"]
+    };
+
+    new Angular5Csv(this.exportExcel, 'RelatoriaoContaReceberCentroCusto', options);
+
   }
 
   sortData(sort: Sort) {
