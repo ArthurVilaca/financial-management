@@ -27,6 +27,7 @@ class BillsreceiveService extends Service
             'invoice_number' => $request->get('invoice_number'),
             'invoice_date' => new \DateTime($request->get('invoice_date')),
             'banks_id' => $request->get('banks_id'),
+            'cost_centers_id' => $request->get('cost_centers_id'),
             'projects_id' => $request->get('projects_id'),
             'employee_id' => $request->get('user'),
         ]);

@@ -259,5 +259,30 @@ class ReportCashFlowService extends Service
         array_push($billspayCostcenter,$arrayFullExpenses);
         return  $billspayCostcenter;        
     }
+
+    public function getDreFlow($year){
+
+        $FullColumn = array();
+
+        for ($i=1; $i <= 12; $i++) {  
+            $columnHeader= new \stdClass();
+
+            $columnHeader->headerName = 'FLUXO DE CAIXA';
+            $columnHeader->field = $i;                                
+
+            array_push($FullColumn ,$columnHeader);
+        }
+                
+        for($i= 0; $i <12; $i ++){ 
+
+            $firstDate = new \DateTime(strval($year).strval('-').strval($i).strval('-').strval(1));           
+            $lastDate = $firstDate->modify('+1 month');
+            $users = DB::table('users')
+            ->where('votes', '>', 100)
+            ->whereMonth('created_at', '12')
+            ->get();
+
+        }
+    }
 }
 ?>

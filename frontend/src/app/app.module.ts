@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, FormControl } from '@angular/forms';
+import { FormsModule, FormControl ,ReactiveFormsModule} from '@angular/forms';
+
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import localePt from '@angular/common/locales/pt';
@@ -89,6 +90,7 @@ import { BankReconciliationComponent } from './bank-reconciliation/bank-reconcil
 import { ConciliationComponent } from './conciliation/conciliation.component';
 import { ConciliationBillComponent } from './conciliation-bill/conciliation-bill.component';
 import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
+import { ReportDreCashflowComponent } from './report-dre-cashflow/report-dre-cashflow.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +135,8 @@ import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cas
     BankReconciliationComponent,
     ConciliationComponent,
     ConciliationBillComponent,
-    ReportCashflowMonthComponent
+    ReportCashflowMonthComponent,
+    ReportDreCashflowComponent
   ],
   imports: [
     BrowserModule,
@@ -166,6 +169,7 @@ import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cas
     NgxChartsModule,
     MatCheckboxModule,
     MatFormFieldModule,
+    ReactiveFormsModule,
   ],
   providers: [ ProviderService, HttpService, AuthGuard, HttpClientModule, MessageDialogComponent, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],

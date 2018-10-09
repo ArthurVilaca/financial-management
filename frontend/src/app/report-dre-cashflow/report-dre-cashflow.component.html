@@ -1,0 +1,49 @@
+<div class="main-section">
+
+    <div class="container">
+        <div class="row">
+              <div class="col-sm-8">
+                  <span class="code-header"><strong>Relatório DER</strong></span>
+                  <hr>
+                </div>
+              <div class="col-sm-2">
+              </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2">Filtro</div>
+          <div class="col-sm-4">
+              <mat-form-field>
+                  <input matInput [matDatepicker]="dp" placeholder="Ano" [formControl]="date">
+                  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                  <mat-datepicker #dp
+                                  startView="multi-year"
+                                  (yearSelected)="chosenYearHandler($event)"
+                                  panelClass="example-month-picker">
+                  </mat-datepicker>
+                </mat-form-field>
+          </div>
+          <div class="col-sm-2">
+              <button mat-stroked-button color="warn" (click)="search()">Buscar</button>
+          </div>
+          <div class="col-sm-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-8">
+              <ag-grid-angular
+              style="width: 800px; height: 500px;"
+              class="ag-theme-balham"
+              [enableSorting]="true"
+              [enableFilter]="true"
+              [rowData]="rowData"
+              [columnDefs]="columnDefs"
+              >
+             </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+<!--(monthSelected)="chosenMonthHandler($event, dp)"-->
