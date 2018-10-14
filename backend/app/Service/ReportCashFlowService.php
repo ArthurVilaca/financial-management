@@ -196,9 +196,7 @@ class ReportCashFlowService extends Service
                 $rowBillsPay->{'cod'.$i} = $value->amountPay;                
                 $subtotalPay += $value->amountPay;
                 $date_pay =  $date_pay->modify('+1 month');
-
             }
-
             array_push($arrayFullExpenses,$rowBillsPay);            
             $validate ++;
         }
@@ -263,24 +261,346 @@ class ReportCashFlowService extends Service
     public function getDreFlow($year){
 
         $FullColumn = array();
+        $FullRow = array();
 
-        for ($i=1; $i <= 12; $i++) {  
+        $arrayMonths = array("f1", "Jan", "Fev", "Mar", "Abr","Mai", "Jun","Jul", "Ago", "Set", "Nov", "Dez", "Total");
+
+
+        foreach ($arrayMonths as $key => $value) {
             $columnHeader= new \stdClass();
 
-            $columnHeader->headerName = 'FLUXO DE CAIXA';
-            $columnHeader->field = $i;                                
-
+            $columnHeader->headerName = $value;
+            $columnHeader->field = $key;                                
             array_push($FullColumn ,$columnHeader);
         }
                 
-        for($i= 0; $i <12; $i ++){ 
+        for($i= 0; $i <=12; $i ++){
+            
+            $rowTitle = new \stdClass();
 
-            $firstDate = new \DateTime(strval($year).strval('-').strval($i).strval('-').strval(1));           
-            $lastDate = $firstDate->modify('+1 month');
-            $users = DB::table('users')
-            ->where('votes', '>', 100)
-            ->whereMonth('created_at', '12')
-            ->get();
+            $rowRecipeProject = new \stdClass(); 
+
+            if($i == 0){
+                $rowTitle->{$i} ='';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='RECEITA OPERACIONAL BRUTA';  
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Receitas de projeto';                             
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Outras receitas';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='DEDUÇÕES DA RECEITA BRUTA';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Retenção de COFINS na fonte pelo cliente';
+                array_push($FullRow,$rowTitle);
+                $rowTitle->{$i} ='COFINS complementar';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Retenção de PIS na fonte pelo cliente';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='PIS complementar';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Retenção de ISS na fonte pelo cliente';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='ISSQN complementar';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='RECEITA OPERACIONAL LÍQUIDA';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='DESPESAS OPERACIONAIS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='CUSTO DOS SERVIÇOS PRESTADOS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Despesas fornecedores serviços (projetos)';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Outros fornecedores (projetos)';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Pagamento de impostos retidos pela INNOVARE';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Despesas de viagem';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='CUSTOS INTERNOS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Salários e encargos';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Taxas e anuidades';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Materiais de consumo';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Serviços básicos';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Outras despesas';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='LUCRO OPERACIONAL / EBITDA';
+                array_push($FullRow, $rowTitle);              
+                $rowTitle->{$i} =' ';                  
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='DESPESAS FINANCEIRAS LÍQUIDAS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Despesas financeiras';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Receitas financeiras';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='RESULTADO OPERACIONAL (LAIR)';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';                
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='IMPOSTO DE RENDA E CONTRIBUIÇÃO SOBRE LUCRO';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Retenção de IRPJ na fonte pelo cliente';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='IRPJ complementar';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Retenção de CSSL na fonte pelo cliente';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='CSSL complementar';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='RESULTADO LÍQUIDO DO EXERCÍCIO (lucro líquido)';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='(Δ)INVESTIMENTOS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Alienações';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Aquisições';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='FLUXO DE CAIXA LIVRE';                
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='(Δ)EMPRÉSTIMOS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Valor tomado de empréstimo';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Valor pago de empréstimo';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='FLUXO DE CAIXA DOS ACIONISTAS';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';                
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='APLICAÇÃO FINANCEIRA';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Título de Capitalização';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Aplicações financeiras diversas';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' ';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='PARTICIPAÇÕES';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} ='Distribuição de lucros';
+                array_push($FullRow, $rowTitle);
+                $rowTitle->{$i} =' '; 
+                $rowTitle->{$i} ='FLUXO DE CAIXA LÍQUIDO';               
+                array_push($FullRow, $rowTitle);
+
+            }else{
+
+                $firstDate = new \DateTime(strval($year).strval('-').strval($i).strval('-').strval(1));           
+                $lastDate = $firstDate->modify('+1 month');
+
+                $rowRecipeProject = new \stdClass();    
+            
+                $recipeProject = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Receita de projeto')
+                ->whereMonth('billsreceives.payment_date', $i)
+                ->sum('billsreceives.amount');
+                $rowRecipeProject->{$i} = $recipeProject;
+            }
+
+            $rowRecipeOtherProject = new \stdClass();
+
+            $otherProject = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Outras receitas')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            
+            $rowOtherProject = new \stdClass();
+            $rowRecipeProject->{$i} = $otherProject;
+
+            $rowRecipeOpBrute = new \stdClass();
+
+            $rowRecipeOpBrute->{$i} = 'DEDUÇÕES DA RECEITA BRUTA';
+            array_push($FullRow, $rowRecipeOpBrute);
+            
+            $rowRecipeOpBrute->{$i} = $recipeProject  + $otherProject;
+
+            array_push($FullRow, $rowRecipeOpBrute);
+            array_push($FullRow, $rowRecipeProject);
+            array_push($FullRow, $rowRecipeProject);
+
+            array_push($FullRow, " ");
+
+            $rowRetentionCofins = new \stdClass();    
+           
+            $retentionCofinsClient = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Retenção de COFINS na fonte pelo cliente')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowRetentionCofinsClient->{$i} = $retentionCofinsClient;
+            
+            
+            $rowComplementCofins = new \stdClass();    
+           
+            $complementCofins = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'COFINS complementar')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowComplementCofins->{$i} = $complementCofins;
+
+
+
+            $rowPisSoucre = new \stdClass();    
+           
+            $PisSoucre = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Retenção de PIS na fonte pelo cliente')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowPisSoucre->{$i} = $PisSoucre;
+
+
+            $rowPisComplement = new \stdClass();    
+           
+            $PisComplement = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'PIS complementar')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowPisComplement->{$i} = $PisComplement;
+
+            $rowComplementISSQN = new \stdClass();
+
+            $complementISSQN = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'ISSQN complementar')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowComplementISSQN->{$i} = $complementISSQN;
+
+            $rowGrossRevenueDeduction = new \stdClass();
+            $rowGrossRevenueDeduction->{$i} = 'DEDUÇÕES DA RECEITA BRUTA';
+            array_push($FullRow, $rowGrossRevenueDeduction);
+            $rowGrossRevenueDeduction->{$i} = $rowRetentionCofinsClient + $rowComplementCofins + $rowPisSoucre + 
+            $rowPisComplement + $rowComplementISSQN;
+            array_push($FullRow, $rowGrossRevenueDeduction);
+
+            array_push($FullRow, $rowRetentionCofinsClient);
+            array_push($FullRow, $rowComplementCofins);
+            array_push($FullRow, $rowPisSoucre);
+            array_push($FullRow, $rowPisComplement);
+            array_push($FullRow, $rowComplementISSQN);
+
+            array_push($FullRow, " ");
+
+            $rowNetOperatingRevenue = new \stdClass();
+            $rowNetOperatingRevenue->{$i} = 'RECEITA OPERACIONAL LÍQUIDA';
+            array_push($FullRow, $rowNetOperatingRevenue);
+            $rowNetOperatingRevenue->{$i} = $rowRecipeOpBrute + $rowGrossRevenueDeduction;    
+            array_push($FullRow, $rowNetOperatingRevenue);
+
+            array_push($FullRow, "");
+
+            $rowExpensesSuppliersServices = new \stdClass();
+            $expensesSuppliersServices = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Despesas fornecedores serviços (projetos)')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowExpensesSuppliersServices->{$i} = $expensesSuppliersServices;
+
+
+            $rowOtherSuppliers = new \stdClass();
+            $otherSuppliers = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Outros fornecedores (projetos)')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowOtherSuppliers->{$i} = $otherSuppliers;
+
+            $rowPaymentTaxesInnovare = new \stdClass();
+            $paymentTaxesInnovare = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Pagamento de impostos retidos pela INNOVARE')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowPaymentTaxesInnovare->{$i} = $paymentTaxesInnovare;
+
+            $rowTravelExpenses = new \stdClass();
+            $travelExpenses = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Despesas de viagem')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowTravelExpenses->{$i} = $travelExpenses;
+
+            $rowFeesAnnuities = new \stdClass();
+            $feesAnnuities = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Taxas e anuidades')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowFeesAnnuities->{$i} = $feesAnnuities;
+
+            $rowConsumables = new \stdClass();
+            $consumables = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Materiais de consumo')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowConsumables->{$i} = $Consumables;
+
+            $rowBasicServices = new \stdClass();
+            $basicServices = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Serviços básicos')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowBasicServices->{$i} = $basicServices;
+
+
+            $rowOtherExpenses = new \stdClass();
+            $otherExpenses = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Outras despesas')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowOtherExpenses->{$i} = $otherExpenses;
+
+            array_push($FullRow, "");
+            
+            //DESPESAS FINANCEIRAS LÍQUIDAS
+            $rowFinancialExpenses = new \stdClass();
+            $financialExpenses = DB::table('billsreceives')
+            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+            ->where('cost_centers.name', '=', 'Despesas financeiras')
+            ->whereMonth('billsreceives.payment_date', $i)
+            ->sum('billsreceives.amount');
+            $rowFinancialExpenses->{$i} = $financialExpenses;
+
+
+
 
         }
     }
