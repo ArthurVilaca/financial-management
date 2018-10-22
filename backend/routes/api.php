@@ -57,4 +57,5 @@ Route::get('/reports/expenses', 'ReportsController@getExpenses');
 Route::get('/reports/recipes', 'ReportsController@getRecipes');
 Route::get('/reports/CashFlow', 'ReportsController@getCashFlow');
 Route::get('/reports/CashFlow/month', 'ReportsController@getCashFlowMonth');
+Route::get('/reports/CashFlow/dre', 'ReportsController@getDreFlow');
 Route::get('/reports/conciliation', 'BillsController@conciliation');

@@ -258,8 +258,8 @@ class ReportCashFlowService extends Service
         return  $billspayCostcenter;        
     }
 
-    public function getDreFlow($year){
-
+    public function getDreFlow($filter){
+        
         $arrayDreFlow = array();
         $rowRecipeProject = new \stdClass();
         $rowOtherProject = new \stdClass();
@@ -300,7 +300,7 @@ class ReportCashFlowService extends Service
         $rowInvestments = new \stdClass();
         $rowCashFlowFree = new \stdClass();
         $rowAmountBorrowed = new \stdClass();
-        $paymentLoan = new \stdClass();
+        $rowPaymentLoan = new \stdClass();
         $rowCashFlowShareholders = new \stdClass();
         $rowCapitalizationTitle = new \stdClass();
         $rowMiscellaneousFinancialInvestments = new \stdClass();
@@ -308,20 +308,20 @@ class ReportCashFlowService extends Service
         $rowDistributionProfits = new \stdClass();
         $rowParticipations = new \stdClass();
         $rowLiqCashFlow = new \stdClass();
+        $rowLoans = new \stdClass();
+        $rowSpace = new \stdClass();
 
         $cashFlow = array();
+        $year = $filter['year'];        
 
+        for($i= 0; $i <=13; $i ++){                                  
 
-        for($i= 0; $i <=12; $i ++){           
-
-            $firstDate = new \DateTime(strval($year).strval('-').strval($i).strval('-').strval(1));           
-            $lastDate = $firstDate->modify('+1 month');
+            $rowSpace->{$i}= '';
 
             if($i == 0){
                 $rowRecipeProject->{$i} = 'Receitas de projeto';
                 $rowOtherProject->{$i} = 'Outras receitas'; 
-                $rowRecipeOpBrute->{$i} = 'RECEITA OPERACIONAL BRUTA';
-
+                $rowRecipeOpBrute->{$i} = 'RECEITA OPERACIONAL BRUTA';                
                 $rowRetentionCofinsClient->{$i} ='Retenção de COFINS na fonte pelo cliente';                
                 $rowComplementCofins->{$i} = 'COFINS complementar';                
                 $rowRetentionPisClient->{$i} = 'Retenção de PIS na fonte pelo cliente';                
@@ -356,9 +356,10 @@ class ReportCashFlowService extends Service
                 $rowDisposals->{$i} = 'Alienações';
                 $rowAcquisitions->{$i} = 'Aquisições';                
                 $rowInvestments->{$i} = '(Δ)INVESTIMENTOS';                
-                $rowCashFlowFree->{$i} = 'FLUXO DE CAIXA LIVRE';                
+                $rowCashFlowFree->{$i} = 'FLUXO DE CAIXA LIVRE';  
+                $rowLoans->{$i} = 'EMPRÉSTIMOS';              
                 $rowAmountBorrowed->{$i} = 'Valor tomado de empréstimo';                
-                $paymentLoan->{$i} = 'Valor pago de empréstimo';                
+                $rowPaymentLoan->{$i} = 'Valor pago de empréstimo';                
                 $rowCashFlowShareholders->{$i} = 'FLUXO DE CAIXA DOS ACIONISTAS';                
                 $rowCapitalizationTitle->{$i} = 'Título de Capitalização';                
                 $rowMiscellaneousFinancialInvestments->{$i} = 'Aplicações financeiras diversas';                
@@ -366,421 +367,842 @@ class ReportCashFlowService extends Service
                 $rowDistributionProfits->{$i} = 'Distribuição de lucros';                
                 $rowParticipations->{$i} = 'PARTICIPAÇÕES';                
                 $rowLiqCashFlow->{$i} = 'FLUXO DE CAIXA LÍQUIDO';
+            }else if($i > 0 && $i <=12) {
+
+                $firstDate = new \DateTime(strval($year).strval('-').strval($i).strval('-').strval(1));           
+                $lastDate = $firstDate->modify('+1 month');
+
+                //Receitas de projeto
+                $recipeProject = DB::table('billsreceives')
+                    ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                    ->where('cost_centers.name', '=', 'Receita de projeto')
+                    ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                    ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                    ->sum('billsreceives.amount');
+                    $rowRecipeProject->{$i} = $recipeProject;
+
+                //Outras receitas
+                $otherProject = DB::table('billsreceives')
+                    ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                    ->where('cost_centers.name', '=', 'Receita diversas')
+                    ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                    ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                    ->sum('billsreceives.amount');
+                
+                $rowOtherProject->{$i} = $otherProject;
+                    
+                
+                //RECEITA OPERACIONAL BRUTA
+                $RecipeOpBrute = $recipeProject  + $otherProject;
+                $rowRecipeOpBrute->{$i} = $RecipeOpBrute;
+                
+                
+                //Retenção de COFINS na fonte pelo cliente
+                $retentionCofinsClient = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Retenção de COFINS na fonte pelo cliente')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowRetentionCofinsClient->{$i} = $retentionCofinsClient;
+                
+                
+            //COFINS complementar
+                $complementCofins = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'COFINS')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowComplementCofins->{$i} = $complementCofins; 
+
+                
+                //Retenção de PIS na fonte pelo cliente
+                $retentionPisClient = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Retenção de PIS na fonte pelo cliente')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowRetentionPisClient->{$i} = $retentionPisClient;
+
+                //PIS complementar
+                $pisSoucre = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'PIS')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowPisSoucre->{$i} = $pisSoucre;
+                
+
+            //Retenção de ISS na fonte pelo cliente
+                $pisComplement = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Retenção de ISS na fonte pelo cliente')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowPisComplement->{$i} = $pisComplement;
+
+
+                //ISSQN complementar
+                $complementISSQN = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'ISSQN')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowComplementISSQN->{$i} = $complementISSQN;
+
+                //DEDUÇÕES DA RECEITA BRUTA
+                $grossRevenueDeduction = $retentionCofinsClient + $complementCofins + $pisSoucre + 
+                $pisComplement + $complementISSQN;
+                $rowGrossRevenueDeduction->{$i} = $grossRevenueDeduction;
+                
+
+                //RECEITA OPERACIONAL LÍQUIDA
+                $recipeOpLiquid = $RecipeOpBrute  + $grossRevenueDeduction;
+                $rowRecipeOpLiquid->{$i} = $recipeOpLiquid;
+
+
+                //Despesas fornecedores serviços (projetos)            
+                $rentalPA = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Aluguel de PA')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowRentalPA->{$i} = $rentalPA;
+
+                //Outros fornecedores (projetos)
+                $equipmentRental = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Aluguel de equipamentos')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowEquipmentRental->{$i} = $equipmentRental;
+
+                //Pagamento de impostos retidos pela INNOVARE
+                $payTaxWwithheld = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Pagamento de impostos retidos pela INNOVARE')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowPayTaxWwithheld->{$i} = $payTaxWwithheld;
+
+                //Despesas de viagem
+                $travelExpenses = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Alimentação')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+                
+                $rowTravelExpenses->{$i} = $travelExpenses;
+
+                //CUSTO DOS SERVIÇOS PRESTADOS 
+                $costServicesProvided = $rentalPA + $equipmentRental + $payTaxWwithheld + $travelExpenses;
+                $rowCostServicesProvided->{$i} = $costServicesProvided;
+                
+                //Salários e encargos
+                $wagesCharges = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Bolsa de Estágio')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowWagesCharges->{$i} = $wagesCharges;
+
+                //Taxas e anuidades
+                $rateAnnuities = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Taxas e anuidades')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowRateAnnuities->{$i} = $rateAnnuities;
+
+                //Materiais de Consumo
+                $consumables = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Materiais Escritório')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+                $rowConsumables->{$i} = $consumables;
+
+                //Serviços básicos
+                $baseicServices = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Condomínio')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowBaseicServices->{$i} = $baseicServices;
+
+                //Outras despesas
+                $otherExpenses = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Cartório')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowOtherExpenses->{$i} = $otherExpenses;
+
+                //CUSTOS INTERNOS
+                $internalCosts = $wagesCharges + $rateAnnuities + $consumables + $baseicServices + $otherExpenses;
+                $rowInternalCosts->{$i} = $internalCosts; 
+
+                //DESPESAS OPERACIONAIS
+                $operationalEpenses = $costServicesProvided + $internalCosts;
+                $rowOperationalEpenses->{$i} = $operationalEpenses;
+                //LUCRO OPERACIONAL 
+                $operatingIncome = $operationalEpenses + $recipeOpLiquid;
+                $rowOperatingIncome->{$i} = $operatingIncome;
+
+
+                //Despesas financeiras
+                $financialExpenses = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Despesa financeira (juros e multas)')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowFinancialExpenses->{$i} = $financialExpenses;
+
+                //Receitas financeiras 
+                $recipeFinancialExpenses = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Receita financeira (rendimento de aplicações)')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+
+                $rowRecipeFinancialExpenses->{$i} = $recipeFinancialExpenses;
+
+                //DESPESAS FINANCEIRAS LÍQUIDAS
+                $netFinancialEpenses = $financialExpenses + $recipeFinancialExpenses;
+                $rowNetFinancialEpenses->{$i} = $netFinancialEpenses; 
+                
+                //RESULTADO OPERACIONAL(LAIR)
+                $operatingResult = $operatingIncome + $netFinancialEpenses;
+                $rowOperatingResult->{$i} = $operatingResult;
+
+                //Retenção de IRPJ na fonte pelo cliente
+                $retentionIRPJSoucre = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Retenção de IRPJ na fonte pelo cliente')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+                $rowRetentionIRPJSoucre->{$i} = $retentionIRPJSoucre;
+
+
+                //IRPJ complementar
+                $complementIRPJ = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'IRPJ')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+
+                $rowComplementIRPJ->{$i} = $complementIRPJ;
+
+                //Retenção de CSSL na fonte pelo cliente
+                $retentionCSSLSource = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Retenção de CSSL na fonte pelo cliente')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+                $rowRetentionCSSLSource->{$i} = $retentionCSSLSource;
+
+                //CSSL complementar
+                $complementCSSL = DB::table('billspays')
+                ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'CSSL')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billspays.amount');
+                $rowComplementCSSL->{$i} = $complementCSSL; 
+
+                //IMPOSTO DE RENDA E CONTRIBUIÇÃO SOBRE LUCRO
+                $incomeTaxProfitContribuitions = $retentionIRPJSoucre + $complementIRPJ + $retentionCSSLSource + $complementCSSL;
+                $rowIncomeTaxProfitContribuitions->{$i} = $incomeTaxProfitContribuitions;
+
+                //RESULTADO LÍQUIDO DO EXERCÍCIO (lucro líquido)
+                $netIncomeYear = $operatingResult + $incomeTaxProfitContribuitions;
+                $rowNetIncomeYear->{$i} = $netIncomeYear;
+
+                //Alienações
+                $disposals = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Receita de alienações de bens')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowDisposals->{$i} = $disposals; 
+
+                //Aquisições
+                $acquisitions = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Móvel, imóvel ou equipamento')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowAcquisitions->{$i} = $acquisitions;
+
+                //(Δ)INVESTIMENTOS
+                $investments = $disposals + $acquisitions;
+                $rowInvestments->{$i} = $investments;
+                
+                //FLUXO DE CAIXA LIVRE
+                $cashFlowFree = $netIncomeYear + $investments;
+                $rowCashFlowFree->{$i} = $cashFlowFree; 
+                 
+
+                //Valor tomado de empréstimo
+                $amountBorrowed = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Empréstimo')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowAmountBorrowed->{$i} = $amountBorrowed;
+
+                //Valor pago de empréstimo
+                $paymentLoan = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Pagamento Empréstimo')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowPaymentLoan->{$i} = $paymentLoan;
+                
+                //EMPRÉSTIMO
+                $rowLoans->{$i} = $amountBorrowed + $paymentLoan;
+
+                //FLUXO DE CAIXA DOS ACIONISTAS
+                $cashFlowShareholders = $investments + $cashFlowFree;
+                $rowCashFlowShareholders->{$i} = $cashFlowShareholders; 
+                
+                //Título de Capitalização
+                $capitalizationTitle = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Título de Capitalização')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowCapitalizationTitle->{$i} = $capitalizationTitle;
+
+                //Aplicações financeiras diversas
+                $miscellaneousFinancialInvestments = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Aplicações financeiras diversas')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowMiscellaneousFinancialInvestments->{$i} = $miscellaneousFinancialInvestments;
+
+
+                //APLICAÇÃO FINANCEIRA
+                $financialAppication = $capitalizationTitle + $miscellaneousFinancialInvestments;
+                $rowFinancialAppication->{$i} = $financialAppication;
+
+                //Distribuição de lucros
+                $distributionProfits = DB::table('billsreceives')
+                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
+                ->where('cost_centers.name', '=', 'Antecipação de lucros')
+                ->whereDate('due_date' ,$firstDate->format('Y-m-d'))
+                ->whereDate('due_date' ,$lastDate->format('Y-m-d'))
+                ->sum('billsreceives.amount');
+                $rowDistributionProfits->{$i} = $distributionProfits;
+
+                //PARTICIPAÇÕES
+                $participations = $distributionProfits;
+                $rowParticipations->{$i} = $participations;
+
+                //FLUXO DE CAIXA LÍQUIDO
+                $LiqCashFlow = $cashFlowShareholders + $financialAppication + $participations;
+                $rowLiqCashFlow->{$i} = $LiqCashFlow;
+        }else {
+            $sum = 0;
+            foreach($rowRecipeProject as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
             }
 
+            $rowRecipeProject->{$i} = $sum;
+            $sum = 0;
+            foreach($rowOtherProject as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowOtherProject->{$i} = $sum;
 
-            //Receitas de projeto
-            $recipeProject = DB::table('billsreceives')
-                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-                ->where('cost_centers.name', '=', 'Receita de projeto')
-                ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-                ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-                ->whereMonth('', $i)
-                ->sum('billsreceives.amount');
-                $rowRecipeProject->{$i} = $recipeProject;
+            $sum = 0;
+            foreach($rowRecipeOpBrute as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }                    
+            }
+            $rowRecipeOpBrute->{$i} = $sum;
 
-            //Outras receitas
-            $otherProject = DB::table('billsreceives')
-                ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-                ->where('cost_centers.name', '=', 'Receita diversas')
-                ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-                ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-                ->sum('billsreceives.amount');
-            
-            $rowOtherProject->{$i} = $otherProject;
-                
-            
-            //RECEITA OPERACIONAL BRUTA
-            $RecipeOpBrute = $recipeProject  + $otherProject;
-            $rowRecipeOpBrute->{$i} = $RecipeOpBrute;
-            
-            
-            //Retenção de COFINS na fonte pelo cliente
-            $retentionCofinsClient = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Retenção de COFINS na fonte pelo cliente')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowRetentionCofinsClient as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRetentionCofinsClient->{$i} = $sum;
 
-            $rowRetentionCofinsClient->{$i} = $retentionCofinsClient;
-            
-            
-           //COFINS complementar
-            $complementCofins = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'COFINS')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowComplementCofins as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowComplementCofins->{$i} = $sum;
 
-            $rowComplementCofins->{$i} = $complementCofins; 
+            $sum = 0;
+            foreach($rowRetentionPisClient as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRetentionPisClient->{$i} = $sum;
 
-            
-            //Retenção de PIS na fonte pelo cliente
-            $retentionPisClient = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Retenção de PIS na fonte pelo cliente')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowPisSoucre as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowPisSoucre->{$i} = $sum;
 
-            $rowRetentionPisClient->{$i} = $retentionPisClient;
+            $sum = 0;
+            foreach($rowPisComplement as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowPisComplement->{$i} = $sum;
 
-            //PIS complementar
-            $pisSoucre = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'PIS')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowComplementISSQN as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowComplementISSQN->{$i} = $sum;
 
-            $rowPisSoucre->{$i} = $pisSoucre;
-            
+            $sum = 0;
+            foreach($rowGrossRevenueDeduction as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowGrossRevenueDeduction->{$i} = $sum;
 
-           //Retenção de ISS na fonte pelo cliente
-            $pisComplement = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Retenção de ISS na fonte pelo cliente')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowRecipeOpLiquid as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRecipeOpLiquid->{$i} = $sum;
 
-            $rowPisComplement->{$i} = $pisComplement;
+            $sum = 0;
+            foreach($rowRentalPA as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRentalPA->{$i} = $sum;
 
+            $sum = 0;
+            foreach($rowEquipmentRental as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowEquipmentRental->{$i} = $sum;
 
-            //ISSQN complementar
-            $complementISSQN = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'ISSQN')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowPayTaxWwithheld as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowPayTaxWwithheld->{$i} = $sum;
 
-            $rowComplementISSQN->{$i} = $complementISSQN;
+            $sum = 0;
+            foreach($rowTravelExpenses as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowTravelExpenses->{$i} = $sum;
 
-            //DEDUÇÕES DA RECEITA BRUTA
-            $grossRevenueDeduction = $retentionCofinsClient + $complementCofins + $pisSoucre + 
-            $pisComplement + $complementISSQN;
-            $rowGrossRevenueDeduction->{$i} = $grossRevenueDeduction;
-            
+            $sum = 0;
+            foreach($rowCostServicesProvided as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowCostServicesProvided->{$i} = $sum;
 
-            //RECEITA OPERACIONAL LÍQUIDA
-            $recipeOpLiquid = $RecipeOpBrute  + $grossRevenueDeduction;
-            $rowRecipeOpLiquid = $recipeOpLiquid;
+            $sum = 0;
+            foreach($rowWagesCharges as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowWagesCharges->{$i} = $sum;
 
+            $sum = 0;
+            foreach($rowRateAnnuities as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRateAnnuities->{$i} = $sum;
 
-            //Despesas fornecedores serviços (projetos)            
-            $rentalPA = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Aluguel de PA')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowConsumables as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowConsumables->{$i} = $sum;
 
-            //Outros fornecedores (projetos)
-            $equipmentRental = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Aluguel de equipamentos')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowBaseicServices as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowBaseicServices->{$i} = $sum;
 
-            $rowEquipmentRental->{$i} = $equipmentRental;
+            $sum = 0;
+            foreach($rowOtherExpenses as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowOtherExpenses->{$i} = $sum;
 
-            //Pagamento de impostos retidos pela INNOVARE
-            $payTaxWwithheld = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Pagamento de impostos retidos pela INNOVARE')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowInternalCosts as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowInternalCosts->{$i} = $sum;
 
-            $rowPayTaxWwithheld->{$i} = $payTaxWwithheld;
+            $sum = 0;
+            foreach($rowOperationalEpenses as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowOperationalEpenses->{$i} = $sum;
 
-            //Despesas de viagem
-            $travelExpenses = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Alimentação')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
-            
-            $rowTravelExpenses->{$i} = $travelExpenses;
+            $sum = 0;
+            foreach($rowOperatingIncome as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowOperatingIncome->{$i} = $sum;
 
-            //CUSTO DOS SERVIÇOS PRESTADOS 
-            $costServicesProvided = $rentalPA + $equipmentRental + $payTaxWwithheld + $travelExpenses;
-            $rowCostServicesProvided = $costServicesProvided;
+            $sum = 0;
+            foreach($rowFinancialExpenses as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowFinancialExpenses->{$i} = $sum;
 
-            //Salários e encargos
-            $wagesCharges = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Bolsa de Estágio')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowRecipeFinancialExpenses as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRecipeFinancialExpenses->{$i} = $sum;
 
-            $rowWagesCharges->{$i} = $wagesCharges;
+            $sum = 0;
+            foreach($rowNetFinancialEpenses as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowNetFinancialEpenses->{$i} = $sum;
 
-            //Taxas e anuidades
-            $rateAnnuities = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Taxas e anuidades')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowOperatingResult as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowOperatingResult->{$i} = $sum;
 
-            //Materiais de Consumo
-            $consumables = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Materiais Escritório')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
-            $rowConsumables->{$i} = $consumables;
+            $sum = 0;
+            foreach($rowRetentionIRPJSoucre as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRetentionIRPJSoucre->{$i} = $sum;
 
-            //Serviços básicos
-            $baseicServices = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Condomínio')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowComplementIRPJ as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowComplementIRPJ->{$i} = $sum;
 
-            $rowBaseicServices->{$i} = $baseicServices;
+            $sum = 0;
+            foreach($rowRetentionCSSLSource as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowRetentionCSSLSource->{$i} = $sum;
 
-            //Outras despesas
-            $otherExpenses = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Cartório')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowComplementCSSL as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowComplementCSSL->{$i} = $sum;
 
-            $rowOtherExpenses->{$i} = $otherExpenses;
+            $sum = 0;
+            foreach($rowIncomeTaxProfitContribuitions as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowIncomeTaxProfitContribuitions->{$i} = $sum;
 
-            //CUSTOS INTERNOS
-            $internalCosts = $wagesCharges + $rateAnnuities + $consumables + $baseicServices + $otherExpenses;
+            $sum = 0;
+            foreach($rowNetIncomeYear as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowNetIncomeYear->{$i} = $sum;
 
-            //DESPESAS OPERACIONAIS
-            $operationalEpenses = $costServicesProvided + $internalCosts;
+            $sum = 0;
+            foreach($rowDisposals as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowDisposals->{$i} = $sum;
 
-            //LUCRO OPERACIONAL 
-            $operatingIncome = $operationalEpenses + $recipeOpLiquid;
-            $rowOperatingIncome->{$i} = $operatingIncome;
+            $sum = 0;
+            foreach($rowAcquisitions as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowAcquisitions->{$i} = $sum;
 
+            $sum = 0;
+            foreach($rowInvestments as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowInvestments->{$i} = $sum;
 
-            //Despesas financeiras
-            $financialExpenses = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Despesa financeira (juros e multas)')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowCashFlowFree as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowCashFlowFree->{$i} = $sum;
 
-            $rowFinancialExpenses->{$i} = $financialExpenses;
+            $sum = 0;
+            foreach($rowAmountBorrowed as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowAmountBorrowed->{$i} = $sum;
 
-            //Receitas financeiras 
-            $recipeFinancialExpenses = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Receita financeira (rendimento de aplicações)')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
+            $sum = 0;
+            foreach($rowPaymentLoan as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowPaymentLoan->{$i} = $sum;
 
-            $rowRecipeFinancialExpenses->{$i} = $recipeFinancialExpenses;
+            $sum = 0;
+            foreach($rowCashFlowShareholders as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowCashFlowShareholders->{$i} = $sum;
 
-            //DESPESAS FINANCEIRAS LÍQUIDAS
-            $netFinancialEpenses = $financialExpenses + $recipeFinancialExpenses;
-            $rowNetFinancialEpenses->{$i} = $netFinancialEpenses; 
-            
-            //RESULTADO OPERACIONAL(LAIR)
-            $operatingResult = $operatingIncome + $netFinancialEpenses;
-            $rowOperatingResult->{$i} = $operatingResult;
+            $sum = 0;
+            foreach($rowCapitalizationTitle as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowCapitalizationTitle->{$i} = $sum;
 
-            //Retenção de IRPJ na fonte pelo cliente
-            $retentionIRPJSoucre = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Retenção de IRPJ na fonte pelo cliente')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
-            $rowRetentionIRPJSoucre->{$i} = $retentionIRPJSoucre;
+            $sum = 0;
+            foreach($rowMiscellaneousFinancialInvestments as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowMiscellaneousFinancialInvestments->{$i} = $sum;
 
+            $sum = 0;
+            foreach($rowDistributionProfits as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowDistributionProfits->{$i} = $sum;
 
-            //IRPJ complementar
-            $complementIRPJ = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'IRPJ')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
+            $sum = 0;
+            foreach($rowParticipations as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowParticipations->{$i} = $sum;
 
-            $rowComplementIRPJ->{$i} = $complementIRPJ;
+            $sum = 0;
+            foreach($rowLiqCashFlow as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowLiqCashFlow->{$i} = $sum;
 
-            //Retenção de CSSL na fonte pelo cliente
-            $retentionCSSLSource = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Retenção de CSSL na fonte pelo cliente')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
-
-            //CSSL complementar
-            $complementCSSL = DB::table('billspays')
-            ->join('cost_centers', 'billspays.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'CSSL')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billspays.amount');
-            $rowComplementCSSL->{$i} = $complementCSSL; 
-
-            //IMPOSTO DE RENDA E CONTRIBUIÇÃO SOBRE LUCRO
-            $incomeTaxProfitContribuitions = $retentionIRPJSoucre + $complementIRPJ + $retentionCSSLSource + $complementCSSL;
-            $rowIncomeTaxProfitContribuitions->{$i} = $incomeTaxProfitContribuitions;
-
-            //RESULTADO LÍQUIDO DO EXERCÍCIO (lucro líquido)
-            $netIncomeYear = $operatingResult + $incomeTaxProfitContribuitions;
-            $rowNetIncomeYear->{$i} = $netIncomeYear;
-
-            //Alienações
-            $disposals = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Receita de alienações de bens')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $rowDisposals->{$i} = $disposals; 
-
-            //Aquisições
-            $acquisitions = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Móvel, imóvel ou equipamento')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $rowAcquisitions->{$i} = $acquisitions;
-
-            //(Δ)INVESTIMENTOS
-            $investments = $disposals + $acquisitions;
-            $rowInvestments->{$i} = $investments;
-            
-            //FLUXO DE CAIXA LIVRE
-            $cashFlowFree = $netIncomeYear + $investments;
-            $rowCashFlowFree->{$i} = $cashFlowFree; 
-
-
-            //Valor tomado de empréstimo
-            $amountBorrowed = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Empréstimo')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $rowAmountBorrowed->{$i} = $amountBorrowed;
-
-            //Valor pago de empréstimo
-            $paymentLoan = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Pagamento Empréstimo')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $paymentLoan->{$i} = $paymentLoan; 
-
-            //FLUXO DE CAIXA DOS ACIONISTAS
-            $cashFlowShareholders = $investments + $cashFlowFree;
-            $rowCashFlowShareholders->{$i} = $cashFlowShareholders; 
-            
-            //Título de Capitalização
-            $capitalizationTitle = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Título de Capitalização')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $rowCapitalizationTitle->{$i} = $capitalizationTitle;
-
-            //Aplicações financeiras diversas
-            $miscellaneousFinancialInvestments = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Aplicações financeiras diversas')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $rowMiscellaneousFinancialInvestments->{$i} = $miscellaneousFinancialInvestments;
-
-
-            //APLICAÇÃO FINANCEIRA
-            $financialAppication = $capitalizationTitle + $miscellaneousFinancialInvestments;
-            $rowFinancialAppication->{$i} = $financialAppication;
-
-            //Distribuição de lucros
-            $distributionProfits = DB::table('billsreceives')
-            ->join('cost_centers', 'billsreceives.cost_centers_id', '=', 'cost_centers.id')
-            ->where('cost_centers.name', '=', 'Antecipação de lucros')
-            ->whereDate('payment_date' ,$firstDate->format('Y-m-d'))
-            ->whereDate('payment_date' ,$lastDate->format('Y-m-d'))
-            ->sum('billsreceives.amount');
-            $rowDistributionProfits->{$i} = $distributionProfits;
-
-            //PARTICIPAÇÕES
-            $participations = $distributionProfits;
-            $rowParticipations->{$i} = $participations;
-
-            //FLUXO DE CAIXA LÍQUIDO
-            $LiqCashFlow = $cashFlowShareholders + $financialAppication + $participations;
-            $rowLiqCashFlow->{$i} = $LiqCashFlow;
+            $sum = 0;
+            foreach($rowLoans as $value){
+                if(is_numeric($value)){
+                    $sum += $value;
+                }
+            }
+            $rowLoans->{$i} = $sum;
         }
 
+    }
+
+        array_push($cashFlow,$rowRecipeOpBrute);
         array_push($cashFlow,$rowRecipeProject);
         array_push($cashFlow,$rowOtherProject);
-        array_push($cashFlow,$rowRecipeOpBrute);
+        array_push($cashFlow,$rowSpace);
+        
+        array_push($cashFlow,$rowGrossRevenueDeduction);
         array_push($cashFlow,$rowRetentionCofinsClient);
         array_push($cashFlow,$rowComplementCofins);
         array_push($cashFlow,$rowRetentionPisClient);
         array_push($cashFlow,$rowPisSoucre);
         array_push($cashFlow,$rowPisComplement);
-        array_push($cashFlow,$rowComplementISSQN);
-        array_push($cashFlow,$rowGrossRevenueDeduction);
+        array_push($cashFlow,$rowComplementISSQN);         
+        array_push($cashFlow,$rowSpace);
+
         array_push($cashFlow,$rowRecipeOpLiquid);
+        array_push($cashFlow,$rowSpace);
+
+        array_push($cashFlow,$rowOperationalEpenses);
+        array_push($cashFlow,$rowCostServicesProvided);
         array_push($cashFlow,$rowRentalPA);
         array_push($cashFlow,$rowEquipmentRental);
         array_push($cashFlow,$rowPayTaxWwithheld);
         array_push($cashFlow,$rowTravelExpenses);
-        array_push($cashFlow,$rowCostServicesProvided);
+        array_push($cashFlow,$rowInternalCosts);        
         array_push($cashFlow,$rowWagesCharges);
         array_push($cashFlow,$rowRateAnnuities);
         array_push($cashFlow,$rowConsumables);
         array_push($cashFlow,$rowBaseicServices);
-        array_push($cashFlow,$rowOtherExpenses);
-        array_push($cashFlow,$rowInternalCosts);
-        array_push($cashFlow,$rowOperationalEpenses);
+        array_push($cashFlow,$rowOtherExpenses);        
+        array_push($cashFlow,$rowSpace); 
+
         array_push($cashFlow,$rowOperatingIncome);
-        array_push($cashFlow,$rowFinancialExpenses);
-        array_push($cashFlow,$rowRecipeFinancialExpenses);
+        array_push($cashFlow,$rowSpace);
+
         array_push($cashFlow,$rowNetFinancialEpenses);
+        array_push($cashFlow,$rowFinancialExpenses);
+        array_push($cashFlow,$rowRecipeFinancialExpenses); 
+        array_push($cashFlow,$rowSpace);
+
         array_push($cashFlow,$rowOperatingResult);
+        array_push($cashFlow,$rowSpace);
+
+        array_push($cashFlow,$rowIncomeTaxProfitContribuitions);
         array_push($cashFlow,$rowRetentionIRPJSoucre);
         array_push($cashFlow,$rowComplementIRPJ);
         array_push($cashFlow,$rowRetentionCSSLSource);
         array_push($cashFlow,$rowComplementCSSL);
-        array_push($cashFlow,$rowIncomeTaxProfitContribuitions);
+        array_push($cashFlow,$rowSpace);        
+
         array_push($cashFlow,$rowNetIncomeYear);
+        array_push($cashFlow,$rowSpace);
+
+        array_push($cashFlow,$rowInvestments);
         array_push($cashFlow,$rowDisposals);
         array_push($cashFlow,$rowAcquisitions);
-        array_push($cashFlow,$rowInvestments);
+        array_push($cashFlow,$rowSpace);
+
         array_push($cashFlow,$rowCashFlowFree);
+        array_push($cashFlow,$rowSpace);
+        
+        array_push($cashFlow,$rowLoans);
         array_push($cashFlow,$rowAmountBorrowed);
-        array_push($cashFlow,$paymentLoan);
+        array_push($cashFlow,$rowPaymentLoan);
+        array_push($cashFlow,$rowSpace);
+
+
         array_push($cashFlow,$rowCashFlowShareholders);
+        array_push($cashFlow,$rowSpace);
+        
+        array_push($cashFlow,$rowFinancialAppication);
         array_push($cashFlow,$rowCapitalizationTitle);
         array_push($cashFlow,$rowMiscellaneousFinancialInvestments);
-        array_push($cashFlow,$rowDistributionProfits);
+        array_push($cashFlow,$rowSpace);
+
         array_push($cashFlow,$rowParticipations);
+        array_push($cashFlow,$rowDistributionProfits);
+
         array_push($cashFlow,$rowLiqCashFlow);
-                        
-                                
+        array_push($cashFlow,$rowSpace);
+        
+            return $cashFlow;
         }
 }
 ?>

@@ -4,79 +4,64 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
 import { AgGridModule, AgGridNg2 } from 'ag-grid-angular';
-
-
-
-// Depending on whether rollup is used, moment needs to be imported differently.
-// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
-// syntax. However, rollup creates a synthetic default module and we thus need to import it using
-// the `default as` syntax.
-import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-import {default as _rollupMoment, Moment} from 'moment';
-
-const moment = _rollupMoment || _moment;
-
-// See the Moment.js docs for the meaning of these formats:
-// https://momentjs.com/docs/#/displaying/format/
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'YYYY',
-  },
-  display: {
-    dateInput: 'YYYY',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
+import { HttpService } from '../http.service';
+import { ProviderService } from '../provider.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
   selector: 'app-report-dre-cashflow',
   templateUrl: './report-dre-cashflow.component.html',
   styleUrls: ['./report-dre-cashflow.component.scss'],
-  providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ],
 })
 export class ReportDreCashflowComponent implements OnInit {
 
 
+
+  date: any;
+  length: number;
+
   columnDefs = [
-    {headerName: '', field: 'first' },
-    {headerName: 'Nome', field: 'name' },
-    {headerName: 'R$', field: 'amount'},
-    {headerName: 'Nº de Contas', field: 'bills'},
-    {headerName: 'Tipo', field: 'typeCost'},
+    {headerName: '', field: '0' },
+    {headerName: 'Jan', field: '1' },
+    {headerName: 'Fev', field: '2'},
+    {headerName: 'Mar', field: '3'},
+    {headerName: 'Abr', field: '4'},
+    {headerName: 'Mai', field: '5'},
+    {headerName: 'Jun', field: '6'},
+    {headerName: 'Jul', field: '7'},
+    {headerName: 'Ago', field: '8'},
+    {headerName: 'Set', field: '9'},
+    {headerName: 'Out', field: '10'},
+    {headerName: 'Nov', field: '11'},
+    {headerName: 'Dez', field: '12'},
+    {headerName: 'Total', field: '13'},
   ];
 
   rowData: any = [];
 
+  constructor(private http: HttpService, private appState: ProviderService, private httpClient: HttpClient) {
 
-  constructor() { }
+    let d = new Date();
+    console.log('typeOf', typeof(d.getFullYear()));
+    this.date  = d.getFullYear();
+    this.search();
+   }
 
   ngOnInit() {
+
   }
 
-  date = new FormControl(moment());
-
-  chosenYearHandler(normalizedYear: Moment) {
-    const ctrlValue = this.date.value;
-    ctrlValue.year(normalizedYear.year());
-    this.date.setValue(ctrlValue);
-  }
-
-  chosenMonthHandler(normlizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.date.value;
-    ctrlValue.month(normlizedMonth.month());
-    this.date.setValue(ctrlValue);
-    datepicker.close();
+  search(){
+    this.http.get('/reports/CashFlow/dre?year=' + this.date)
+      .then((data: any) => {
+        this.appState.set('reportDreCashFlow', data.dataset.reportDreCashFlow);
+        this.rowData = this.appState.provider.reportDreCashFlow;
+        this.length = data.dataset.total;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 }
