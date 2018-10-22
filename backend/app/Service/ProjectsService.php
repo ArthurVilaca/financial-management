@@ -173,7 +173,7 @@ class ProjectsService extends Service
                 'comments' => 'Conta referente ao projeto '.$request->get('name').' - REF '.$date->format('Y-m'),
                 'amount' => $portion,
                 'projects_id' => $returnProject->id,                
-                'due_date' => $date,
+                'payment_date' => $date,
                 'banks_id' => $request->get('banks_id'),
                 'clients_id' => $request->get('clients_id'),
                 'employee' => $request->get('user'),

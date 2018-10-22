@@ -84,4 +84,15 @@ class ReportsController extends Controller
 
         return response()->json($this->response->toString());
     }
+
+    public function getDreFlow(Request $request){
+
+        $cashFlowDre = $this->reportCashFlow->getDreFlow($_GET);
+        $this->response->setDataSet("reportDreCashFlow", $cashFlowDre);
+        $this->response->setType("S");
+        $this->response->setMessages("Sucess!");
+
+        return response()->json($this->response->toString());
+
+    }
 }

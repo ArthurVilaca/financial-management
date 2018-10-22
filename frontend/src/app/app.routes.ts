@@ -32,6 +32,7 @@ import { BankReconciliationComponent } from './bank-reconciliation/bank-reconcil
 import { ReportCashflowComponent } from './report-cashflow/report-cashflow.component';
 import { ReportCashflowMonthComponent } from './report-cashflow-month/report-cashflow-month.component';
 import { ConciliationComponent } from './conciliation/conciliation.component';
+import { ReportDreCashflowComponent } from './report-dre-cashflow/report-dre-cashflow.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -77,7 +78,8 @@ const SECURE_ROUTES: Routes = [
 	{ path: 'conciliacaoBancaria/:id', component: BankReconciliationComponent },
 	{ path: 'relatorio/fluxoCaixa', component: ReportCashflowComponent },
 	{ path: 'relatorio/fluxoCaixa/mes', component: ReportCashflowMonthComponent },
-	{ path: 'conciliacao', component: ConciliationComponent },
+  { path: 'conciliacao', component: ConciliationComponent },
+  { path: 'dre/fluxoCaixa', component: ReportDreCashflowComponent }
 ];
 
 export const rootRouterConfig: Routes = [

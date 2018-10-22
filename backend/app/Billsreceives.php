@@ -267,7 +267,6 @@ class Billsreceives extends Model
                 ->where('cost_centers_id','=', $value->id)
                 ->sum('amount');
         }
-
         return $phases;
     }
 
